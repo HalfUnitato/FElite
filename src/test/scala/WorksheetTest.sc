@@ -5,7 +5,7 @@ all.foreach(println)
 odds.foreach{println}
 
 
-
+// a little different comment for conflict
 var list = List(1,2,3,4,5,6,7,8,9)			// Creating a list
 for( i <- list){							// Iterating the list
   println(i)
