@@ -9,7 +9,7 @@ var list = List(1,2,3,4,5,6,7,8,9)			// Creating a list
 for( i <- list){							// Iterating the list
   println(i)
 }
-
+//some code comments
 var result = for( a <- 1 to 10 by 3) yield a
 for(i<-result){
   println(i)
