@@ -8,7 +8,7 @@ lib_managed/
 src_managed/
 project/boot/
 project/plugins/project
-project/taget/
+project/target/
 project/project/
 log/
 project/.sbtserver
@@ -19,4 +19,4 @@ project/.sbtserver
 # intellij
 /.idea/
 # Application
-/FElite.log
+
