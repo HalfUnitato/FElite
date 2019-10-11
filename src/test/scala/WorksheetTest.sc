@@ -3,7 +3,6 @@ var all= (2 to 10 by 2).toList
 println((2 to 10).toList)
 all.foreach(println)
 odds.foreach{println}
-print("Hello")
 
 
 var list = List(1,2,3,4,5,6,7,8,9)			// Creating a list
