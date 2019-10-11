@@ -10,7 +10,7 @@ for( i <- list){							// Iterating the list
   println(i)
 }
 
-var result = for( a <- 1 to 10) yield a
+var result = for( a <- 1 to 10 by 3) yield a
 for(i<-result){
   println(i)
 }
