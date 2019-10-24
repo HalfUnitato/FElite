@@ -15,4 +15,10 @@ for( i <- list){							// Iterating the list
 var result = for( a <- 1 to 10 by 3) yield a
 for(i<-result){
   println(i)
+
+
+
+
+  val nill = null
+  nill.toString().charAt(1)
 }
