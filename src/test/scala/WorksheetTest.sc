@@ -16,3 +16,11 @@ var result = for( a <- 1 to 10 by 3) yield a
 for(i<-result){
   println(i)
 }
+
+System.getProperty("file.encoding")
+print(8364.toChar)
+print(0xC2A5.toChar)
+print(203.toChar)
+print(0x2603.toChar)
+print(0xa5.toChar)
+print(0xff.toChar)
