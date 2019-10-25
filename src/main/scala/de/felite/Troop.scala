@@ -1,6 +1,8 @@
 package de.felite
 
 trait Troop {
+  def attack():Int = 0
+  def defense():Int = 0
   def attackRange():Int = 0
   def moveRange():Int = 0
 

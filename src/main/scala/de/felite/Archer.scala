@@ -1,8 +1,11 @@
 package de.felite
 
-case class Archer(att:Int,mv:Int) extends Troop {
-  override val attackRange:Int = att
-  override val moveRange:Int = mv
+case class Archer(attV: Int, defV: Int, attR: Int, mvR: Int) extends Troop {
+
+  override val attack: Int = attV
+  override val defense: Int = defV
+  override val attackRange: Int = attR
+  override val moveRange: Int = mvR
 
 
 }
