@@ -1,7 +1,8 @@
 package de.felite
 
-class CellTest extends TestBaseClass {
-  "A Obstacle" when {
+class FieldTest extends TestBaseClass {
+  "A Test" when {
+    val test = new Field()
     "as Tree" should {
       val tree = Tree
       "has walkthrough " in {

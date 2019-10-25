@@ -1,5 +1,5 @@
 package de.felite
 
-case object Rock extends Obstacle{
-  override val walkThrough = false
+case object Rock extends Obstacle(false, 'r') {
+
 }

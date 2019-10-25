@@ -1,8 +1,13 @@
 package de.felite
 
-case class Field(size: Int){
-  private val field = Array.ofDim[Cell](size,size)
-  for( x <- 0 to size)
-    for(y <- 0 to size)
-      field(y)(x) = Cell(Tree)
+case class Field(initFile: Array[Array[Char]]) { //: Array.ofDim[char]()){
+  private val field = initFile
+  for (x <- initFile.indices)
+    for (y <- x.)
+      field(y)(x) = initFile(y)(x) match {
+        case Tree.sign => Cell(Tree)
+        case Grass.sign => Cell(Grass)
+        case Rock.sign => Cell(Rock)
+        case _ => Cell(Grass)
+      }
 }
