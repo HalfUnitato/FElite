@@ -1,36 +1,17 @@
 package de.felite
 
 class FieldTest extends TestBaseClass {
-  "A Test" when {
-    val test = new Field()
-    "as Tree" should {
-      val tree = Tree
-      "has walkthrough " in {
-        tree.walkThrough should be
-        false
+  "A Field" when {
+    val testField = Field(FileIO.readFromFile("C:\\Users\\Unitato\\Documents\\HTWG-Konstanz\\3-Semester\\SoftwareEngineering\\Tut\\FElite\\src\\fieldTest.txt"))
+    "do move" should {
+      "move is valide" in {
+        testField.plausibilityCheck(0, 0, 0, 5) shouldBe true
       }
-      "has sign " in {
-        tree.sign === 't'
+      "move throwns no Exception for Index -1" in {
+       testField.plausibilityCheck(-1, 0,0,0) shouldBe false
       }
-    }
-    "as Grass" should {
-      val grass = Grass
-      "has walkThrough " in {
-        grass.walkThrough should be
-        true
-      }
-      "has sign " in {
-        grass.sign === 'g'
-      }
-      "as Rock" should {
-        val rock = Rock
-        "has walkThrough " in {
-          rock.walkThrough should be
-          false
-        }
-        "has sign " in {
-          rock.sign === 'r'
-        }
+      "move throwns no Exception for Index 10" in {
+        testField.plausibilityCheck(-1, 0,10,0) shouldBe false
       }
     }
   }

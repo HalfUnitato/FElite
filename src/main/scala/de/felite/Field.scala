@@ -1,29 +1,22 @@
 package de.felite
 
-case class Field(initFile: Array[Array[Char]]) { //: Array.ofDim[char]()){
-  private val matrix = Array.ofDim[Char](20,20)
+case class Field(initFile: Array[Array[String]]) { //: Array.ofDim[char]()){
+  private val matrix = FileIO.readFromFile("C:\\Users\\Unitato\\Documents\\HTWG-Konstanz\\3-Semester\\SoftwareEngineering\\Tut\\FElite\\src\\fieldTest.txt")
 
-  // All Grass
-  for (i <- 0 until 20) {
-    for (j <- 0 until 20) {
-      matrix(i)(j) = Grass.sign
-    }
+  private def move(fromX: Int, fromY: Int, toX: Int, toY: Int): Unit = {
+    matrix(toY)(toX) = matrix(fromY)(fromX)
   }
 
-  for (i <- 0 until 20) {
-    for (j <- 0 until 20) {
-      print(matrix(i)(j))
+  def plausibilityCheck(fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean = {
+    try {
+      matrix(fromY)(fromX)
+      matrix(toY)(toX)
     }
-    println()
+    catch {
+      case _: Throwable => return false
+    }
+    move(fromX, fromY, toX, toY)
+    true
   }
 
-  /*private val field = initFile
-  for (x <- initFile.indices)
-    for (y <- x.)
-      field(y)(x) = initFile(y)(x) match {
-        case Tree.sign => Cell(Tree)
-        case Grass.sign => Cell(Grass)
-        case Rock.sign => Cell(Rock)
-        case _ => Cell(Grass)
-      }*/
 }
