@@ -1,6 +1,5 @@
-package de.felite
+package de.felite.io
 
-import io.Source._
 import scala.io.Source
 
 object FileIO {
@@ -10,7 +9,8 @@ object FileIO {
     val source = Source.fromFile(fileName)
     for (v <- source.getLines()) {
       if (c == 0) {
-        arr = Array.ofDim(v(1), v(0))
+
+        arr = Array.ofDim(v(2).toString.toInt, v(0).toString.toInt)
       } else {
         arr(c - 1) = v.split(",")
       }

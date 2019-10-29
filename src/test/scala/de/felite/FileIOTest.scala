@@ -1,5 +1,7 @@
 package de.felite
 
+import de.felite.io.FileIO
+
 class FileIOTest extends TestBaseClass {
   "A FileIO" when {
     var field: Array[Array[String]] = null
