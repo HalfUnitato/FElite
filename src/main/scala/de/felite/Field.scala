@@ -1,29 +1,28 @@
 package de.felite
 
 import de.felite.io.FileIO
+import de.felite.obstacle.Grass
 
 case class Field(fileName: String) { //: Array.ofDim[char]()){
   private val matrix = FileIO.readFromFile(fileName)
 
-  private def move(fromX: Int, fromY: Int, toX: Int, toY: Int): Unit = {
-    matrix(toY)(toX) = matrix(fromY)(fromX)
-  }
-
   // return Field
   // BUT NEVER THE ORIGINAL ONE!!!
-  def getField: Array[Array[String]] = matrix.clone()
+  def getField: Array[Array[Char]] = matrix.clone()
 
-  def doMove(fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean = {
+  def doMove(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
     // Indexierung grueltig? keine IndexOutOfRange Exception
     try {
-      matrix(fromY)(fromX)
-      matrix(toY)(toX)
+      // teste IndexZugriffe
+      matrix(from._2)(from._1)
+      matrix(to._2)(to._1)
     }
     catch {
-      case _: Throwable => return false
+      case _: Throwable => return ReturnValues.INVALID
     }
-    move(fromX, fromY, toX, toY)
-    true
+    matrix(to._2)(to._1) = matrix(from._2)(from._1)
+    matrix(from._2)(from._1) = 'g'
+    ReturnValues.VALID
   }
 
 }

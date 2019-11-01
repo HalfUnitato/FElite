@@ -3,16 +3,16 @@ package de.felite.io
 import scala.io.Source
 
 object FileIO {
-  def readFromFile(fileName: String): Array[Array[String]] = {
+  def readFromFile(fileName: String): Array[Array[Char]] = {
     var c = 0
-    var arr: Array[Array[String]] = Array.ofDim(0, 0)
+    var arr: Array[Array[Char]] = Array.ofDim(0, 0)
     val source = Source.fromFile(fileName)
     for (v <- source.getLines()) {
       if (c == 0) {
-
-        arr = Array.ofDim(v(2).toString.toInt, v(0).toString.toInt)
+        val arrSize = v.split(",")
+        arr = Array.ofDim(arrSize(1).toString.toInt, arrSize(0).toString.toInt)
       } else {
-        arr(c - 1) = v.split(",")
+        arr(c - 1) = v.toArray //(v.split(",")).toArray[Char]
       }
       c += 1
     }

@@ -1,7 +1,7 @@
 6,6
-"g","g","g","g","g","g"
-"g","t","g","r","r","r"
-"g","t","g","g","g","g"
-"r","r","g","t","t","g"
-"r","g","g","g","t","g"
-"r","r","g","g","g","g"
+gggggg
+gtgrrr
+gtgggg
+rrgttg
+rgggtg
+rrgggg

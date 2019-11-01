@@ -1,5 +1,7 @@
 package de.felite
 
+import de.felite.obstacle.{Grass, Rock, Tree}
+
 class CellTest extends TestBaseClass {
   "A Obstacle" when {
     "as Tree" should {
