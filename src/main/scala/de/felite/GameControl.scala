@@ -1,7 +1,8 @@
 package de.felite
 
-import de.felite.figure.{Archer, Soldier}
+import de.felite.figure.{Archer, Soldier, Troop}
 import de.felite.io.Tui
+import de.felite.obstacle.Branded
 
 object GameControl {
   private var field: Field = _
@@ -14,24 +15,39 @@ object GameControl {
 
 
     field = Field("src\\fieldTest.txt")
-    Tui.printField(field)
 
     setUserTroopsDefault("TopLeft", playerOne)
     setUserTroopsDefault("BottomRight", playerTwo)
+
+    Tui.printField(field)
   }
 
   private def setUserTroopsDefault(pos: String, player: Player): Unit = {
+    var y = 0
+    var x = 0
+
     if (pos.equals("TopLeft")) {
-      val y = 0
-      player.addPlayerTroop(new Soldier(3, 6, 1, 4, 6, 0, y))
-      player.addPlayerTroop(new Archer(2, 3, 4, 2, 3, 1, y))
-      player.addPlayerTroop(new Soldier(3, 6, 1, 4, 6, 2, y))
-    } else if(pos.equals("BottomRight")) {
-      val y = 5
-      player.addPlayerTroop(new Soldier(3, 6, 1, 4, 6, 0, y))
-      player.addPlayerTroop(new Archer(2, 3, 4, 2, 3, 1, y))
-      player.addPlayerTroop(new Soldier(3, 6, 1, 4, 6, 2, y))
+      y = 0
+      x = 0
     }
+    else if (pos.equals("BottomRight")) {
+      y = 5
+      x = 3
+    }
+
+    val soldier: Branded = new Soldier(3, 6, 1, 4, 6, x, y)
+    val archer = new Archer(2, 3, 4, 2, 3, x, y)
+    player.addPlayerTroop(soldier.asInstanceOf[Troop])
+    field.setSoldier(soldier, x, y)
+
+    x += 1
+
+    player.addPlayerTroop(archer.asInstanceOf[Troop])
+    field.setSoldier(archer, x, y)
+
+    x += 1
+    player.addPlayerTroop(soldier.asInstanceOf[Troop])
+    field.setSoldier(soldier, x, y)
   }
 
   def playerTurn(currentPlayer: Player): ReturnValues.Value = {
@@ -54,13 +70,14 @@ object GameControl {
                   Tui.printString("invalid move")
                   ReturnValues.INVALID
                 }
-              case "a" => return if (doAttack(currentPlayer, (xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
-                Tui.printField(field)
-                ReturnValues.VALID
-              } else {
-                Tui.printString("invalid attack")
-                ReturnValues.INVALID
-              }
+              case "a" =>
+                return if (doAttack(currentPlayer, (xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+                  Tui.printField(field)
+                  ReturnValues.VALID
+                } else {
+                  Tui.printString("invalid attack")
+                  ReturnValues.INVALID
+                }
               case _ => Tui.printString("invalid command") // -1 5 m 2 2 returns invalid command but should return invalid move
                 return ReturnValues.INVALID
             }
@@ -72,9 +89,12 @@ object GameControl {
     ReturnValues.VALID
   }
 
-  private def doMove(currentPlayer: Player, from: (Int, Int), to: (Int, Int)) = {
-    //if()
-    field.doMove(from, to)
+  private def doMove(currentPlayer: Player, from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
+    if (currentPlayer.containsSoldier(field.getField(from._2)(from._1)) == ReturnValues.VALID) {
+      field.doMove(from, to)
+      return ReturnValues.VALID
+    }
+    ReturnValues.INVALID
   }
 
   private def doAttack(currentPlayer: Player, from: (Int, Int), to: (Int, Int)) = {

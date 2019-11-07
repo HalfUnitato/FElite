@@ -26,7 +26,7 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
     ReturnValues.VALID
   }
 
-  def setSoldier(soldier: Troop, x: Int, y: Int): Unit = {
+  def setSoldier(soldier: Branded, x: Int,y: Int): ReturnValues.Value = {
     try {
       // teste IndexZugriffe
       matrix(y)(x)
@@ -34,6 +34,7 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
     catch {
       case _: Throwable => return ReturnValues.INVALID
     }
-
+    matrix(y)(x) = soldier
+    ReturnValues.VALID
   }
 }

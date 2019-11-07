@@ -9,7 +9,7 @@ object Tui {
     scala.io.StdIn.readLine()
   }
 
-  def printField(field: Field): Unit = {
+  def printField(field: Field) = {
     var base = ""
     base += "\t0\t1\t2\t3\t4\t5\n"
     var i = 0

@@ -1,23 +1,22 @@
 package de.felite
 
 class GameControlTest extends TestBaseClass {
-  var gameControl = GameControl
   val playerOne = new Player("Marin")
   val playerTwo = new Player("Lukas")
   "The GameControl" when {
     "Initialization" should {
       "not throw Exceptions " in {
-        noException shouldBe thrownBy(gameControl.init(playerOne,playerTwo))
+        noException shouldBe thrownBy(GameControl.init(playerOne, playerTwo))
       }
     }
     "isEnd" should {
-      "fail" in{
-        !gameControl.isEnd(playerOne, playerOne)
+      "fail" in {
+        !GameControl.isEnd(playerOne, playerOne) shouldBe true
       }
     }
-    /*"printHelp" should {
-      "not throw Exceptions" in{
-        noException shouldBe thrownBy(gameControl.printHelp())
+    /*"playerTurn" should {
+      "be valid" in {
+        GameControl.playerTurn(playerOne) shouldBe true
       }
     }*/
   }
