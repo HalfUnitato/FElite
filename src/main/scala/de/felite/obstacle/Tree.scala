@@ -1,7 +1,5 @@
 package de.felite.obstacle
 
-import de.felite.Obstacle
-
-case object Tree extends Obstacle(false, 't') {
-
+case object Tree extends Obstacle(false) with Branded {
+  override val sign: Char = 't'
 }

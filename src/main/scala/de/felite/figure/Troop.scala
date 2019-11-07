@@ -1,7 +1,8 @@
-package de.felite
+package de.felite.figure
 
 trait Troop {
-
+  def x(): Int = 0
+  def y(): Int = 0
   def health():Int = 0
 
   def attack():Int = 0

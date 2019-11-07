@@ -12,7 +12,7 @@ object Tui {
   def printField(field: Field): Unit = {
     for (y <- field.getField) {
       for (x <- y) {
-        print(x + "\t")
+        print(x.sign() + "\t")
       }
       println()
     }

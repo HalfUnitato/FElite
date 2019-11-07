@@ -1,6 +1,5 @@
 package de.felite.obstacle
 
-import de.felite.Obstacle
-
-case object Grass extends Obstacle(true, 'g') {
+case object Grass extends Obstacle(true) with Branded {
+  override val sign: Char = 'g'
 }

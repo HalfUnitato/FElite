@@ -7,7 +7,7 @@ class GameControlTest extends TestBaseClass {
   "The GameControl" when {
     "Initialization" should {
       "not throw Exceptions " in {
-        noException shouldBe thrownBy(gameControl.init())
+        noException shouldBe thrownBy(gameControl.init(playerOne,playerTwo))
       }
     }
     "isEnd" should {

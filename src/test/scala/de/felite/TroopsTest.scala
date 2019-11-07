@@ -1,12 +1,14 @@
 package de.felite
 
+import de.felite.figure.{Archer, Soldier}
+
 
 class TroopsTest extends TestBaseClass {
   "a new Troop" when {
     "a new Archer" should {
       //Archer(attV,defV,attR,mvR)
-      val archer = Archer(5, 3, 2, 4, 40)
-      val archer2 = Archer(5, 3, 2, 4, 40)
+      val archer = Archer(5, 3, 2, 4, 40, 0, 0)
+      val archer2 = Archer(5, 3, 2, 4, 40, 0, 0)
       "be of Instance Archer" in {
         archer.isInstanceOf[Archer] should be(true)
       }
@@ -63,13 +65,13 @@ class TroopsTest extends TestBaseClass {
     var soldier = Soldier(4, 4, 1, 5, 50)
     "a soldier attacks a archer, the archer" should {
       "loose health" in {
-        archer = Archer(5,3,2,4,36)
+        archer = Archer(5, 3, 2, 4, 36)
         archer.health === 36
       }
     }
     "a archer attacks a soldier, the soldier" should {
       "loose health" in {
-        soldier = Soldier(4,4,1,5,45)
+        soldier = Soldier(4, 4, 1, 5, 45)
         soldier.health === 45
       }
     }
