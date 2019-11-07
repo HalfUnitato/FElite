@@ -3,9 +3,7 @@ package de.felite
 import de.felite.io.Tui
 
 class TuiTest extends TestBaseClass {
-  val field = Field("C:\\Users\\Unitato\\Documents\\HTWG-Konstanz" +
-    "\\3-Semester\\SoftwareEngineering" +
-    "\\Tut\\FElite\\src\\fieldTest.txt")
+  val field = Field("src\\fieldTest.txt")
 
   "The Tui" when {
     "print String" should {

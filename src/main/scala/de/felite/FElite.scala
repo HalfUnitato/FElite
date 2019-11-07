@@ -7,7 +7,7 @@ object FElite {
     val playerOne = new Player("Marin");
     val playerTwo = new Player("Lukas");
     GameControl.init(playerOne, playerTwo)
-    // run GAme for ever
+    // run Game for ever
     var currentPlayer = playerOne
     var currentRun = ReturnValues.VALID
 
@@ -17,6 +17,7 @@ object FElite {
 
       while (currentRun != ReturnValues.END && currentRun != ReturnValues.QUIT) {
         currentRun = GameControl.playerTurn(currentPlayer)
+
       }
       // switch payer after each turn
       currentPlayer =

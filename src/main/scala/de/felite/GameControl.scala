@@ -13,9 +13,7 @@ object GameControl {
     this.player2 = playerTwo
 
 
-    field = Field("C:\\Users\\Unitato\\Documents\\HTWG-Konstanz" +
-      "\\3-Semester\\SoftwareEngineering" +
-      "\\Tut\\FElite\\src\\fieldTest.txt")
+    field = Field("src\\fieldTest.txt")
     Tui.printField(field)
 
     setUserTroopsDefault("TopLeft", playerOne)
@@ -37,31 +35,33 @@ object GameControl {
   }
 
   def playerTurn(currentPlayer: Player): ReturnValues.Value = {
-    val command = Tui.readLine("type in your command: {-h for help}")
+    val command = Tui.readLine("type in your command: ('help' if no idea)")
     command match {
       case "p" => Tui.printField(field)
       case "quit" => return ReturnValues.QUIT
       case "cancel" => return ReturnValues.CANCEL
       case "end" => return ReturnValues.END
-      case "-h" => printHelp()
+      case "help" => printHelp()
       case _ =>
         command.toList.filter(c => c != ' ').map(c => c.toString) match {
           case xF :: yF :: action :: xT :: yT :: Nil =>
             action match {
               case "m" =>
                 return if (doMove(currentPlayer, (xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+                  Tui.printField(field)
                   ReturnValues.VALID
                 } else {
                   Tui.printString("invalid move")
                   ReturnValues.INVALID
                 }
               case "a" => return if (doAttack(currentPlayer, (xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+                Tui.printField(field)
                 ReturnValues.VALID
               } else {
                 Tui.printString("invalid attack")
                 ReturnValues.INVALID
               }
-              case _ => Tui.printString("invalid command")
+              case _ => Tui.printString("invalid command") // -1 5 m 2 2 returns invalid command but should return invalid move
                 return ReturnValues.INVALID
             }
           case _ => Tui.printString("invalid command")
@@ -94,21 +94,23 @@ object GameControl {
         "%s:%29s\n" +
         "%s:%23s\n" +
         "%s:\n" +
-        "%10s:%25s\n" +
-        "%10s:%15s\n" +
-        "%15s:%8s\n" +
-        "%15s:%10s\n" +
-        "%10s:%23s\n",
-      "|p", "print board",
-      "|quit", "end game",
-      "|cancel", "undo last command",
-      "|end", "end turn",
-      "|xF yF c xT yT",
-      "|xF yF", " coordinates from",
-      "|c", "action",
-      "|m", "move",
-      "|a", "attack",
-      "|xT yT", "coordinates to"))
+        "%s:%25s\n" +
+        "%7s:%21s\n" +
+        "%13s:%15s\n" +
+        "%20s:\n" +
+        "%10s:%8s\n" +
+        "%10s:%10s\n",
+      "p", "print board", //coordinates of the board? print them too?
+      "quit", "end game",
+      "cancel", "undo last command",
+      "end", "end turn",
+      "xF yF c xT yT where",
+      "xF yF", "coordinates from",
+      "c", "command/action",
+      "xT yT", "coordinates to",
+      "c being one of",
+      "m", "to move",
+      "a", "to attack"))
     /*"quit:\t\t\tend game\n" +
       "cancel:\t\t\tundo last command\n" +
       "end:\t\t\t\tend turn\n" +

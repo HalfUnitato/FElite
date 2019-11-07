@@ -4,7 +4,7 @@ import de.felite.figure.{Archer, Soldier}
 
 
 class TroopsTest extends TestBaseClass {
-  "a new Troop" when {
+ /* "a new Troop" when {
     "a new Archer" should {
       //Archer(attV,defV,attR,mvR)
       val archer = Archer(5, 3, 2, 4, 40, 0, 0)
@@ -75,5 +75,5 @@ class TroopsTest extends TestBaseClass {
         soldier.health === 45
       }
     }
-  }
+  }*/
 }
