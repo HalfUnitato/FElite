@@ -1,5 +1,3 @@
-import de.felite._
-import de.felite.controller.GameControl
 import de.felite.model.Player
 
 System.getProperty("file.encoding")
@@ -10,7 +8,9 @@ print(0x2603.toChar)
 print(0xa5.toChar)
 print(0xff.toChar)
 
-val p1 = Player("Lili")
-val p2 = Player("Nuke Dukem")
+val pp = "DukeNukem KaiserNero"
 
-GameControl.init(p1, p2)
+val arr = pp.split(" ")
+
+arr(1)
+arr(0)

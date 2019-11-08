@@ -6,9 +6,8 @@ import de.felite.util.ReturnValues
 
 import scala.collection.mutable.ListBuffer
 
-case class Player(name: String = "John Doe") {
+case class Player(private val name: String = "John Doe") {
   private var playerTroops = new ListBuffer[Troop]()
-  private val playerName = name
   private var unitAmount = 42 //UnitList.length
 
   def addPlayerTroop(troop: Troop): ReturnValues.Value = {
@@ -33,7 +32,7 @@ case class Player(name: String = "John Doe") {
     ReturnValues.INVALID
   }
 
-  def getPlayerName: String = playerName
+  def getPlayerName: String = name
 
   def getUnitAmount: Int = unitAmount
 }

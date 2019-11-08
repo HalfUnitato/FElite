@@ -1,37 +1,73 @@
 package de.felite.view
 
-import de.felite.model.Field
-import de.felite.util.ReturnValues
+import de.felite.controller._
+import de.felite.model.{Field, Player}
+import de.felite.util.{Observer, ReturnValues}
 
-object Tui {
+class Tui(controller:GameController) extends Observer{
+
+  controller.add(this)
+
   // return (-1,-1) at exit
-  def readLine(what: String): String = {
+  /*def readLine(what: String): String = {
     println(what)
     scala.io.StdIn.readLine()
+  }*/
+
+
+  def init(input: String): Unit = {
+    val names = input.split(" ")
+    controller.init(names)
+    controller.infoToString()
+    //print basic game?
   }
 
-  def createFieldString(field: Field): String = {
-    var base = ""
-    base += "\t0\t1\t2\t3\t4\t5\n"
-    var i = 0
-    for (y <- field.getField) {
-      base += i + "\t"
-      for (x <- y) {
-        base += x.sign() + "\t"
-      }
-      i += 1
-      base += "\n"
+ /* def playerTurn(input: String): ReturnValues.Value = {
+    controller.getPlayers()
+
+    val fieldString = Tui.createFieldString(GameControl.fieldTxt)
+
+    command match {
+      case "p" => Tui.printString(fieldString)
+      case "quit" => return ReturnValues.QUIT
+      case "cancel" => return ReturnValues.CANCEL
+      case "end" => return ReturnValues.END
+      case "help" => Tui.printHelp()
+      case _ =>
+        command.toList.filter(c => c != ' ').map(c => c.toString) match {
+          case xF :: yF :: action :: xT :: yT :: Nil =>
+            action match {
+              case "m" =>
+                return if (doMove(currentPlayer, (xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+                  ReturnValues.VALID
+                } else {
+                  Tui.printString("invalid move")
+                  ReturnValues.INVALID
+                }
+              case "a" =>
+                return if (doAttack(currentPlayer, (xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+                  ReturnValues.VALID
+                } else {
+                  Tui.printString("invalid attack")
+                  ReturnValues.INVALID
+                }
+              case _ => Tui.printString("invalid command/action") // -1 5 m 2 2 returns invalid command but should return invalid move
+                return ReturnValues.INVALID
+            }
+          case _ => Tui.printString("invalid command")
+            return ReturnValues.INVALID
+        }
     }
-    base
-  }
 
+    ReturnValues.VALID
+  }*/
 
   def printString(txt: String): Unit = {
     println(txt)
   }
 
   def printHelp(): ReturnValues.Value = {
-    Tui.printString(String.format(
+    printString(String.format(
       "%s:%28s\n" +
         "%s:%22s\n" +
         "%s:%29s\n" +
@@ -64,5 +100,14 @@ object Tui {
       "\t\t\t\t\ta: attack\n" +
       "\t\t\t\txT yT: coordinates to\n")*/
     ReturnValues.VALID
+  }
+
+  override def update(): Unit = {
+    /*if (option == 0) {
+      printString(controller.infoToString())
+    } else if (option ==1) {
+
+    }*/
+
   }
 }

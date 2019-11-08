@@ -10,6 +10,22 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
   // BUT NEVER THE ORIGINAL ONE!!!
   def getField: Array[Array[Branded]] = matrix.clone()
 
+  override def toString: String = {
+    var base = ""
+    //variable amount of numbers relative to size of field #skalierung
+    base += "\t0\t1\t2\t3\t4\t5\n"
+    var i = 0
+    for (y <- matrix) {
+      base += i + "\t"
+      for (x <- y) {
+        base += x.sign() + "\t"
+      }
+      i += 1
+      base += "\n"
+    }
+    base
+  }
+
   def doMove(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
     // Indexierung grueltig? keine IndexOutOfRange Exception
     try {
@@ -25,7 +41,7 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
     ReturnValues.VALID
   }
 
-  def setSoldier(soldier: Branded, x: Int,y: Int): ReturnValues.Value = {
+  def setSoldier(soldier: Branded, x: Int, y: Int): ReturnValues.Value = {
     try {
       // teste IndexZugriffe
       matrix(y)(x)

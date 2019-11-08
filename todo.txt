@@ -1,3 +1,12 @@
+# AbgabeZiel
+TODO: Build MVC Structure
+clean architecture
+No import of classes from higher level
+Use reorganisation and observer pattern to resolve
+    Cycles
+    Layer conflicts
+
+
 # HighPrio:
 
 TODO: im help die Bedeutung der Symbole erklären
@@ -7,7 +16,6 @@ TODO: move - plausicheck
 TODO: attack
 TODO: MVC Strukture enforcing
 TODO: Observer etc.
-TODO: GameControl = Controller?
 
 # LowerPrio:
 TODO: CharColors
@@ -16,3 +24,5 @@ TODO: todo.txt kategorien?
 TODO: Spielernamen abfragen
 
 # UnknownPrio:
+
+TODO: Controller is object or class?
