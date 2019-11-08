@@ -1,0 +1,18 @@
+# HighPrio:
+
+TODO: im help die Bedeutung der Symbole erklären
+TODO: skalierbares Spielfeld
+TODO: trivialer Fall bei Spielfeld -> schnell gewinnen/verlieren
+TODO: move - plausicheck
+TODO: attack
+TODO: MVC Strukture enforcing
+TODO: Observer etc.
+TODO: GameControl = Controller?
+
+# LowerPrio:
+TODO: CharColors
+
+TODO: todo.txt kategorien?
+TODO: Spielernamen abfragen
+
+# UnknownPrio:
