@@ -1,4 +1,4 @@
-package de.felite.obstacle
+package de.felite.model.obstacle
 
 trait Branded {
   def sign():Char = 'm'

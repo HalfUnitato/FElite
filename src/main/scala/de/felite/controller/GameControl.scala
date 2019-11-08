@@ -1,8 +1,10 @@
-package de.felite
+package de.felite.controller
 
-import de.felite.figure.{Archer, Soldier, Troop}
-import de.felite.io.Tui
-import de.felite.obstacle.Branded
+import de.felite.model.{Field, Player}
+import de.felite.model.figure.{Archer, Soldier, Troop}
+import de.felite.model.obstacle.Branded
+import de.felite.util.ReturnValues
+import de.felite.view.Tui
 
 object GameControl {
   private var player1: Player = _

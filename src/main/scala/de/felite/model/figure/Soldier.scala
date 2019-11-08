@@ -1,6 +1,6 @@
-package de.felite.figure
+package de.felite.model.figure
 
-import de.felite.obstacle.Branded
+import de.felite.model.obstacle.Branded
 import javax.swing.BoundedRangeModel
 
 case class Soldier(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos: Int, yPos: Int) extends Troop with Branded {

@@ -1,4 +1,8 @@
-package de.felite
+package de.felite.controller
+
+import de.felite.TestBaseClass
+import de.felite.model.Player
+import de.felite.util.ReturnValues
 
 
 class GameControlTest extends TestBaseClass {

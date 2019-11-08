@@ -1,4 +1,4 @@
-package de.felite.figure
+package de.felite.model.figure
 
 trait Troop {
   def x(): Int = 0

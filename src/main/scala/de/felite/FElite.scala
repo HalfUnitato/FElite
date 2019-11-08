@@ -1,6 +1,9 @@
 package de.felite
 
-import de.felite.io.Tui
+import de.felite.controller.GameControl
+import de.felite.model.Player
+import de.felite.util.ReturnValues
+import de.felite.view.Tui
 
 object FElite {
   def main(args: Array[String]): Unit = {

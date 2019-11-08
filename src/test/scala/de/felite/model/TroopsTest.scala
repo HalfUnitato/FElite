@@ -1,6 +1,6 @@
-package de.felite
+package de.felite.model
 
-import de.felite.figure.{Archer, Soldier}
+import de.felite.TestBaseClass
 
 
 class TroopsTest extends TestBaseClass {

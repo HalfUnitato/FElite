@@ -1,6 +1,7 @@
-package de.felite
+package de.felite.view
 
-import de.felite.io.Tui
+import de.felite.TestBaseClass
+import de.felite.model.Field
 
 class TuiTest extends TestBaseClass {
   val field = Field("src\\fieldTest.txt")

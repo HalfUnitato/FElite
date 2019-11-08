@@ -1,4 +1,4 @@
-package de.felite.obstacle
+package de.felite.model.obstacle
 
 case object Rock extends Obstacle(false) with Branded {
 

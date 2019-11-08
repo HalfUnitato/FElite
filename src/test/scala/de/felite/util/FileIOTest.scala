@@ -1,6 +1,6 @@
-package de.felite
+package de.felite.util
 
-import de.felite.io.FileIO
+import de.felite.TestBaseClass
 
 class FileIOTest extends TestBaseClass {
   "A FileIO" when {

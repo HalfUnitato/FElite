@@ -1,7 +1,9 @@
-package de.felite
+package de.felite.model
 
-import de.felite.figure.{Archer, Soldier, Troop}
-import de.felite.obstacle.Branded
+import de.felite.TestBaseClass
+import de.felite.model.figure.{Archer, Soldier, Troop}
+import de.felite.model.obstacle.Branded
+import de.felite.util.ReturnValues
 
 class PlayerTest extends TestBaseClass {
   "A Player" when {

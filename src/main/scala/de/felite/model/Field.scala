@@ -1,8 +1,7 @@
-package de.felite
+package de.felite.model
 
-import de.felite.figure.Troop
-import de.felite.io.FileIO
-import de.felite.obstacle.{Branded, Grass}
+import de.felite.model.obstacle.{Branded, Grass}
+import de.felite.util.{FileIO, ReturnValues}
 
 case class Field(fileName: String) { //: Array.ofDim[char]()){
   private val matrix = FileIO.readFromFile(fileName)

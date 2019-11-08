@@ -1,6 +1,8 @@
-package de.felite
+package de.felite.model
 
-import de.felite.figure.Soldier
+import de.felite.TestBaseClass
+import de.felite.model.figure.Soldier
+import de.felite.util.ReturnValues
 
 class FieldTest extends TestBaseClass {
   "A Field" when {

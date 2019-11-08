@@ -1,7 +1,6 @@
-package de.felite.io
+package de.felite.util
 
-import de.felite.figure.{Archer, Soldier}
-import de.felite.obstacle.{Branded, Grass, Rock, Tree}
+import de.felite.model.obstacle.{Branded, Grass, Rock, Tree}
 
 import scala.io.Source
 

@@ -1,4 +1,6 @@
 import de.felite._
+import de.felite.controller.GameControl
+import de.felite.model.Player
 
 System.getProperty("file.encoding")
 print(8364.toChar)

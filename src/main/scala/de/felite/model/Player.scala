@@ -1,7 +1,8 @@
-package de.felite
+package de.felite.model
 
-import de.felite.figure.Troop
-import de.felite.obstacle.Branded
+import de.felite.model.figure.Troop
+import de.felite.model.obstacle.Branded
+import de.felite.util.ReturnValues
 
 import scala.collection.mutable.ListBuffer
 

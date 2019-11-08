@@ -1,4 +1,4 @@
-package de.felite
+package de.felite.util
 
 object ReturnValues extends Enumeration {
   type Margin = Value

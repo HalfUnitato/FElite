@@ -1,6 +1,7 @@
-package de.felite.io
+package de.felite.view
 
-import de.felite.{Field, ReturnValues}
+import de.felite.model.Field
+import de.felite.util.ReturnValues
 
 object Tui {
   // return (-1,-1) at exit
