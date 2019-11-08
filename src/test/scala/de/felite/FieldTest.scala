@@ -4,7 +4,7 @@ import de.felite.figure.Soldier
 
 class FieldTest extends TestBaseClass {
   "A Field" when {
-    val testField = Field("C:\\Users\\Unitato\\Documents\\HTWG-Konstanz\\3-Semester\\SoftwareEngineering\\Tut\\FElite\\src\\fieldTest.txt")
+    val testField = Field("src\\fieldTest.txt")
 
     "get Field" should {
       "not be null" in {
@@ -25,7 +25,7 @@ class FieldTest extends TestBaseClass {
     "set Soldier" should {
       var x: Int = 1
       var y: Int = 1
-      val sold: Soldier = new Soldier(1, 1, 1, 1, 1, x, y)
+      val sold: Soldier = Soldier(1, 1, 1, 1, 1, x, y)
 
       "set is valide" in {
         x = 1

@@ -4,21 +4,17 @@ import de.felite.io.Tui
 
 class TuiTest extends TestBaseClass {
   val field = Field("src\\fieldTest.txt")
+  var fieldString: String = Tui.createFieldString(field)
 
   "The Tui" when {
     "print String" should {
-      "not fail" in {
-        noException shouldBe thrownBy(Tui.printString("Halloo"))
+      "not throw an ERROR when printing the fieldString" in {
+        noException shouldBe thrownBy(Tui.printString(fieldString))
       }
     }
-    /*"readLine" should {
-      "not fail" in {
-        an[Exception] shouldBe thrownBy(Tui.readLine("type in command"))
-      }
-    }*/
-    "print Field" should {
-      "doesn't throw an ERROR" in {
-        noException shouldBe thrownBy(Tui.printField(field))
+    "printing the help" should {
+      "not throw an ERROR" in {
+        noException shouldBe thrownBy(Tui.printHelp())
       }
     }
   }
