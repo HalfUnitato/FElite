@@ -12,12 +12,12 @@ class FEliteTest extends TestBaseClass {
     }
     "create two players" when {
       val input = "NukeDukem NaiserKero"
-      game.tui.init(input)
+      /*game.tui.init(input)
       "Player One" should {
         "have a Name" in {
           game.controller.getPlayerName(1) shouldEqual "NukeDukem"
         }
-      }
+      }*/
       "Player Two" should {
         "have a Name" in {
           game.controller.getPlayerName(2) shouldEqual "NaiserKero"

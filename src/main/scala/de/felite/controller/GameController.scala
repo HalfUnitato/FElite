@@ -3,28 +3,46 @@ package de.felite.controller
 import de.felite.model.{Field, Player}
 import de.felite.model.figure.{Archer, Soldier, Troop}
 import de.felite.model.obstacle.Branded
-import de.felite.util.{Observable, ReturnValues}
+import de.felite.util.{Observable, ObserverCommand, ReturnValues}
 
 class GameController(var field: Field) extends Observable {
   private var player1: Player = _
   private var player2: Player = _
+  var currentPlayer: Player = _
+  var printString: String = _
+  var readString: String = _
+  var gameState: ReturnValues.Value = ReturnValues.VALID
 
+  def init(): Unit = {
+    println("init Controller")
+    printString = "Name of player number one:"
+    notifyObservers(ObserverCommand.PRINTSTRING)
+    notifyObservers((ObserverCommand.READSTRING))
+    this.player1 = Player(readString)
+    printString = "Name of player number two:"
+    notifyObservers(ObserverCommand.PRINTSTRING)
+    notifyObservers((ObserverCommand.READSTRING))
+    this.player2 = Player(readString)
 
-  def init(names: Array[String]): Unit = {
-    this.player1 = Player(names(0))
-    this.player2 = Player(names(1))
+    currentPlayer = player1
 
+    printString = "------ " + currentPlayer.getPlayerName + "\'s turn ------"
+    notifyObservers(ObserverCommand.PRINTSTRING)
 
-//    setUserTroopsDefault("TopLeft", playerOne)
-//    setUserTroopsDefault("BottomRight", playerTwo)
+    setUserTroopsDefault("TopLeft", player1)
+    setUserTroopsDefault("BottomRight", player2)
 
     //match um größe des Feldes zu bestimmen?
   }
-
-  def infoToString(): String = {
-    field.toString
+  def switchPlayer(): Unit ={
+    printString = "------ " + currentPlayer.getPlayerName + "\'s turn ------"
+    notifyObservers(ObserverCommand.PRINTSTRING)
+    currentPlayer =
+      if (currentPlayer.equals(player1))
+        player2
+      else
+        player1
   }
-
   private def setUserTroopsDefault(pos: String, player: Player): Unit = {
     var y = 0
     var x = 0
@@ -53,32 +71,32 @@ class GameController(var field: Field) extends Observable {
     field.setSoldier(soldier, x, y)
   }
 
-  /*def getCommand(currentPlayer: Player): String = {
-    readLine("type in your command: ('help' if no idea)")
-  }*/
+  /* def getCommand(currentPlayer: Player): String = {
+     printString = "type in your command: ('help' if no idea)"
+     notifyObservers(ObserverCommand.PRINTSTRING)
+   }*/
 
 
-  /*private def doMove(currentPlayer: Player, from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
+  def doMove(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
     if (currentPlayer.containsSoldier(field.getField(from._2)(from._1)) == ReturnValues.VALID) {
       field.doMove(from, to)
-      fieldString = Tui.createFieldString(field)
-      Tui.printString(fieldString)
+      printString = field.toString
+      notifyObservers(ObserverCommand.PRINTSTRING)
       return ReturnValues.VALID
     }
     ReturnValues.INVALID
-  }*/
+  }
 
-  private def doAttack(currentPlayer: Player, from: (Int, Int), to: (Int, Int)) = {
+  def doAttack(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
     // missing plausi-Check -----
 
     ReturnValues.VALID
   }
 
-  def isEnd(playerOne: Player, playerTwo: Player): Boolean = {
-    playerOne.getUnitAmount == 0 || playerTwo.getUnitAmount == 0
-  }
+  def isEnd: Boolean =
+    player1.getUnitAmount == 0 || player2.getUnitAmount == 0
 
-  def getPlayerName(pos: Int):String = {
+  def getPlayerName(pos: Int): String = {
     if (pos == 1) {
       player1.getPlayerName
     } else if (pos == 2) {
@@ -86,5 +104,9 @@ class GameController(var field: Field) extends Observable {
     } else {
       "IllegalIndex"
     }
+  }
+
+  def nextPlayerMove(): Unit = {
+    notifyObservers(ObserverCommand.READCOMMAND)
   }
 }

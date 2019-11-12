@@ -1,7 +1,7 @@
 package de.felite.util
 
 trait Observer {
-  def update(): Unit
+  def update(observerCommand: ObserverCommand.Value): Unit
 }
 
 class Observable {
@@ -11,7 +11,7 @@ class Observable {
 
   def remove(s: Observer): Unit = subscribers = subscribers.filterNot(o => o == s)
 
-  def notifyObservers(): Unit = subscribers.foreach(_.update())
+  def notifyObservers(observerCommand: ObserverCommand.Value): Unit = subscribers.foreach(_.update(observerCommand: ObserverCommand.Value))
 
   // print help text etc.
 //  def notifyObserverText?

@@ -1,8 +1,10 @@
 package de.felite.view
 
+import java.lang.ModuleLayer.Controller
+
 import de.felite.controller._
 import de.felite.model.{Field, Player}
-import de.felite.util.{Observer, ReturnValues}
+import de.felite.util.{Observer, ObserverCommand, ReturnValues}
 
 class Tui(controller:GameController) extends Observer{
 
@@ -15,52 +17,44 @@ class Tui(controller:GameController) extends Observer{
   }*/
 
 
-  def init(input: String): Unit = {
+  /*def init(input: String): Unit = {
     val names = input.split(" ")
-    controller.init(names)
+    controller.init()
     controller.infoToString()
     //print basic game?
-  }
+  }*/
 
- /* def playerTurn(input: String): ReturnValues.Value = {
-    controller.getPlayers()
+  def playerTurn(input: String) = {
+    //controller.getPlayers()
 
-    val fieldString = Tui.createFieldString(GameControl.fieldTxt)
-
+    //val fieldString = Tui.createFieldString(GameControl.fieldTxt)
+    val command = scala.io.StdIn.readLine()
     command match {
-      case "p" => Tui.printString(fieldString)
-      case "quit" => return ReturnValues.QUIT
-      case "cancel" => return ReturnValues.CANCEL
-      case "end" => return ReturnValues.END
-      case "help" => Tui.printHelp()
+      case "p" => printString(controller.field.toString)
+      case "quit" =>  controller.gameState = ReturnValues.QUIT
+      case "cancel" => controller.gameState = ReturnValues.CANCEL
+      case "end" => controller.gameState = ReturnValues.END
+      case "help" => printHelp()
       case _ =>
         command.toList.filter(c => c != ' ').map(c => c.toString) match {
           case xF :: yF :: action :: xT :: yT :: Nil =>
             action match {
               case "m" =>
-                return if (doMove(currentPlayer, (xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
-                  ReturnValues.VALID
+                if (controller.doMove((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
                 } else {
-                  Tui.printString("invalid move")
-                  ReturnValues.INVALID
+                  printString("invalid move")
                 }
               case "a" =>
-                return if (doAttack(currentPlayer, (xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
-                  ReturnValues.VALID
+                if (controller.doAttack((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
                 } else {
-                  Tui.printString("invalid attack")
-                  ReturnValues.INVALID
+                  printString("invalid attack")
                 }
-              case _ => Tui.printString("invalid command/action") // -1 5 m 2 2 returns invalid command but should return invalid move
-                return ReturnValues.INVALID
+              case _ => printString("invalid command/action") // -1 5 m 2 2 returns invalid command but should return invalid move
             }
-          case _ => Tui.printString("invalid command")
-            return ReturnValues.INVALID
+          case _ => printString("invalid command")
         }
     }
-
-    ReturnValues.VALID
-  }*/
+  }
 
   def printString(txt: String): Unit = {
     println(txt)
@@ -102,12 +96,16 @@ class Tui(controller:GameController) extends Observer{
     ReturnValues.VALID
   }
 
-  override def update(): Unit = {
-    /*if (option == 0) {
-      printString(controller.infoToString())
-    } else if (option ==1) {
-
-    }*/
-
+  override def update(observerCommand: ObserverCommand.Value): Unit = {
+    if (observerCommand == ObserverCommand.PRINTSTRING)
+    {
+      printString(controller.printString)
+    } else if (observerCommand == ObserverCommand.READSTRING)
+    {
+      controller.readString= scala.io.StdIn.readLine()
+    } else if (observerCommand == ObserverCommand.READCOMMAND)
+    {
+      playerTurn(controller.printString)
+    }
   }
 }
