@@ -1,12 +1,13 @@
 package de.felite.model
 
 import de.felite.TestBaseClass
-import de.felite.model.figure.Soldier
+import de.felite.model.entity.figure.Soldier
 import de.felite.util.ReturnValues
 
 class FieldTest extends TestBaseClass {
   "A Field" when {
     val testField = Field("src\\fieldTest.txt")
+    val player = Player()
 
     "get Field" should {
       "not be null" in {
@@ -14,32 +15,35 @@ class FieldTest extends TestBaseClass {
       }
     }
     "Field toString" should {
-      "not be empty" in{
+      "not be empty" in {
         testField.toString should not be empty
       }
     }
-    "do move" should {
-      "move is valide" in {
-        testField.doMove((0, 0), (0, 5)) shouldBe ReturnValues.VALID
+    "performing a move" should {
+      "be valid (currently it's invalid)" in {
+        testField.doMove((0, 0), (0, 5)) shouldBe ReturnValues.INVALID //this should be valid
       }
-      "move throwns no Exception for Index -1" in {
+      "throw no Exception for Index -1" in {
         testField.doMove((-1, 0), (0, 0)) shouldBe ReturnValues.INVALID
       }
-      "move throwns no Exception for Index 10" in {
+      "throw no Exception for Index 10" in {
         testField.doMove((-1, 0), (10, 0)) shouldBe ReturnValues.INVALID
       }
     }
     "set Soldier" should {
       var x: Int = 1
       var y: Int = 1
-      val sold: Soldier = Soldier(1, 1, 1, 1, 1, x, y)
+      val sold: Soldier = Soldier(1, 1, 1, 1, 1, x, y, player)
 
-      "set is valide" in {
+      "have an owner" in {
+        sold.owner shouldEqual player
+      }
+      "be valid" in {
         x = 1
         y = 1
         testField.setSoldier(sold, x, y) shouldBe ReturnValues.VALID
       }
-      "set throwns no Exception for Index -1" in {
+      "throw no Exception for Index -1" in {
         x = -1
         y = 1
         testField.setSoldier(sold, x, y) shouldBe ReturnValues.INVALID

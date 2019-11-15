@@ -5,7 +5,7 @@ import de.felite.controller.GameController
 import de.felite.model.Field
 
 class TuiTest extends TestBaseClass {
-  val tui:Tui = new Tui(new GameController(new Field("src\\fieldTest.txt")))
+  val tui:Tui = new Tui(new GameController(Field("src\\fieldTest.txt")))
 
   "The Tui" when {
     "print String" should {

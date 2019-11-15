@@ -1,8 +1,8 @@
 package de.felite.controller
 
 import de.felite.model.{Field, Player}
-import de.felite.model.figure.{Archer, Soldier, Troop}
-import de.felite.model.obstacle.Obstacle
+import de.felite.model.entity.figure.{Archer, Soldier, Troop}
+import de.felite.model.entity.obstacle.Obstacle
 import de.felite.util.{Observable, ObserverCommand, ReturnValues}
 
 class GameController(var field: Field) extends Observable {
@@ -16,26 +16,31 @@ class GameController(var field: Field) extends Observable {
   def init(): Unit = {
     println("------ Start of Initialisation ------")
     println("initialize Controller")
+
     printString = "Name of player number one:"
     notifyObservers(ObserverCommand.PRINTSTRING)
-    notifyObservers((ObserverCommand.READSTRING))
+    notifyObservers(ObserverCommand.READSTRING)
     this.player1 = Player(readString, Console.BLUE)
+
     printString = "Name of player number two:"
     notifyObservers(ObserverCommand.PRINTSTRING)
-    notifyObservers((ObserverCommand.READSTRING))
+    notifyObservers(ObserverCommand.READSTRING)
     this.player2 = Player(readString, Console.RED)
 
+    setUserTroopsDefault("TopLeft", player1)
+    setUserTroopsDefault("BottomRight", player2)
+
     currentPlayer = player1
+
 
     println("------ End of Initialisation ------")
 
     printString = field.toString
     notifyObservers(ObserverCommand.PRINTSTRING)
-    printString = "------ " + currentPlayer.getPlayerName + "\'s turn ------"
-    notifyObservers(ObserverCommand.PRINTSTRING)
 
-    setUserTroopsDefault("TopLeft", player1)
-    setUserTroopsDefault("BottomRight", player2)
+    printString = "------ " + currentPlayer.getPlayerName + "\'s turn ------\n"
+    printString += "type in your command: ('help' if no idea)"
+    notifyObservers(ObserverCommand.PRINTSTRING)
   }
 
   def switchPlayer(): Unit = {
@@ -44,7 +49,8 @@ class GameController(var field: Field) extends Observable {
         player2
       else
         player1
-    printString = "------ " + currentPlayer.getPlayerName + "\'s turn ------"
+    printString = "------ " + currentPlayer.getPlayerName + "\'s turn ------\n"
+    printString = "type in your command: ('help' if no idea)"
     notifyObservers(ObserverCommand.PRINTSTRING)
     printString = field.toString
     notifyObservers(ObserverCommand.PRINTSTRING)
@@ -63,8 +69,8 @@ class GameController(var field: Field) extends Observable {
       x = field.scal - 2
     }
 
-    val soldier: Obstacle = Soldier(3, 6, 1, 4, 6, x, y)
-    val archer = Archer(2, 3, 4, 2, 3, x, y)
+    val soldier = Soldier(3, 6, 1, 4, 6, x, y, player)
+    val archer = Archer(2, 3, 4, 2, 3, x, y, player)
     player.addPlayerTroop(soldier.asInstanceOf[Troop])
     field.setSoldier(soldier, x, y)
 
@@ -73,11 +79,6 @@ class GameController(var field: Field) extends Observable {
     player.addPlayerTroop(archer.asInstanceOf[Troop])
     field.setSoldier(archer, x, y)
   }
-
-  /* def getCommand(currentPlayer: Player): String = {
-     printString = "type in your command: ('help' if no idea)"
-     notifyObservers(ObserverCommand.PRINTSTRING)
-   }*/
 
 
   def doMove(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {

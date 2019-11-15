@@ -1,12 +1,13 @@
 package de.felite.model
 
-import de.felite.model.figure.Troop
-import de.felite.model.obstacle.Obstacle
+import de.felite.model.entity.Entity
+import de.felite.model.entity.figure.Troop
+import de.felite.model.entity.obstacle.Obstacle
 import de.felite.util.ReturnValues
 
 import scala.collection.mutable.ListBuffer
 
-case class Player(private val name: String = "John Doe",val color:String) {
+case class Player(private val name: String = "John Doe", private val color: String = Console.BLACK) {
   private var playerTroops = new ListBuffer[Troop]()
   private var unitAmount = 42 //UnitList.length
 
@@ -26,13 +27,15 @@ case class Player(private val name: String = "John Doe",val color:String) {
     ReturnValues.VALID
   }
 
-  def containsSoldier(soldier: Obstacle): ReturnValues.Value = {
+  def containsSoldier(soldier: Entity): ReturnValues.Value = {
     if (playerTroops.contains(soldier))
       return ReturnValues.VALID
     ReturnValues.INVALID
   }
 
   def getPlayerName: String = name
+
+  def getPlayerColor: String = color
 
   def getUnitAmount: Int = unitAmount
 }

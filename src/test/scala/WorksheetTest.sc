@@ -14,3 +14,7 @@ val arr = pp.split(" ")
 
 arr(1)
 arr(0)
+
+Console.RED_B
+
+print("asdfghj" + Console.RED) //doesnt work in worksheet?

@@ -1,8 +1,8 @@
 package de.felite.model
 
-import de.felite.controller.GameController
-import de.felite.model.figure.Troop
-import de.felite.model.obstacle.{Grass, Obstacle}
+import de.felite.model.entity.Entity
+import de.felite.model.entity.figure.Troop
+import de.felite.model.entity.obstacle.{Grass, Obstacle, Rock}
 import de.felite.util.{FileIO, ReturnValues}
 
 case class Field(fileName: String) { //: Array.ofDim[char]()){
@@ -12,11 +12,10 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
 
   // return Field
   // BUT NEVER THE ORIGINAL ONE!!!
-  def getField: Array[Array[Obstacle]] = matrix.clone()
+  def getField: Array[Array[Entity]] = matrix.clone()
 
-  override def toString(): String = {
+  override def toString: String = {
     var base = ""
-    //variable amount of numbers relative to size of field #skalierung
     for (i <- 0 until scal)
       base += "\t" + i
     base += "\n"
@@ -25,10 +24,14 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
       base += i + "\t"
       for (x <- y) {
         x match {
-          case troop: Troop => base += troop.owner().color
-          case _ => Console.RESET
+          case troop: Troop => base += troop.getColor
+          case tree: Obstacle => base += tree.getColor
+          case rock: Obstacle => base += rock.getColor
+          case grass: Obstacle => base += grass.getColor
+          case _ => base += Console.RESET
         }
         base += x.sign() + "\t"
+        base += Console.RESET
       }
       i += 1
       base += "\n"
@@ -51,7 +54,7 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
     ReturnValues.VALID
   }
 
-  def setSoldier(soldier: Obstacle, x: Int, y: Int): ReturnValues.Value = {
+  def setSoldier(soldier: Troop, x: Int, y: Int): ReturnValues.Value = {
     try {
       // teste IndexZugriffe
       matrix(y)(x)
