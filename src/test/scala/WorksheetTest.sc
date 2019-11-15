@@ -8,6 +8,8 @@ print(0x2603.toChar)
 print(0xa5.toChar)
 print(0xff.toChar)
 
+val p = Player()
+
 val pp = "DukeNukem KaiserNero"
 
 val arr = pp.split(" ")

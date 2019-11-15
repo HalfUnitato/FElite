@@ -25,9 +25,7 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
       for (x <- y) {
         x match {
           case troop: Troop => base += troop.getColor
-          case tree: Obstacle => base += tree.getColor
-          case rock: Obstacle => base += rock.getColor
-          case grass: Obstacle => base += grass.getColor
+          case obs: Obstacle => base += obs.getColor
           case _ => base += Console.RESET
         }
         base += x.sign() + "\t"

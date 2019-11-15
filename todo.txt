@@ -26,4 +26,4 @@ TODO: Spielernamen abfragen
 
 # UnknownPrio:
 
-TODO: Controller is object or class?
+TODO: rework Array to ArraySeq
