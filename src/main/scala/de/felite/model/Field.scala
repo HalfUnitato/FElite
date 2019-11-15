@@ -1,6 +1,6 @@
 package de.felite.model
 
-import de.felite.model.obstacle.{Branded, Grass}
+import de.felite.model.obstacle.{Obstacle, Grass}
 import de.felite.util.{FileIO, ReturnValues}
 
 case class Field(fileName: String) { //: Array.ofDim[char]()){
@@ -8,7 +8,7 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
 
   // return Field
   // BUT NEVER THE ORIGINAL ONE!!!
-  def getField: Array[Array[Branded]] = matrix.clone()
+  def getField: Array[Array[Obstacle]] = matrix.clone()
 
   override def toString: String = {
     var base = ""
@@ -41,7 +41,7 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
     ReturnValues.VALID
   }
 
-  def setSoldier(soldier: Branded, x: Int, y: Int): ReturnValues.Value = {
+  def setSoldier(soldier: Obstacle, x: Int, y: Int): ReturnValues.Value = {
     try {
       // teste IndexZugriffe
       matrix(y)(x)
