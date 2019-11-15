@@ -19,11 +19,11 @@ class GameController(var field: Field) extends Observable {
     printString = "Name of player number one:"
     notifyObservers(ObserverCommand.PRINTSTRING)
     notifyObservers((ObserverCommand.READSTRING))
-    this.player1 = Player(readString)
+    this.player1 = Player(readString, Console.BLUE)
     printString = "Name of player number two:"
     notifyObservers(ObserverCommand.PRINTSTRING)
     notifyObservers((ObserverCommand.READSTRING))
-    this.player2 = Player(readString)
+    this.player2 = Player(readString, Console.RED)
 
     currentPlayer = player1
 

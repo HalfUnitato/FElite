@@ -6,7 +6,7 @@ import de.felite.util.ReturnValues
 
 import scala.collection.mutable.ListBuffer
 
-case class Player(private val name: String = "John Doe") {
+case class Player(private val name: String = "John Doe",val color:String) {
   private var playerTroops = new ListBuffer[Troop]()
   private var unitAmount = 42 //UnitList.length
 

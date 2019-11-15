@@ -1,9 +1,9 @@
 package de.felite.model.figure
 
+import de.felite.model.Player
 import de.felite.model.obstacle.Obstacle
-import javax.swing.BoundedRangeModel
 
-case class Soldier(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos: Int, yPos: Int) extends Troop with Obstacle {
+case class Soldier(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos: Int, yPos: Int, player: Player) extends Troop with Obstacle {
   override val x: Int = xPos
   override val y: Int = yPos
   override val sign: Char = 's'
@@ -12,4 +12,5 @@ case class Soldier(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos
   override val defense: Int = defV
   override val attackRange: Int = attR
   override val moveRange: Int = mvR
+  override val owner: Player = player
 }
