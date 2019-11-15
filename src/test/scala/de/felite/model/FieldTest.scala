@@ -13,6 +13,11 @@ class FieldTest extends TestBaseClass {
         noException shouldBe thrownBy(testField.getField)
       }
     }
+    "Field toString" should {
+      "not be empty" in{
+        testField.toString should not be empty
+      }
+    }
     "do move" should {
       "move is valide" in {
         testField.doMove((0, 0), (0, 5)) shouldBe ReturnValues.VALID

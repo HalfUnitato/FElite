@@ -34,15 +34,17 @@ class GameController(var field: Field) extends Observable {
 
     //match um größe des Feldes zu bestimmen?
   }
-  def switchPlayer(): Unit ={
-    printString = "------ " + currentPlayer.getPlayerName + "\'s turn ------"
-    notifyObservers(ObserverCommand.PRINTSTRING)
+
+  def switchPlayer(): Unit = {
     currentPlayer =
       if (currentPlayer.equals(player1))
         player2
       else
         player1
+    printString = "------ " + currentPlayer.getPlayerName + "\'s turn ------"
+    notifyObservers(ObserverCommand.PRINTSTRING)
   }
+
   private def setUserTroopsDefault(pos: String, player: Player): Unit = {
     var y = 0
     var x = 0
@@ -52,8 +54,8 @@ class GameController(var field: Field) extends Observable {
       x = 0
     }
     else if (pos.equals("BottomRight")) {
-      y = 5
-      x = 3
+      y = field.scal - 1
+      x = field.scal - 2
     }
 
     val soldier: Branded = Soldier(3, 6, 1, 4, 6, x, y)
@@ -65,10 +67,6 @@ class GameController(var field: Field) extends Observable {
 
     player.addPlayerTroop(archer.asInstanceOf[Troop])
     field.setSoldier(archer, x, y)
-
-    x += 1
-    player.addPlayerTroop(soldier.asInstanceOf[Troop])
-    field.setSoldier(soldier, x, y)
   }
 
   /* def getCommand(currentPlayer: Player): String = {
@@ -96,15 +94,8 @@ class GameController(var field: Field) extends Observable {
   def isEnd: Boolean =
     player1.getUnitAmount == 0 || player2.getUnitAmount == 0
 
-  def getPlayerName(pos: Int): String = {
-    if (pos == 1) {
-      player1.getPlayerName
-    } else if (pos == 2) {
-      player2.getPlayerName
-    } else {
-      "IllegalIndex"
-    }
-  }
+  def getPlayerName: String =
+    currentPlayer.getPlayerName
 
   def nextPlayerMove(): Unit = {
     notifyObservers(ObserverCommand.READCOMMAND)

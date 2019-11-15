@@ -6,7 +6,7 @@ import de.felite.controller._
 import de.felite.model.{Field, Player}
 import de.felite.util.{Observer, ObserverCommand, ReturnValues}
 
-class Tui(controller:GameController) extends Observer{
+class Tui(controller: GameController) extends Observer {
 
   controller.add(this)
 
@@ -31,7 +31,7 @@ class Tui(controller:GameController) extends Observer{
     val command = scala.io.StdIn.readLine()
     command match {
       case "p" => printString(controller.field.toString)
-      case "quit" =>  controller.gameState = ReturnValues.QUIT
+      case "quit" => controller.gameState = ReturnValues.QUIT
       case "cancel" => controller.gameState = ReturnValues.CANCEL
       case "end" => controller.gameState = ReturnValues.END
       case "help" => printHelp()
@@ -97,14 +97,11 @@ class Tui(controller:GameController) extends Observer{
   }
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
-    if (observerCommand == ObserverCommand.PRINTSTRING)
-    {
+    if (observerCommand == ObserverCommand.PRINTSTRING) {
       printString(controller.printString)
-    } else if (observerCommand == ObserverCommand.READSTRING)
-    {
-      controller.readString= scala.io.StdIn.readLine()
-    } else if (observerCommand == ObserverCommand.READCOMMAND)
-    {
+    } else if (observerCommand == ObserverCommand.READSTRING) {
+      controller.readString = scala.io.StdIn.readLine()
+    } else if (observerCommand == ObserverCommand.READCOMMAND) {
       playerTurn(controller.printString)
     }
   }

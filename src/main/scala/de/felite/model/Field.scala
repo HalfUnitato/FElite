@@ -4,6 +4,8 @@ import de.felite.model.obstacle.{Branded, Grass}
 import de.felite.util.{FileIO, ReturnValues}
 
 case class Field(fileName: String) { //: Array.ofDim[char]()){
+  val scal: Int = 3
+  FileIO.scal = scal
   private val matrix = FileIO.readFromFile(fileName)
 
   // return Field
@@ -13,7 +15,9 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
   override def toString: String = {
     var base = ""
     //variable amount of numbers relative to size of field #skalierung
-    base += "\t0\t1\t2\t3\t4\t5\n"
+    for (i <- 0 until scal)
+      base += "\t" + i
+    base += "\n"
     var i = 0
     for (y <- matrix) {
       base += i + "\t"

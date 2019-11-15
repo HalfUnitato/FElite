@@ -18,7 +18,7 @@ class FEliteTest extends TestBaseClass {
           game.controller.getPlayerName(1) shouldEqual "NukeDukem"
         }
       }*/
-      "Player Two" should {
+      /*"Player Two" should {
         "have a Name" in {
           game.controller.getPlayerName(2) shouldEqual "NaiserKero"
         }
@@ -30,7 +30,7 @@ class FEliteTest extends TestBaseClass {
         "return 'Illegalindex' with pos >= 3" in {
           game.controller.getPlayerName(3) shouldEqual "IllegalIndex"
         }
-      }
+      }*/
     }
   }
 }
