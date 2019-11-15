@@ -2,7 +2,7 @@ package de.felite.model
 
 import de.felite.TestBaseClass
 import de.felite.model.figure.{Archer, Soldier, Troop}
-import de.felite.model.obstacle.Branded
+import de.felite.model.obstacle.Obstacle
 import de.felite.util.ReturnValues
 
 class PlayerTest extends TestBaseClass {
@@ -33,11 +33,11 @@ class PlayerTest extends TestBaseClass {
         // field.setSoldier(soldier, x, y)
       }
       "can check for troops" in {
-        player.containsSoldier(archer1.asInstanceOf[Branded]) shouldBe ReturnValues.VALID
-        player.containsSoldier(archer2.asInstanceOf[Branded]) shouldBe ReturnValues.VALID
-        player.containsSoldier(soldier1.asInstanceOf[Branded]) shouldBe ReturnValues.VALID
-        player.containsSoldier(soldier2.asInstanceOf[Branded]) shouldBe ReturnValues.VALID
-        player.containsSoldier(soldierX.asInstanceOf[Branded]) shouldBe ReturnValues.INVALID
+        player.containsSoldier(archer1.asInstanceOf[Obstacle]) shouldBe ReturnValues.VALID
+        player.containsSoldier(archer2.asInstanceOf[Obstacle]) shouldBe ReturnValues.VALID
+        player.containsSoldier(soldier1.asInstanceOf[Obstacle]) shouldBe ReturnValues.VALID
+        player.containsSoldier(soldier2.asInstanceOf[Obstacle]) shouldBe ReturnValues.VALID
+        player.containsSoldier(soldierX.asInstanceOf[Obstacle]) shouldBe ReturnValues.INVALID
       }
       "can remove troops" in {
         player.removeTroop(archer1) shouldBe ReturnValues.VALID

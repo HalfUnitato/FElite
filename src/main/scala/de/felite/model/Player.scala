@@ -1,7 +1,7 @@
 package de.felite.model
 
 import de.felite.model.figure.Troop
-import de.felite.model.obstacle.Branded
+import de.felite.model.obstacle.Obstacle
 import de.felite.util.ReturnValues
 
 import scala.collection.mutable.ListBuffer
@@ -26,7 +26,7 @@ case class Player(private val name: String = "John Doe") {
     ReturnValues.VALID
   }
 
-  def containsSoldier(soldier: Branded): ReturnValues.Value = {
+  def containsSoldier(soldier: Obstacle): ReturnValues.Value = {
     if (playerTroops.contains(soldier))
       return ReturnValues.VALID
     ReturnValues.INVALID

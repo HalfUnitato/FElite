@@ -2,7 +2,7 @@ package de.felite.controller
 
 import de.felite.model.{Field, Player}
 import de.felite.model.figure.{Archer, Soldier, Troop}
-import de.felite.model.obstacle.Branded
+import de.felite.model.obstacle.Obstacle
 import de.felite.util.{Observable, ObserverCommand, ReturnValues}
 
 class GameController(var field: Field) extends Observable {
@@ -58,7 +58,7 @@ class GameController(var field: Field) extends Observable {
       x = field.scal - 2
     }
 
-    val soldier: Branded = Soldier(3, 6, 1, 4, 6, x, y)
+    val soldier: Obstacle = Soldier(3, 6, 1, 4, 6, x, y)
     val archer = Archer(2, 3, 4, 2, 3, x, y)
     player.addPlayerTroop(soldier.asInstanceOf[Troop])
     field.setSoldier(soldier, x, y)

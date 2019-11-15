@@ -1,15 +1,15 @@
 package de.felite.util
 
-import de.felite.model.obstacle.{Branded, Grass, Rock, Tree}
+import de.felite.model.obstacle.{Obstacle, Grass, Rock, Tree}
 
 import scala.io.Source
 
 object FileIO {
   var scal: Int = _
 
-  def readFromFile(fileName: String): Array[Array[Branded]] = {
+  def readFromFile(fileName: String): Array[Array[Obstacle]] = {
     var c = 0
-    var arr: Array[Array[Branded]] = Array.ofDim(scal, scal)
+    val arr: Array[Array[Obstacle]] = Array.ofDim(scal, scal)
     val source = Source.fromFile(fileName)
     for (v <- source.getLines()) {
       if (c >= scal) {

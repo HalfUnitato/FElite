@@ -17,8 +17,8 @@ class FEliteTest extends TestBaseClass {
         "have a Name" in {
           game.controller.getPlayerName(1) shouldEqual "NukeDukem"
         }
-      }*/
-      /*"Player Two" should {
+      }
+      "Player Two" should {
         "have a Name" in {
           game.controller.getPlayerName(2) shouldEqual "NaiserKero"
         }
