@@ -2,7 +2,6 @@ package de.felite.controller
 
 import de.felite.model.{Field, Player}
 import de.felite.model.entity.figure.{Archer, Soldier, Troop}
-import de.felite.model.entity.obstacle.Obstacle
 import de.felite.util.{Observable, ObserverCommand, ReturnValues}
 
 class GameController(var field: Field) extends Observable {
@@ -65,8 +64,8 @@ class GameController(var field: Field) extends Observable {
       x = 0
     }
     else if (pos.equals("BottomRight")) {
-      y = field.scal - 1
-      x = field.scal - 2
+      y = field.getScal - 1
+      x = field.getScal - 2
     }
 
     val soldier = Soldier(3, 6, 1, 4, 6, x, y, player)
@@ -82,12 +81,23 @@ class GameController(var field: Field) extends Observable {
 
 
   def doMove(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
+    val tmpScal = field.getScal
+
+    //check if outOBounds
+    if (from._1 >= tmpScal || from._2 >= tmpScal || to._1 >= tmpScal || to._2 >= tmpScal
+          || from._1 < 0 || from._2 < 0 || to._1 < 0 || to._2 < 0) {
+      return ReturnValues.INVALID
+    }
+
+    //check if currentPlayer owns Soldier specified at from
     if (currentPlayer.containsSoldier(field.getField(from._2)(from._1)) == ReturnValues.VALID) {
       field.doMove(from, to)
       printString = field.toString
       notifyObservers(ObserverCommand.PRINTSTRING)
       return ReturnValues.VALID
     }
+
+    //else return invalid
     ReturnValues.INVALID
   }
 

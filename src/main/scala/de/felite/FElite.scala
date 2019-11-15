@@ -8,7 +8,7 @@ import de.felite.view.Tui
 object FElite {
 
   private val fieldSrc = "src\\fieldTest.txt"
-  val controller = new GameController(Field(fieldSrc))
+  val controller = new GameController(Field(fieldSrc, 3)) // second param is scal value
   val tui = new Tui(controller)
 
 
@@ -18,6 +18,8 @@ object FElite {
 
     controller.init()
 
+    //Main read input passes it to tui?
+    //what about ObserverCommand.READCOMMAND
     while (!controller.isEnd && controller.gameState != ReturnValues.QUIT) {
       controller.gameState = ReturnValues.VALID
 

@@ -6,7 +6,7 @@ import de.felite.model.entity.obstacle.{Grass, Obstacle, Rock, Tree}
 import scala.io.Source
 
 object FileIO {
-  var scal: Int = _
+  private var scal: Int = _
 
   def readFromFile(fileName: String): Array[Array[Entity]] = {
     var c = 0
@@ -27,6 +27,14 @@ object FileIO {
 
     source.close()
     arr
+  }
+
+  def setScal(s:Int): Unit ={
+    scal = s
+  }
+
+  def getScal: Int = {
+    scal
   }
 
 }

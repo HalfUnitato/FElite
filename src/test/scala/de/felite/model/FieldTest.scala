@@ -6,7 +6,7 @@ import de.felite.util.ReturnValues
 
 class FieldTest extends TestBaseClass {
   "A Field" when {
-    val testField = Field("src\\fieldTest.txt")
+    val testField = Field("src\\fieldTest.txt", 5)
     val player = Player()
 
     "get Field" should {

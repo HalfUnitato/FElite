@@ -10,7 +10,9 @@ class Tui(controller: GameController) extends Observer {
 
   controller.add(this)
 
-  def playerTurn(input: String) = {
+  def playerTurn(input: String): Any = {
+    //input is useless?
+    //where to put input reading
     val command = scala.io.StdIn.readLine()
     command match {
       case "p" => printString(controller.field.toString)

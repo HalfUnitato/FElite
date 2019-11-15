@@ -5,9 +5,9 @@ import de.felite.model.entity.figure.Troop
 import de.felite.model.entity.obstacle.{Grass, Obstacle, Rock}
 import de.felite.util.{FileIO, ReturnValues}
 
-case class Field(fileName: String) { //: Array.ofDim[char]()){
-  val scal: Int = 3
-  FileIO.scal = scal
+case class Field(private val fileName: String, private val scal: Int) { //: Array.ofDim[char]()){
+
+  FileIO.setScal(scal)
   private val matrix = FileIO.readFromFile(fileName)
 
   // return Field
@@ -16,7 +16,7 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
 
   override def toString: String = {
     var base = ""
-    for (i <- 0 until scal)
+    for (i <- 0 until FileIO.getScal)
       base += "\t" + i
     base += "\n"
     var i = 0
@@ -38,7 +38,7 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
   }
 
   def doMove(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
-    // Indexierung grueltig? keine IndexOutOfRange Exception
+
     try {
       // teste IndexZugriffe
       matrix(from._2)(from._1)
@@ -62,5 +62,9 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
     }
     matrix(y)(x) = soldier
     ReturnValues.VALID
+  }
+
+  def getScal: Int = {
+    scal
   }
 }
