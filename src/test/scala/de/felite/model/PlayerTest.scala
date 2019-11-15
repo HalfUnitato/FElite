@@ -7,12 +7,12 @@ import de.felite.util.ReturnValues
 
 class PlayerTest extends TestBaseClass {
   "A Player" when {
-    val player = Player("Mercedes Maserati")
-    val archer1: Troop = Archer(1, 1, 1, 1, 1, 0, 1)
-    val archer2: Troop = Archer(1, 1, 1, 1, 1, 0, 2)
-    val soldier1: Troop = Soldier(1, 1, 1, 1, 1, 0, 3)
-    val soldier2: Troop = Soldier(1, 1, 1, 1, 1, 0, 4)
-    val soldierX: Troop = Soldier(9, 1, 1, 1, 1, 0, 4)
+    val player = Player("Mercedes Maserati", Console.BLUE)
+    val archer1: Troop = Archer(1, 1, 1, 1, 1, 0, 1, player)
+    val archer2: Troop = Archer(1, 1, 1, 1, 1, 0, 2, player)
+    val soldier1: Troop = Soldier(1, 1, 1, 1, 1, 0, 3, player)
+    val soldier2: Troop = Soldier(1, 1, 1, 1, 1, 0, 4, player)
+    val soldierX: Troop = Soldier(9, 1, 1, 1, 1, 0, 4, player)
 
     "created" should {
       "have a name" in {

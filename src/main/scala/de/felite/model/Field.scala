@@ -1,6 +1,8 @@
 package de.felite.model
 
-import de.felite.model.obstacle.{Obstacle, Grass}
+import de.felite.controller.GameController
+import de.felite.model.figure.Troop
+import de.felite.model.obstacle.{Grass, Obstacle}
 import de.felite.util.{FileIO, ReturnValues}
 
 case class Field(fileName: String) { //: Array.ofDim[char]()){
@@ -12,7 +14,7 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
   // BUT NEVER THE ORIGINAL ONE!!!
   def getField: Array[Array[Obstacle]] = matrix.clone()
 
-  override def toString: String = {
+  override def toString(): String = {
     var base = ""
     //variable amount of numbers relative to size of field #skalierung
     for (i <- 0 until scal)
@@ -22,6 +24,10 @@ case class Field(fileName: String) { //: Array.ofDim[char]()){
     for (y <- matrix) {
       base += i + "\t"
       for (x <- y) {
+        x match {
+          case troop: Troop => base += troop.owner().color
+          case _ => Console.RESET
+        }
         base += x.sign() + "\t"
       }
       i += 1

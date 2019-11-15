@@ -1,5 +1,7 @@
 package de.felite.model.figure
 
+import de.felite.model.Player
+
 trait Troop {
   def x(): Int = 0
   def y(): Int = 0
@@ -11,6 +13,7 @@ trait Troop {
   def attackRange():Int = 0
   def moveRange():Int = 0
 
+  def owner():Player = _
   /*def move(from:Cell, to:Cell): Unit = {
 
   }*/

@@ -7,8 +7,8 @@ import de.felite.{TestBaseClass, util}
 class GameControllerTest extends TestBaseClass {
   val controller: GameController = new GameController(new Field("src\\fieldTest.txt"))
 
-  val playerOne = Player("Marin")
-  val playerTwo = Player("Lukas")
+  val playerOne = Player("Marin", Console.BLUE)
+  val playerTwo = Player("Lukas", Console.RED)
   //controller.init()
 
   "The GameControl" when {
