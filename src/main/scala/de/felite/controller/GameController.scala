@@ -14,7 +14,8 @@ class GameController(var field: Field) extends Observable {
   var gameState: ReturnValues.Value = ReturnValues.VALID
 
   def init(): Unit = {
-    println("init Controller")
+    println("------ Start of Initialisation ------")
+    println("initialize Controller")
     printString = "Name of player number one:"
     notifyObservers(ObserverCommand.PRINTSTRING)
     notifyObservers((ObserverCommand.READSTRING))
@@ -26,13 +27,15 @@ class GameController(var field: Field) extends Observable {
 
     currentPlayer = player1
 
+    println("------ End of Initialisation ------")
+
+    printString = field.toString
+    notifyObservers(ObserverCommand.PRINTSTRING)
     printString = "------ " + currentPlayer.getPlayerName + "\'s turn ------"
     notifyObservers(ObserverCommand.PRINTSTRING)
 
     setUserTroopsDefault("TopLeft", player1)
     setUserTroopsDefault("BottomRight", player2)
-
-    //match um größe des Feldes zu bestimmen?
   }
 
   def switchPlayer(): Unit = {
@@ -42,6 +45,8 @@ class GameController(var field: Field) extends Observable {
       else
         player1
     printString = "------ " + currentPlayer.getPlayerName + "\'s turn ------"
+    notifyObservers(ObserverCommand.PRINTSTRING)
+    printString = field.toString
     notifyObservers(ObserverCommand.PRINTSTRING)
   }
 

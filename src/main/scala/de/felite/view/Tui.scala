@@ -10,24 +10,7 @@ class Tui(controller: GameController) extends Observer {
 
   controller.add(this)
 
-  // return (-1,-1) at exit
-  /*def readLine(what: String): String = {
-    println(what)
-    scala.io.StdIn.readLine()
-  }*/
-
-
-  /*def init(input: String): Unit = {
-    val names = input.split(" ")
-    controller.init()
-    controller.infoToString()
-    //print basic game?
-  }*/
-
   def playerTurn(input: String) = {
-    //controller.getPlayers()
-
-    //val fieldString = Tui.createFieldString(GameControl.fieldTxt)
     val command = scala.io.StdIn.readLine()
     command match {
       case "p" => printString(controller.field.toString)
@@ -49,9 +32,9 @@ class Tui(controller: GameController) extends Observer {
                 } else {
                   printString("invalid attack")
                 }
-              case _ => printString("invalid command/action") // -1 5 m 2 2 returns invalid command but should return invalid move
+              case _ => printString("invalid command/action")
             }
-          case _ => printString("invalid command")
+          case _ => printString("unkown command")
         }
     }
   }
@@ -73,7 +56,7 @@ class Tui(controller: GameController) extends Observer {
         "%20s:\n" +
         "%10s:%8s\n" +
         "%10s:%10s\n",
-      "p", "print board", //coordinates of the board? print them too?
+      "p", "print board",
       "quit", "end game",
       "cancel", "undo last command",
       "end", "end turn",
@@ -84,15 +67,6 @@ class Tui(controller: GameController) extends Observer {
       "c being one of",
       "m", "to move",
       "a", "to attack"))
-    /*"quit:\t\t\tend game\n" +
-      "cancel:\t\t\tundo last command\n" +
-      "end:\t\t\t\tend turn\n" +
-      ":\n" +
-      "\t\t\t\txF yF: coordinates from\n" +
-      "\t\t\t\tc: action\n" +
-      "\t\t\t\t\tm: move\n" +
-      "\t\t\t\t\ta: attack\n" +
-      "\t\t\t\txT yT: coordinates to\n")*/
     ReturnValues.VALID
   }
 

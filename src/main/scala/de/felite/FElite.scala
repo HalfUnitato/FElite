@@ -14,19 +14,9 @@ object FElite {
 
   def main(args: Array[String]): Unit = {
 
-    println("Welcome to FElite")
+    println("Welcome to Fire Emblem lite")
 
-    //initialisation
-    println("------ Start of Initialisation ------")
     controller.init()
-    //    tui.init(input)
-
-    println("------ End of Initialisation ------")
-    //    do {
-    //      controller.nextPlayerMove()
-    //    } while (controller.gameState != ReturnValues.QUIT);
-
-    //controller.nextPlayerMove()
 
     while (!controller.isEnd && controller.gameState != ReturnValues.QUIT) {
       controller.gameState = ReturnValues.VALID
