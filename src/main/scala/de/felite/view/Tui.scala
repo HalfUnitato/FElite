@@ -1,6 +1,5 @@
 package de.felite.view
 
-import java.lang.ModuleLayer.Controller
 
 import de.felite.controller._
 import de.felite.model.{Field, Player}
@@ -13,15 +12,14 @@ class Tui(controller: GameController) extends Observer {
   def playerTurn(input: String): Any = {
     //input is useless?
     //where to put input reading
-    val command = scala.io.StdIn.readLine()
-    command match {
+    input match {
       case "p" => printString(controller.field.toString)
       case "quit" => controller.gameState = ReturnValues.QUIT
       case "cancel" => controller.gameState = ReturnValues.CANCEL
       case "end" => controller.gameState = ReturnValues.END
       case "help" => printHelp()
       case _ =>
-        command.toList.filter(c => c != ' ').map(c => c.toString) match {
+        input.toList.filter(c => c != ' ').map(c => c.toString) match {
           case xF :: yF :: action :: xT :: yT :: Nil =>
             action match {
               case "m" =>
@@ -78,7 +76,7 @@ class Tui(controller: GameController) extends Observer {
     } else if (observerCommand == ObserverCommand.READSTRING) {
       controller.readString = scala.io.StdIn.readLine()
     } else if (observerCommand == ObserverCommand.READCOMMAND) {
-      playerTurn(controller.printString)
+      playerTurn(controller.cmdStr)
     }
   }
 }

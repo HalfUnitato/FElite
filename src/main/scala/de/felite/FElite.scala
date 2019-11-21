@@ -24,7 +24,8 @@ object FElite {
       controller.gameState = ReturnValues.VALID
 
       while (controller.gameState != ReturnValues.END && controller.gameState != ReturnValues.QUIT) {
-        controller.nextPlayerMove()
+        val command = scala.io.StdIn.readLine()
+        controller.nextPlayerMove(command)
       }
       // switch payer after each turn
       if (!controller.isEnd && controller.gameState != ReturnValues.QUIT)

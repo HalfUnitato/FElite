@@ -10,6 +10,7 @@ class GameController(var field: Field) extends Observable {
   var currentPlayer: Player = _
   var printString: String = _
   var readString: String = _
+  var cmdStr: String =_
   var gameState: ReturnValues.Value = ReturnValues.VALID
 
   def init(): Unit = {
@@ -113,7 +114,8 @@ class GameController(var field: Field) extends Observable {
   def getPlayerName: String =
     currentPlayer.getPlayerName
 
-  def nextPlayerMove(): Unit = {
+  def nextPlayerMove(str:String): Unit = {
+    cmdStr = str
     notifyObservers(ObserverCommand.READCOMMAND)
   }
 }
