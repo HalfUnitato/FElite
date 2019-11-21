@@ -30,22 +30,28 @@ class GameControllerTest extends TestBaseClass {
     }
     "troop actions" should {
       "move not fail" in {
-        controller.doMove((0,0), (0, 1)) shouldBe util.ReturnValues.VALID
+        controller.doMove((0, 0), (0, 1)) shouldBe util.ReturnValues.VALID
       }
       "move fail" in {
         controller.doMove((0, 5), (0, 1)) shouldBe ReturnValues.INVALID
+        controller.doMove((1, 1), (0, 1)) shouldBe ReturnValues.INVALID
       }
-     /* "attack not fail" in {
-        controller.doAttack((0, 5), (0, 1)) shouldBe ReturnValues.VALID
-      }*/
+       "attack not fail" in {
+         controller.doAttack((0, 0), (0, 1)) shouldBe ReturnValues.VALID
+       }
     }
-    "switch to Player" should {
+    "switch to player" should {
       "not fail" in {
         controller.getPlayerName == "Marin"
         controller.switchPlayer()
         controller.getPlayerName == "Lukas"
         controller.switchPlayer()
         controller.getPlayerName == "Marin"
+      }
+      "next layer move" should {
+        "not fail" in {
+         noException shouldBe thrownBy(controller.nextPlayerMove("0 0 m 0 1"))
+        }
       }
     }
   }
