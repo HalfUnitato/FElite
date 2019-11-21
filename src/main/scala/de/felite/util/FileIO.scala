@@ -28,7 +28,7 @@ object FileIO {
     source.close()
     arr*/
 
-    Array(Array(Grass,Tree,Tree),Array(Grass,Grass,Grass),Array(Grass,Grass,Grass))
+    Array(Array(Grass,Tree,Tree),Array(Rock,Grass,Grass),Array(Grass,Grass,Grass))
   }
 
   def setScal(s:Int): Unit ={
