@@ -13,19 +13,24 @@ class GameController(var field: Field) extends Observable {
   var cmdStr: String =_
   var gameState: ReturnValues.Value = ReturnValues.VALID
 
-  def init(): Unit = {
+  def init(testflag:Integer = 0): Unit = {
     println("------ Start of Initialisation ------")
     println("initialize Controller")
 
-    printString = "Name of player number one:"
-    notifyObservers(ObserverCommand.PRINTSTRING)
-    notifyObservers(ObserverCommand.READSTRING)
-    this.player1 = Player(readString, Console.BLUE)
+    if (testflag == 0) {
+      printString = "Name of player number one:"
+      notifyObservers(ObserverCommand.PRINTSTRING)
+      notifyObservers(ObserverCommand.READSTRING)
+      this.player1 = Player(readString, Console.BLUE)
 
-    printString = "Name of player number two:"
-    notifyObservers(ObserverCommand.PRINTSTRING)
-    notifyObservers(ObserverCommand.READSTRING)
-    this.player2 = Player(readString, Console.RED)
+      printString = "Name of player number two:"
+      notifyObservers(ObserverCommand.PRINTSTRING)
+      notifyObservers(ObserverCommand.READSTRING)
+      this.player2 = Player(readString, Console.RED)
+    } else {
+      this.player1 = Player()
+      this.player2 = Player("Hans Peter")
+    }
 
     setUserTroopsDefault("TopLeft", player1)
     setUserTroopsDefault("BottomRight", player2)

@@ -5,6 +5,7 @@ coveralls doesn't work, probs cause nothing to build on master
 
 
 # HighPrio:
+TODO: Refactoring (READCOMMAND)
 
 TODO: playerTurn in Tui should have a ReturnValues returnvalue?
 TODO: playerTurn and Reading the command
