@@ -9,7 +9,7 @@ object FileIO {
   private var scal: Int = _
 
   def readFromFile(fileName: String): Array[Array[Entity]] = {
-    var c = 0
+    /*var c = 0
     val arr: Array[Array[Entity]] = Array.ofDim(scal, scal)
     val source = Source.fromFile(fileName)
     for (v <- source.getLines()) {
@@ -26,7 +26,9 @@ object FileIO {
     }
 
     source.close()
-    arr
+    arr*/
+
+    Array(Array(Grass,Tree,Tree),Array(Grass,Grass,Grass),Array(Grass,Grass,Grass))
   }
 
   def setScal(s:Int): Unit ={
