@@ -7,7 +7,7 @@ trait Obstacle extends Entity {
 
   def walkthrough(): Boolean = false
 
-  def color(): String = "WHITE"
+  def color(): String
 
   def getColor:String = color()
 }

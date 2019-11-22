@@ -4,15 +4,15 @@ import de.felite.model.Player
 import de.felite.model.entity.Entity
 
 trait Troop extends Entity {
-  def x(): Int = 0
-  def y(): Int = 0
-  def health():Int = 0
+  def x(): Int
+  def y(): Int
+  def health():Int
 
-  def attack():Int = 0
-  def defense():Int = 0
+  def attack():Int
+  def defense():Int
 
-  def attackRange():Int = 0
-  def moveRange():Int = 0
+  def attackRange():Int
+  def moveRange():Int
 
   def owner():Player = Player()
 
