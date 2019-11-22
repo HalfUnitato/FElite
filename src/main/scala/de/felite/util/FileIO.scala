@@ -8,7 +8,7 @@ import scala.io.Source
 
 object FileIO {
   private var scal: Int = _
-  private val fileName: String = "src\\fieldbase.txt"
+  private val fileName: String = "src/fieldbase.txt"
 
   def readFromFile(): Array[Array[Entity]] = {
     var c: Int = 0
