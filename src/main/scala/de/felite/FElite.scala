@@ -7,8 +7,7 @@ import de.felite.view.Tui
 
 object FElite {
 
-  private val fieldSrc = "src\\fieldTest.txt"
-  val controller = new GameController(Field(fieldSrc, 3)) // second param is scal value
+  val controller = new GameController(Field(3)) // second param is scal value
   val tui = new Tui(controller)
 
 

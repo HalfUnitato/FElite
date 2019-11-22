@@ -1,20 +1,11 @@
 # AbgabeZiel
-TODO: Build Travis CI and Coveralls Structure
-travis works but fails
-coveralls doesn't work, probs cause nothing to build on master
 
 
 # HighPrio:
 TODO: Refactoring (READCOMMAND)
 
-TODO: playerTurn in Tui should have a ReturnValues returnvalue?
-TODO: playerTurn and Reading the command
-//Main reads input passes it to tui?
-    //what about ObserverCommand.READCOMMAND?
-    //Argument input is useless in playerTurn
-        //where to put input reading? probs FElite.scala
+TODO:Troops owner test
 
-TODO: why is in Fieldtest move not a valid move?
 TODO: im help die Bedeutung der Symbole erklären
 TODO: skalierbares Spielfeld, almost?
 TODO: trivialer Fall bei Spielfeld -> schnell gewinnen/verlieren

@@ -5,7 +5,7 @@ import de.felite.util.{FileIO, ReturnValues}
 import de.felite.{TestBaseClass, util}
 
 class GameControllerTest extends TestBaseClass {
-  val controller: GameController = new GameController(Field("src\\fieldTest.txt", 5))
+  val controller: GameController = new GameController(Field(5))
 
   val playerOne = Player("Marin", Console.BLUE)
   val playerTwo = Player("Lukas", Console.RED)

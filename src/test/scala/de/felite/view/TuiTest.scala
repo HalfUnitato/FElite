@@ -6,7 +6,7 @@ import de.felite.model.{Field, Player}
 import de.felite.util.{ObserverCommand, ReturnValues}
 
 class TuiTest extends TestBaseClass {
-  val controller = new GameController(Field("src\\fieldTest.txt", 3)) //scal should match testing field specified in Field
+  val controller = new GameController(Field(3)) //scal should match testing field specified in Field
   val tui: Tui = new Tui(controller)
 
   "The Tui" when {
