@@ -26,6 +26,7 @@ TODO: Observer etc.
 
 TODO: push working tui to master?
 TODO: todo.txt kategorien?
+TODO: Rework ReturnValues to Boolean
 
 # UnknownPrio:
 

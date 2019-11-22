@@ -1,9 +1,10 @@
 package de.felite
 
-import de.felite.controller.GameController
+import de.felite.controller.{GameController, GameState}
 import de.felite.model.{Field, Player}
 import de.felite.util.{ObserverCommand, ReturnValues}
 import de.felite.view.Tui
+import de.felite.controller.GameState._
 
 object FElite {
 
@@ -12,7 +13,7 @@ object FElite {
   val tui = new Tui(controller)
 
 
-  def main(args: Array[String]): Unit = {
+  def Main(args: Array[String]): Unit = {
 
     println("Welcome to Fire Emblem lite")
 
@@ -20,15 +21,15 @@ object FElite {
 
     //Main read input passes it to tui?
     //what about ObserverCommand.READCOMMAND
-    while (!controller.isEnd && controller.gameState != ReturnValues.QUIT) {
-      controller.gameState = ReturnValues.VALID
+    while (!controller.isEnd && controller.gameState != QUIT) {
+      controller.gameState = QUIT
 
-      while (controller.gameState != ReturnValues.END && controller.gameState != ReturnValues.QUIT) {
+      while (controller.gameState != END && controller.gameState != QUIT) {
         val command = scala.io.StdIn.readLine()
         controller.nextPlayerMove(command)
       }
       // switch payer after each turn
-      if (!controller.isEnd && controller.gameState != ReturnValues.QUIT)
+      if (!controller.isEnd && controller.gameState != QUIT)
         controller.switchPlayer()
     }
   }

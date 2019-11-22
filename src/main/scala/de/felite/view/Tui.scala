@@ -2,8 +2,10 @@ package de.felite.view
 
 
 import de.felite.controller._
+import GameState._
 import de.felite.model.{Field, Player}
 import de.felite.util.{Observer, ObserverCommand, ReturnValues}
+import de.felite.util.ObserverCommand._
 
 class Tui(controller: GameController) extends Observer {
 
@@ -17,17 +19,16 @@ class Tui(controller: GameController) extends Observer {
         printString(controller.field.toString)
         ReturnValues.VALID
       case "quit" =>
-        controller.gameState = ReturnValues.QUIT
+        controller.quit
         ReturnValues.VALID
-      case "cancel" =>
+      /*case "cancel" =>
         controller.gameState = ReturnValues.CANCEL
-        ReturnValues.VALID
+        ReturnValues.VALID*/
       case "end" =>
-        controller.gameState = ReturnValues.END
+        controller.end
         ReturnValues.VALID
       case "help" =>
         printHelp()
-        controller.gameState = ReturnValues.VALID
         ReturnValues.VALID
       case _ =>
         input.toList.filter(c => c != ' ').map(c => c.toString) match {
@@ -91,11 +92,19 @@ class Tui(controller: GameController) extends Observer {
   }
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
-    if (observerCommand == ObserverCommand.PRINTSTRING) {
+    var str: String =
+      if (controller.gameState == GameState.P1 || controller.gameState == GameState.P2)
+        controller.getPlayerName
+      else
+        ""
+    str += GameState.message(controller.gameState)
+    println(str)
+
+    if (observerCommand == PRINTSTRING) {
       printString(controller.printString)
-    /*} else if (observerCommand == ObserverCommand.READSTRING) {
-      controller.readString = scala.io.StdIn.readLine()*/
-    } else if (observerCommand == ObserverCommand.READCOMMAND) {
+    } else if (observerCommand == READSTRING) {
+      controller.readString = scala.io.StdIn.readLine()
+    } else if (observerCommand == READCOMMAND) {
       playerTurn(controller.cmdStr)
     }
   }
