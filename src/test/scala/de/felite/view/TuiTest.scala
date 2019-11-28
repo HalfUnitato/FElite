@@ -1,7 +1,7 @@
 package de.felite.view
 
 import de.felite.TestBaseClass
-import de.felite.controller.GameController
+import de.felite.controller.{GameController, GameState}
 import de.felite.model.{Field, Player}
 import de.felite.util.{ObserverCommand, ReturnValues}
 
@@ -28,22 +28,21 @@ class TuiTest extends TestBaseClass {
         tui.playerTurn("p") shouldBe ReturnValues.VALID
       }
       "print the help" in {
-        tui.playerTurn("help" )
-        controller.gameState shouldBe ReturnValues.VALID
+        tui.playerTurn("help" ) shouldBe ReturnValues.VALID
       }
       "quit" in {
         tui.playerTurn("quit")
-        controller.gameState shouldBe ReturnValues.QUIT
+        controller.gameState shouldBe GameState.QUIT
       }
-      "cancel" in {
+      /*"cancel" in {
         tui.playerTurn("cancel")
-        controller.gameState shouldBe ReturnValues.CANCEL
-      }
+        controller.gameState shouldBe GameState.Cancel
+      }*/
       "end" in {
-        tui.playerTurn("end")
-        controller.gameState shouldBe ReturnValues.END
+        tui.playerTurn("end") shouldBe ReturnValues.VALID
       }
       "execute the command" in {
+        controller.switchPlayer()
         tui.playerTurn("0 0 m 0 1") shouldBe ReturnValues.VALID
         tui.playerTurn("0 0 a 0 1") shouldBe ReturnValues.VALID
         tui.playerTurn("-1 0 m 0 1") shouldBe ReturnValues.INVALID

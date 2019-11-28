@@ -13,7 +13,7 @@ object FElite {
   val tui = new Tui(controller)
 
 
-  def Main(args: Array[String]): Unit = {
+  def main(args: Array[String]): Unit = {
 
     println("Welcome to Fire Emblem lite")
 
@@ -22,15 +22,10 @@ object FElite {
     //Main read input passes it to tui?
     //what about ObserverCommand.READCOMMAND
     while (!controller.isEnd && controller.gameState != QUIT) {
-      controller.gameState = QUIT
 
       while (controller.gameState != END && controller.gameState != QUIT) {
-        val command = scala.io.StdIn.readLine()
-        controller.nextPlayerMove(command)
+        controller.nextPlayerMove()
       }
-      // switch payer after each turn
-      if (!controller.isEnd && controller.gameState != QUIT)
-        controller.switchPlayer()
     }
   }
 }

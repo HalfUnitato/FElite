@@ -8,7 +8,8 @@ import de.felite.util.ReturnValues._
 import de.felite.util.ObserverCommand._
 
 class GameController(var field: Field) extends Observable {
-  var gameState: GameState = _
+  var gameState: GameState = INIT
+  private var currentPlayer: Player = _
   private var player1: Player = _
   private var player2: Player = _
   var printString: String = _
@@ -18,25 +19,25 @@ class GameController(var field: Field) extends Observable {
   def quit: Unit = {
     // quit Game
     gameState = QUIT
+    notifyObservers(ObserverCommand.PRINTSTRING)
   }
 
   def end: Unit = {
     // end Turn
     gameState = END
+    notifyObservers(ObserverCommand.PRINTSTRING)
+    switchPlayer()
   }
 
   def init(testflag: Int = 0): Unit = {
     println("------ Start of Initialisation ------")
-    println("initialize Controller")
 
     if (testflag == 0) {
-      printString = "Name of player number one:"
-      notifyObservers(ObserverCommand.PRINTSTRING)
+      gameState = P1_INI
       notifyObservers(ObserverCommand.READSTRING)
       this.player1 = Player(readString, Console.BLUE)
 
-      printString = "Name of player number two:"
-      notifyObservers(ObserverCommand.PRINTSTRING)
+      gameState = P2_INI
       notifyObservers(ObserverCommand.READSTRING)
       this.player2 = Player(readString, Console.RED)
     } else {
@@ -48,26 +49,28 @@ class GameController(var field: Field) extends Observable {
     setUserTroopsDefault("BottomRight", player2)
 
     gameState = P1
-
+    currentPlayer = player1
 
     println("------ End of Initialisation ------")
 
-    printString = field.toString
+    gameState = PRINT_FIELD
     notifyObservers(PRINTSTRING)
 
-    printString += "type in your command: ('help' if no idea)"
-    notifyObservers(PRINTSTRING)
+    gameState = P1
   }
 
   def switchPlayer(): Unit = {
     gameState =
-      if (gameState.equals(P1))
+      if (currentPlayer == player1)
         P2
       else
         P1
-    printString = "type in your command: ('help' if no idea)"
-    notifyObservers(PRINTSTRING)
-    printString = field.toString
+    currentPlayer =
+      if (currentPlayer == player1)
+        player2
+      else
+        player1
+
     notifyObservers(PRINTSTRING)
   }
 
@@ -95,6 +98,7 @@ class GameController(var field: Field) extends Observable {
     field.setSoldier(archer, x, y)
   }
 
+  def fieldToString = field.toString
 
   def doMove(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
     val tmpScal = field.getScal
@@ -106,13 +110,10 @@ class GameController(var field: Field) extends Observable {
     }
 
     //check if currentPlayer owns Soldier specified at from
-    if ((if (gameState == GameState.P1) player1 else player2)
-        .containsSoldier(field.getField(from._2)(from._1))
-        == ReturnValues.VALID)
-    {
+    if (currentPlayer.containsSoldier(field.getField(from._2)(from._1)) == ReturnValues.VALID) {
       field.doMove(from, to)
-      printString = field.toString
-      notifyObservers(ObserverCommand.PRINTSTRING)
+      gameState = PRINT_FIELD
+      notifyObservers((ObserverCommand.PRINTSTRING))
       return ReturnValues.VALID
     }
 
@@ -132,8 +133,8 @@ class GameController(var field: Field) extends Observable {
   def getPlayerName: String =
     (if (gameState == GameState.P1) player1 else player2).getPlayerName
 
-  def nextPlayerMove(str: String): Unit = {
-    cmdStr = str
+  def nextPlayerMove(): Unit = {
+    gameState = NEXT_CMD
     notifyObservers(ObserverCommand.READCOMMAND)
   }
 }
