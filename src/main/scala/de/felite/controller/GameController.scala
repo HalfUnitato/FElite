@@ -1,12 +1,11 @@
 package de.felite.controller
 
-import GameState._
+import de.felite.controller.GameState._
 import de.felite.model.{Field, Player}
-import de.felite.model.entity.figure.{Archer, Soldier, Troop}
+import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier, Troop}
 import de.felite.util.{Observable, ObserverCommand, ReturnValues}
 import de.felite.util.ReturnValues._
 import de.felite.util.ObserverCommand._
-
 class GameController(var field: Field) extends Observable {
   var gameState: GameState = INIT
   private var currentPlayer: Player = _
@@ -87,8 +86,9 @@ class GameController(var field: Field) extends Observable {
       x = field.getScal - 2
     }
 
-    val soldier = Soldier(3, 6, 1, 4, 6, x, y, player)
-    val archer = Archer(2, 3, 4, 2, 3, x, y, player)
+    val soldier = BuildSolider.buldSoldier(x, y, player)
+    val archer = BuildArcher.buildArcher(x, y, player)
+
     player.addPlayerTroop(soldier.asInstanceOf[Troop])
     field.setSoldier(soldier, x, y)
 

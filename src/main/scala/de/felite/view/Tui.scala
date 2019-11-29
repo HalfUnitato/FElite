@@ -1,8 +1,8 @@
 package de.felite.view
 
 
-import de.felite.controller._
-import GameState._
+import de.felite.controller.{GameState, _}
+import de.felite.controller.GameState._
 import de.felite.model.{Field, Player}
 import de.felite.util.{Observer, ObserverCommand, ReturnValues}
 import de.felite.util.ObserverCommand._
@@ -31,7 +31,7 @@ class Tui(controller: GameController) extends Observer {
         printHelp()
         ReturnValues.VALID
       case _ =>
-        input.toList.filter(c => c != ' ').map(c => c.toString) match {
+        input.split(" ").toList match {
           case xF :: yF :: action :: xT :: yT :: Nil =>
             action match {
               case "m" =>
@@ -106,11 +106,15 @@ class Tui(controller: GameController) extends Observer {
     println(str)
 
     if (controller.gameState == PRINT_FIELD)
+    {
       println(controller.fieldToString)
-
-    if (observerCommand == READSTRING) {
+    }
+    else if (observerCommand == READSTRING)
+    {
       controller.readString = scala.io.StdIn.readLine()
-    } else if (observerCommand == READCOMMAND) {
+    }
+    else if (observerCommand == READCOMMAND)
+    {
       val command = scala.io.StdIn.readLine()
       playerTurn(command)
     }

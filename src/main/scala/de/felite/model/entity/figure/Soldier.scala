@@ -13,4 +13,8 @@ case class Soldier(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos
   override val attackRange: Int = attR
   override val moveRange: Int = mvR
   override val owner: Player = player
+
+}
+object BuildSolider{
+  def buldSoldier(x:Int, y:Int, player : Player) = Soldier(3, 6, 1, 4, 6, x, y, player)
 }

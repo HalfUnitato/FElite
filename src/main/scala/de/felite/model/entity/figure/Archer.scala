@@ -14,3 +14,7 @@ case class Archer(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos:
   override val moveRange: Int = mvR
   override val owner: Player = player
 }
+
+object BuildArcher{
+  def buildArcher(x:Int, y:Int, player : Player) = Soldier(2, 3, 4, 2, 3, x, y, player)
+}

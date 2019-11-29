@@ -5,6 +5,8 @@ import de.felite.controller.{GameController, GameState}
 import de.felite.model.{Field, Player}
 import de.felite.util.{ObserverCommand, ReturnValues}
 
+import scala.util.control.Exception
+
 class TuiTest extends TestBaseClass {
   val controller = new GameController(Field("src\\fieldTest.txt", 3)) //scal should match testing field specified in Field
   val tui: Tui = new Tui(controller)
@@ -48,7 +50,7 @@ class TuiTest extends TestBaseClass {
         tui.playerTurn("-1 0 m 0 1") shouldBe ReturnValues.INVALID
         tui.playerTurn("0 0 m 9 1") shouldBe ReturnValues.INVALID
         tui.playerTurn("0 0 c 20 1") shouldBe ReturnValues.INVALID
-        tui.playerTurn("O 0 m 20 1") shouldBe ReturnValues.INVALID
+        an [NumberFormatException] shouldBe thrownBy (tui.playerTurn("O 0 m 20 1"))
         tui.playerTurn("0 m 20 1") shouldBe ReturnValues.INVALID
       }
     }

@@ -1,7 +1,7 @@
 package de.felite.model
 
 import de.felite.TestBaseClass
-import de.felite.model.entity.figure.{Archer, Soldier}
+import de.felite.model.entity.figure.{Archer, BuildArcher, Soldier}
 
 
 class TroopsTest extends TestBaseClass {
@@ -10,7 +10,7 @@ class TroopsTest extends TestBaseClass {
     "a new Archer" should {
       //Archer(attV,defV,attR,mvR,xpos,ypos,owner)
       val archer = Archer(5, 3, 2, 4, 40, 0, 0, player)
-      val archer2 = Archer(5, 3, 2, 4, 40, 0, 0, player)
+      val archer2 = BuildArcher.buildArcher(0, 0, player)
       "be of Instance Archer" in {
         archer.isInstanceOf[Archer] should be(true)
       }
@@ -37,7 +37,7 @@ class TroopsTest extends TestBaseClass {
     "a new Soldier" should {
       //Archer(attV,defV,attR,mvR, health, Xpos, Ypos, Owner)
       val soldier = Soldier(4, 4, 1, 5, 50, 0, 0, player)
-      val soldier2 = Soldier(4, 4, 1, 5, 50, 0, 0, player)
+      val soldier2 = BuildArcher.buildArcher(0, 0, player)
       "be of Instance Soldier" in {
         soldier.isInstanceOf[Soldier] should be(true)
       }
