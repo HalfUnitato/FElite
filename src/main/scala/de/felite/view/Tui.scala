@@ -1,31 +1,32 @@
 package de.felite.view
 
 
-import de.felite.controller.{GameState, _}
+import de.felite.controller.GameController
+import de.felite.controller.GameState
 import de.felite.controller.GameState._
 import de.felite.model.{Field, Player}
 import de.felite.util.{Observer, ObserverCommand, ReturnValues}
 import de.felite.util.ObserverCommand._
 
-class Tui(controller: GameController) extends Observer {
+class Tui() extends Observer {
 
-  controller.add(this)
+  GameController.add(this)
 
   def playerTurn(input: String): ReturnValues.Value = {
     //input is useless?
     //where to put input reading
     input match {
       case "p" =>
-        printString(controller.field.toString)
+        printString(GameController.field.toString)
         ReturnValues.VALID
       case "quit" =>
-        controller.quit
+        GameController.quit
         ReturnValues.VALID
       /*case "cancel" =>
-        controller.gameState = ReturnValues.CANCEL
+        GameController.gameState = ReturnValues.CANCEL
         ReturnValues.VALID*/
       case "end" =>
-        controller.end
+        GameController.end
         ReturnValues.VALID
       case "help" =>
         printHelp()
@@ -35,14 +36,14 @@ class Tui(controller: GameController) extends Observer {
           case xF :: yF :: action :: xT :: yT :: Nil =>
             action match {
               case "m" =>
-                if (controller.doMove((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+                if (GameController.doMove((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
                   ReturnValues.VALID
                 } else {
                   printString("invalid move")
                   ReturnValues.INVALID
                 }
               case "a" =>
-                if (controller.doAttack((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+                if (GameController.doAttack((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
                   ReturnValues.VALID
                 } else {
                   printString("invalid attack")
@@ -94,24 +95,24 @@ class Tui(controller: GameController) extends Observer {
   override def update(observerCommand: ObserverCommand.Value): Unit = {
     var str: String = ""
 
-    if (controller.gameState == P1 || controller.gameState == P2) {
+    if (GameController.gameState == P1 || GameController.gameState == P2) {
       str =
-        if (controller.gameState == GameState.P1 || controller.gameState == GameState.P2)
-          controller.getPlayerName
+        if (GameController.gameState == GameState.P1 || GameController.gameState == GameState.P2)
+          GameController.getPlayerName
         else
           ""
     }
-    str += GameState.message(controller.gameState)
+    str += GameState.message(GameController.gameState)
 
     println(str)
 
-    if (controller.gameState == PRINT_FIELD)
+    if (GameController.gameState == PRINT_FIELD)
     {
-      println(controller.fieldToString)
+      println(GameController.fieldToString)
     }
     else if (observerCommand == READSTRING)
     {
-      controller.readString = scala.io.StdIn.readLine()
+      GameController.readString = scala.io.StdIn.readLine()
     }
     else if (observerCommand == READCOMMAND)
     {

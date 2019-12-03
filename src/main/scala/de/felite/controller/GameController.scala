@@ -6,7 +6,9 @@ import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier
 import de.felite.util.{Observable, ObserverCommand, ReturnValues}
 import de.felite.util.ReturnValues._
 import de.felite.util.ObserverCommand._
-class GameController(var field: Field) extends Observable {
+
+object GameController extends Observable {
+  val field: Field = Field("src\\fieldTest.txt", 3)
   var gameState: GameState = INIT
   private var currentPlayer: Player = _
   private var player1: Player = _

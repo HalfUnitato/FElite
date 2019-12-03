@@ -34,7 +34,7 @@ class TuiTest extends TestBaseClass {
       }
       "quit" in {
         tui.playerTurn("quit")
-        controller.gameState shouldBe GameState.QUIT
+        GameController.gameState shouldBe GameState.QUIT
       }
       /*"cancel" in {
         tui.playerTurn("cancel")
@@ -44,7 +44,7 @@ class TuiTest extends TestBaseClass {
         tui.playerTurn("end") shouldBe ReturnValues.VALID
       }
       "execute the command" in {
-        controller.switchPlayer()
+        GameController.switchPlayer()
         tui.playerTurn("0 0 m 0 1") shouldBe ReturnValues.VALID
         tui.playerTurn("0 0 a 0 1") shouldBe ReturnValues.VALID
         tui.playerTurn("-1 0 m 0 1") shouldBe ReturnValues.INVALID
