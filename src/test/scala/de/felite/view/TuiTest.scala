@@ -43,7 +43,7 @@ class TuiTest extends TestBaseClass {
         tui.playerTurn("end") shouldBe ReturnValues.VALID
       }
       "execute the command" in {
-        GameController.switchPlayer()
+        //GameController.switchPlayer()
         tui.playerTurn("0 0 m 0 1") shouldBe ReturnValues.VALID
         tui.playerTurn("0 0 a 0 1") shouldBe ReturnValues.VALID
         tui.playerTurn("-1 0 m 0 1") shouldBe ReturnValues.INVALID
