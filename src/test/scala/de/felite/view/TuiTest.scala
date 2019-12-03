@@ -39,9 +39,6 @@ class TuiTest extends TestBaseClass {
         tui.playerTurn("cancel")
         GameController.gameState shouldBe GameState.Cancel
       }*/
-      "end" in {
-        tui.playerTurn("end") shouldBe ReturnValues.VALID
-      }
       "execute the command" in {
         //GameController.switchPlayer()
         tui.playerTurn("0 0 m 0 1") shouldBe ReturnValues.VALID
@@ -51,6 +48,9 @@ class TuiTest extends TestBaseClass {
         tui.playerTurn("0 0 c 20 1") shouldBe ReturnValues.INVALID
         an [NumberFormatException] shouldBe thrownBy (tui.playerTurn("O 0 m 20 1"))
         tui.playerTurn("0 m 20 1") shouldBe ReturnValues.INVALID
+      }
+      "end" in {
+        tui.playerTurn("end") shouldBe ReturnValues.VALID
       }
     }
     /*"update" when {
