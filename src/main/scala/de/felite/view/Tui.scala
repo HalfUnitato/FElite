@@ -17,7 +17,7 @@ class Tui() extends Observer {
     //where to put input reading
     input match {
       case "p" =>
-        printString(GameController.field.toString)
+        printString(GameController.FieldToString)
         ReturnValues.VALID
       case "quit" =>
         GameController.quit
@@ -108,7 +108,7 @@ class Tui() extends Observer {
 
     if (GameController.gameState == PRINT_FIELD)
     {
-      println(GameController.fieldToString)
+      println(GameController.FieldToString)
     }
     else if (observerCommand == READSTRING)
     {

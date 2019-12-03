@@ -8,11 +8,10 @@ import de.felite.util.{ObserverCommand, ReturnValues}
 import scala.util.control.Exception
 
 class TuiTest extends TestBaseClass {
-  val controller = new GameController(Field("src\\fieldTest.txt", 3)) //scal should match testing field specified in Field
-  val tui: Tui = new Tui(controller)
+  val tui: Tui = new Tui()
 
   "The Tui" when {
-    controller.init(1)
+    GameController.init(1)
     "print String" should {
       "not throw an ERROR when printing the fieldString" in {
         noException shouldBe thrownBy(tui.printString("t3st"))
@@ -38,7 +37,7 @@ class TuiTest extends TestBaseClass {
       }
       /*"cancel" in {
         tui.playerTurn("cancel")
-        controller.gameState shouldBe GameState.Cancel
+        GameController.gameState shouldBe GameState.Cancel
       }*/
       "end" in {
         tui.playerTurn("end") shouldBe ReturnValues.VALID
@@ -57,11 +56,11 @@ class TuiTest extends TestBaseClass {
     /*"update" when {
       "ObserverCommand" should {
         "be PrintString" in {
-          controller.printString = "Marin is doof"
+          GameController.printString = "Marin is doof"
           tui.update(ObserverCommand.PRINTSTRING) shouldBe ReturnValues.VALID
         }
         "be ReadCommand" in {
-          controller.cmdStr = "sickPWftw"
+          GameController.cmdStr = "sickPWftw"
           tui.update(ObserverCommand.READCOMMAND) shouldBe ReturnValues.INVALID
         }
       }

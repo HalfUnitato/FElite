@@ -5,10 +5,10 @@ import de.felite.model.entity.figure.Troop
 import de.felite.model.entity.obstacle.{Grass, Obstacle, Rock}
 import de.felite.util.{FileIO, ReturnValues}
 
-case class Field(private val fileName: String, private val scal: Int) { //: Array.ofDim[char]()){
-
-  FileIO.setScal(scal)
-  private val matrix = FileIO.readFromFile(fileName)
+object Field {
+  private val scal: Int = 3
+  private val fileName = FileIO.setScal(scal)
+  private val matrix = FileIO.readFromFile("src\\fieldTest.txt")
 
   // return Field
   // BUT NEVER THE ORIGINAL ONE!!!

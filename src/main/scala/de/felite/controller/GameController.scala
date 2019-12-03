@@ -8,11 +8,10 @@ import de.felite.util.ReturnValues._
 import de.felite.util.ObserverCommand._
 
 object GameController extends Observable {
-  val field: Field = Field("src\\fieldTest.txt", 3)
   var gameState: GameState = INIT
-  private var currentPlayer: Player = _
-  private var player1: Player = _
-  private var player2: Player = _
+  var player1: Player = Player("Hans Peter")
+  var player2: Player = Player("Hans Peter")
+  var currentPlayer: Player = player1
   var printString: String = _
   var readString: String = _
   var cmdStr: String = _
@@ -61,17 +60,8 @@ object GameController extends Observable {
   }
 
   def switchPlayer(): Unit = {
-    gameState =
-      if (currentPlayer == player1)
-        P2
-      else
-        P1
-    currentPlayer =
-      if (currentPlayer == player1)
-        player2
-      else
-        player1
 
+    PlayerState.handle()
     notifyObservers(PRINTSTRING)
   }
 
@@ -84,26 +74,26 @@ object GameController extends Observable {
       x = 0
     }
     else if (pos.equals("BottomRight")) {
-      y = field.getScal - 1
-      x = field.getScal - 2
+      y = Field.getScal - 1
+      x = Field.getScal - 2
     }
 
     val soldier = BuildSolider.buldSoldier(x, y, player)
     val archer = BuildArcher.buildArcher(x, y, player)
 
     player.addPlayerTroop(soldier.asInstanceOf[Troop])
-    field.setSoldier(soldier, x, y)
+    Field.setSoldier(soldier, x, y)
 
     x += 1
 
     player.addPlayerTroop(archer.asInstanceOf[Troop])
-    field.setSoldier(archer, x, y)
+    Field.setSoldier(archer, x, y)
   }
 
-  def fieldToString = field.toString
+  def FieldToString = Field.toString
 
   def doMove(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
-    val tmpScal = field.getScal
+    val tmpScal = Field.getScal
 
     //check if outOBounds
     if (from._1 >= tmpScal || from._2 >= tmpScal || to._1 >= tmpScal || to._2 >= tmpScal
@@ -112,8 +102,8 @@ object GameController extends Observable {
     }
 
     //check if currentPlayer owns Soldier specified at from
-    if (currentPlayer.containsSoldier(field.getField(from._2)(from._1)) == ReturnValues.VALID) {
-      field.doMove(from, to)
+    if (currentPlayer.containsSoldier(Field.getField(from._2)(from._1)) == ReturnValues.VALID) {
+      Field.doMove(from, to)
       gameState = PRINT_FIELD
       notifyObservers((ObserverCommand.PRINTSTRING))
       return ReturnValues.VALID
