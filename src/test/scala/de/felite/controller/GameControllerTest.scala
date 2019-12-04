@@ -31,6 +31,15 @@ class GameControllerTest extends TestBaseClass {
       "move not fail" in {
         GameController.doMove((0, 0), (0, 1)) shouldBe util.ReturnValues.VALID
       }
+      "undo not fail" in {
+        GameController.doMove((0, 0), (0, 1))
+        GameController.undo
+      }
+      "redo not fail" in {
+        GameController.doMove((0, 0), (0, 1))
+        GameController.undo
+        GameController.redo
+      }
       "move fail" in {
         GameController.doMove((0, 5), (0, 1)) shouldBe ReturnValues.INVALID
         GameController.doMove((1, 1), (0, 1)) shouldBe ReturnValues.INVALID

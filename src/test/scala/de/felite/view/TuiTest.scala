@@ -31,6 +31,9 @@ class TuiTest extends TestBaseClass {
       "redo move" in {
         tui.playerTurn("redo") shouldBe ReturnValues.VALID
       }
+      "print the field" in {
+        tui.playerTurn("p") shouldBe ReturnValues.VALID
+      }
       "print the help" in {
         tui.playerTurn("help") shouldBe ReturnValues.VALID
       }

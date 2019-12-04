@@ -103,10 +103,10 @@ class Tui() extends Observer {
 
     if (GameController.gameState == P1 || GameController.gameState == P2) {
       str =
-        if (GameController.gameState == GameState.P1 || GameController.gameState == GameState.P2)
+        //if (GameController.gameState == GameState.P1 || GameController.gameState == GameState.P2)
           GameController.getPlayerName
-        else
-          ""
+        //else
+        //  ""
     }
     str += GameState.message(GameController.gameState)
 
