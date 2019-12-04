@@ -1,6 +1,8 @@
 package de.felite.util
 
-class UndoManager {
+import de.felite.controller.GameController
+
+class UndoManager(contoller:GameController) {
   private var undoStack: List[Command] = Nil
   private var redoStack: List[Command] = Nil
 
@@ -29,5 +31,9 @@ class UndoManager {
         undoStack = head :: undoStack
       }
     }
+  }
+  def reset={
+    undoStack = Nil
+    redoStack = Nil
   }
 }

@@ -8,11 +8,11 @@ import de.felite.util.{Observable, ObserverCommand, ReturnValues, UndoManager}
 import de.felite.util.ReturnValues._
 import de.felite.util.ObserverCommand._
 
-object GameController extends Observable {
-  private val undoManager = new UndoManager
+class GameController() extends Observable {
+  private val undoManager = new UndoManager(this)
   var gameState: GameState = INIT
-  var player1: Player = Player("Hans Peter")
-  var player2: Player = Player("Hans Peter")
+  var player1: Player = _
+  var player2: Player = _
   var currentPlayer: Player = player1
   var printString: String = _
   var readString: String = _
@@ -43,7 +43,7 @@ object GameController extends Observable {
       notifyObservers(ObserverCommand.READSTRING)
       this.player2 = Player(readString, Console.RED)
     } else {
-      this.player1 = Player()
+      this.player1 = Player("Peter Hans")
       this.player2 = Player("Hans Peter")
     }
 
@@ -63,7 +63,7 @@ object GameController extends Observable {
 
   def switchPlayer(): Unit = {
 
-    PlayerState.handle()
+    PlayerState.handle(this)
     notifyObservers(PRINTSTRING)
   }
 
@@ -94,7 +94,7 @@ object GameController extends Observable {
 
   def FieldToString = Field.toString
 
-  def doMove(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
+  def move(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
     val tmpScal = Field.getScal
 
     //check if outOBounds
@@ -105,7 +105,7 @@ object GameController extends Observable {
 
     //check if currentPlayer owns Soldier specified at from
     if (currentPlayer.containsSoldier(Field.getField(from._2)(from._1)) == ReturnValues.VALID) {
-      undoManager.doStep(new SetCommand(from._1,from._2,Field.getCell(from._1,from._2),to._1,to._2,Field.getCell(to._1,to._2)))
+      undoManager.doStep(new SetCommand(from._1, from._2, Field.getCell(from._1, from._2), to._1, to._2, Field.getCell(to._1, to._2)))
       gameState = PRINT_FIELD
       notifyObservers(ObserverCommand.PRINTSTRING)
       return ReturnValues.VALID
@@ -115,24 +115,30 @@ object GameController extends Observable {
     ReturnValues.INVALID
   }
 
-  def doAttack(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
+  def attack(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
     // missing plausi-Check -----
-
+    //undoManager.doStep(new SetCommand(to._1, to._2, Field.getCell(from._1, from._2),
+    //                                  to._1, to._2, Field.getCell(to._1, to._2)))
+    gameState = PRINT_FIELD
+    notifyObservers(ObserverCommand.PRINTSTRING)
     ReturnValues.VALID
   }
-  def undo={
+
+  def undo = {
     undoManager.undoStep
     gameState = PRINT_FIELD
     notifyObservers(ObserverCommand.PRINTSTRING)
   }
-  def redo ={
+
+  def redo = {
     undoManager.redoStep
     gameState = PRINT_FIELD
     notifyObservers(ObserverCommand.PRINTSTRING)
   }
-//  def setCell(x:Int, y:Int, entity: Entity): Unit ={
-//    Field.
-//  }
+
+  //  def setCell(x:Int, y:Int, entity: Entity): Unit ={
+  //    Field.
+  //  }
   def isEnd: Boolean =
     player1.getUnitAmount == 0 || player2.getUnitAmount == 0
 

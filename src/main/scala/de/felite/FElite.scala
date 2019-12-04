@@ -10,21 +10,21 @@ object FElite {
 
   private val fieldSrc = "src\\fieldTest.txt"
   //val controller = new GameController // second param is scal value
-  val tui = new Tui()
-
 
   def main(args: Array[String]): Unit = {
 
     println("Welcome to Fire Emblem lite")
+    val controller:GameController = new GameController()
+    val tui = new Tui(controller)
 
-    GameController.init()
+    controller.init()
 
     //Main read input passes it to tui?
     //what about ObserverCommand.READCOMMAND
-    while (!GameController.isEnd && GameController.gameState != QUIT) {
+    while (!controller.isEnd && controller.gameState != QUIT) {
 
-      while (GameController.gameState != END && GameController.gameState != QUIT) {
-        GameController.nextPlayerMove()
+      while (controller.gameState != END && controller.gameState != QUIT) {
+        controller.nextPlayerMove()
       }
     }
   }

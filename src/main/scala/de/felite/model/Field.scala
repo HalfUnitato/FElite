@@ -37,7 +37,7 @@ object Field {
     base
   }
 
-  def setCell(soldier: Entity, x: Int, y: Int): ReturnValues.Value = {
+  def setCell(entity: Entity, x: Int, y: Int): ReturnValues.Value = {
     try {
       // teste IndexZugriffe
       matrix(y)(x)
@@ -45,7 +45,7 @@ object Field {
     catch {
       case _: Throwable => return ReturnValues.INVALID
     }
-    matrix(y)(x) = soldier
+    matrix(y)(x) = entity
     ReturnValues.VALID
   }
 

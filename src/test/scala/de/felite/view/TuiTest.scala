@@ -8,10 +8,10 @@ import de.felite.util.{ObserverCommand, ReturnValues}
 import scala.util.control.Exception
 
 class TuiTest extends TestBaseClass {
-  val tui: Tui = new Tui()
-
+  val controller:GameController = new GameController()
+  val tui: Tui = new Tui(controller)
   "The Tui" when {
-    GameController.init(1)
+    controller.init(1)
     "print String" should {
       "not throw an ERROR when printing the fieldString" in {
         noException shouldBe thrownBy(tui.printString("t3st"))
@@ -39,14 +39,14 @@ class TuiTest extends TestBaseClass {
       }
       "quit" in {
         tui.playerTurn("quit")
-        GameController.gameState shouldBe GameState.QUIT
+        controller.gameState shouldBe GameState.QUIT
       }
       /*"cancel" in {
         tui.playerTurn("cancel")
         GameController.gameState shouldBe GameState.Cancel
       }*/
       "execute the command" in {
-        //GameController.switchPlayer()
+        //controller.switchPlayer()
         tui.playerTurn("0 0 m 0 1") shouldBe ReturnValues.VALID
         tui.playerTurn("0 0 a 0 1") shouldBe ReturnValues.VALID
         tui.playerTurn("-1 0 m 0 1") shouldBe ReturnValues.INVALID
