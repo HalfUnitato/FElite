@@ -8,7 +8,7 @@ import de.felite.util.{FileIO, ReturnValues}
 object Field {
   private val scal: Int = 3
   private val fileName = FileIO.setScal(scal)
-  private val matrix = FileIO.readFromFile("src\\fieldTest.txt")
+  private val matrix = FileIO.readFromFile()
 
   // return Field
   // BUT NEVER THE ORIGINAL ONE!!!
