@@ -37,22 +37,7 @@ object Field {
     base
   }
 
-  def doMove(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
-
-    try {
-      // teste IndexZugriffe
-      matrix(from._2)(from._1)
-      matrix(to._2)(to._1)
-    }
-    catch {
-      case _: Throwable => return ReturnValues.INVALID
-    }
-    matrix(to._2)(to._1) = matrix(from._2)(from._1)
-    matrix(from._2)(from._1) = Grass
-    ReturnValues.VALID
-  }
-
-  def setSoldier(soldier: Troop, x: Int, y: Int): ReturnValues.Value = {
+  def setCell(soldier: Entity, x: Int, y: Int): ReturnValues.Value = {
     try {
       // teste IndexZugriffe
       matrix(y)(x)
@@ -62,6 +47,10 @@ object Field {
     }
     matrix(y)(x) = soldier
     ReturnValues.VALID
+  }
+
+  def getCell(x: Int, y: Int) = {
+    matrix(y)(x)
   }
 
   def getScal: Int = {

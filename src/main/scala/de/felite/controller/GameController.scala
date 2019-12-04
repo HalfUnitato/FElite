@@ -1,13 +1,15 @@
 package de.felite.controller
 
 import de.felite.controller.GameState._
+import de.felite.model.entity.Entity
 import de.felite.model.{Field, Player}
 import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier, Troop}
-import de.felite.util.{Observable, ObserverCommand, ReturnValues}
+import de.felite.util.{Observable, ObserverCommand, ReturnValues, UndoManager}
 import de.felite.util.ReturnValues._
 import de.felite.util.ObserverCommand._
 
 object GameController extends Observable {
+  private val undoManager = new UndoManager
   var gameState: GameState = INIT
   var player1: Player = Player("Hans Peter")
   var player2: Player = Player("Hans Peter")
@@ -82,12 +84,12 @@ object GameController extends Observable {
     val archer = BuildArcher.buildArcher(x, y, player)
 
     player.addPlayerTroop(soldier.asInstanceOf[Troop])
-    Field.setSoldier(soldier, x, y)
+    Field.setCell(soldier, x, y)
 
     x += 1
 
     player.addPlayerTroop(archer.asInstanceOf[Troop])
-    Field.setSoldier(archer, x, y)
+    Field.setCell(archer, x, y)
   }
 
   def FieldToString = Field.toString
@@ -103,9 +105,9 @@ object GameController extends Observable {
 
     //check if currentPlayer owns Soldier specified at from
     if (currentPlayer.containsSoldier(Field.getField(from._2)(from._1)) == ReturnValues.VALID) {
-      Field.doMove(from, to)
+      undoManager.doStep(new SetCommand(from._1,from._2,Field.getCell(from._1,from._2),to._1,to._2,Field.getCell(to._1,to._2)))
       gameState = PRINT_FIELD
-      notifyObservers((ObserverCommand.PRINTSTRING))
+      notifyObservers(ObserverCommand.PRINTSTRING)
       return ReturnValues.VALID
     }
 
@@ -118,7 +120,19 @@ object GameController extends Observable {
 
     ReturnValues.VALID
   }
-
+  def undo={
+    undoManager.undoStep
+    gameState = PRINT_FIELD
+    notifyObservers(ObserverCommand.PRINTSTRING)
+  }
+  def redo ={
+    undoManager.redoStep
+    gameState = PRINT_FIELD
+    notifyObservers(ObserverCommand.PRINTSTRING)
+  }
+//  def setCell(x:Int, y:Int, entity: Entity): Unit ={
+//    Field.
+//  }
   def isEnd: Boolean =
     player1.getUnitAmount == 0 || player2.getUnitAmount == 0
 

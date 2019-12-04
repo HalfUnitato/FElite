@@ -16,6 +16,12 @@ class Tui() extends Observer {
     //input is useless?
     //where to put input reading
     input match {
+      case "undo" =>
+        GameController.undo
+        ReturnValues.VALID
+      case "redo" =>
+        GameController.redo
+        ReturnValues.VALID
       case "p" =>
         printString(GameController.FieldToString)
         ReturnValues.VALID

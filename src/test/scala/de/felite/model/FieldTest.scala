@@ -2,6 +2,7 @@ package de.felite.model
 
 import de.felite.TestBaseClass
 import de.felite.model.entity.figure.Soldier
+import de.felite.model.entity.obstacle.Grass
 import de.felite.util.ReturnValues
 
 class FieldTest extends TestBaseClass {
@@ -21,13 +22,15 @@ class FieldTest extends TestBaseClass {
     }
     "performing a move" should {
       "be valid (currently it's invalid)" in {
-        testField.doMove((0, 0), (0, 5)) shouldBe ReturnValues.INVALID //this should be valid
+        testField.setCell(Grass, 0, 3) shouldBe ReturnValues.INVALID //this should be valid
       }
       "throw no Exception for Index -1" in {
-        testField.doMove((-1, 0), (0, 0)) shouldBe ReturnValues.INVALID
+        //an[IndexOutOfBoundsException] shouldBe thrownBy(testField.setCell(Grass, -1, 0))
+        testField.setCell(Grass, -1, 0) shouldBe(ReturnValues.INVALID)
       }
       "throw no Exception for Index 10" in {
-        testField.doMove((-1, 0), (10, 0)) shouldBe ReturnValues.INVALID
+        //an[IndexOutOfBoundsException] shouldBe thrownBy(testField.setCell(Grass, 10, 0))
+        testField.setCell(Grass, 10, 0) shouldBe(ReturnValues.INVALID)
       }
     }
     "set Soldier" should {
@@ -41,17 +44,17 @@ class FieldTest extends TestBaseClass {
       "be valid" in {
         x = 1
         y = 1
-        testField.setSoldier(sold, x, y) shouldBe ReturnValues.VALID
+        testField.setCell(sold, x, y) shouldBe ReturnValues.VALID
       }
       "throw no Exception for Index -1" in {
         x = -1
         y = 1
-        testField.setSoldier(sold, x, y) shouldBe ReturnValues.INVALID
+        testField.setCell(sold, x, y) shouldBe ReturnValues.INVALID
       }
       "set throwns no Exception for Index 10" in {
         x = 10
         y = 1
-        testField.setSoldier(sold, x, y) shouldBe ReturnValues.INVALID
+        testField.setCell(sold, x, y) shouldBe ReturnValues.INVALID
       }
     }
   }

@@ -25,11 +25,14 @@ class TuiTest extends TestBaseClass {
     //playerTurn testing goes here
     //How to use input? where to read input?
     "playerTurn" should {
-      "print the field" in {
-        tui.playerTurn("p") shouldBe ReturnValues.VALID
+      "undo move" in {
+        tui.playerTurn("undo") shouldBe ReturnValues.VALID
+      }
+      "redo move" in {
+        tui.playerTurn("redo") shouldBe ReturnValues.VALID
       }
       "print the help" in {
-        tui.playerTurn("help" ) shouldBe ReturnValues.VALID
+        tui.playerTurn("help") shouldBe ReturnValues.VALID
       }
       "quit" in {
         tui.playerTurn("quit")
@@ -46,7 +49,7 @@ class TuiTest extends TestBaseClass {
         tui.playerTurn("-1 0 m 0 1") shouldBe ReturnValues.INVALID
         tui.playerTurn("0 0 m 9 1") shouldBe ReturnValues.INVALID
         tui.playerTurn("0 0 c 20 1") shouldBe ReturnValues.INVALID
-        an [NumberFormatException] shouldBe thrownBy (tui.playerTurn("O 0 m 20 1"))
+        an[NumberFormatException] shouldBe thrownBy(tui.playerTurn("O 0 m 20 1"))
         tui.playerTurn("0 m 20 1") shouldBe ReturnValues.INVALID
       }
       "end" in {
