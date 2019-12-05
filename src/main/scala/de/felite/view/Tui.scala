@@ -2,7 +2,7 @@ package de.felite.view
 
 
 import de.felite.controller.GameController
-import de.felite.controller.status.State
+import de.felite.controller.status._
 import de.felite.util.{Observer, ObserverCommand, ReturnValues}
 import de.felite.util.ObserverCommand._
 
@@ -25,13 +25,15 @@ class Tui(controller: GameController) extends Observer {
         printString(controller.FieldToString)
         ReturnValues.VALID
       case "quit" =>
-        controller.quit
+        State.gameState = new QuitState(controller)
+        State.gameState.handle
         ReturnValues.VALID
       /*case "cancel" =>
         controller.gameState = ReturnValues.CANCEL
         ReturnValues.VALID*/
       case "end" =>
-        controller.end
+        State.gameState = new EndState(controller)
+        State.gameState.handle
         ReturnValues.VALID
       case "help" =>
         printHelp()

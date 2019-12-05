@@ -10,7 +10,7 @@ import de.felite.util.ReturnValues._
 import de.felite.util.ObserverCommand._
 
 class GameController() extends Observable {
-  private val undoManager = new UndoManager(this)
+  val undoManager = new UndoManager(this)
   var player1: Player = _
   var player2: Player = _
   var currentPlayer: Player = player1
@@ -18,30 +18,17 @@ class GameController() extends Observable {
   var readString: String = _
   var cmdStr: String = _
 
-  def quit: Unit = {
-    // quit Game
-    State.gameState = new QuitState
-    notifyObservers(ObserverCommand.PRINTSTRING)
-  }
-
-  def end: Unit = {
-    // end Turn
-    State.gameState = new EndState(this)
-    notifyObservers(ObserverCommand.PRINTSTRING)
-    undoManager.reset
-    switchPlayer()
-  }
 
   def init(testflag: Int = 0): Unit = {
     println("------ Start of Initialisation ------")
 
     if (testflag == 0) {
-      State.gameState = new P1InitState
-      notifyObservers(ObserverCommand.READSTRING)
+      State.gameState = new P1InitState(this)
+      State.gameState.handle
       this.player1 = Player(readString, Console.BLUE)
 
-      State.gameState = new P2InitState
-      notifyObservers(ObserverCommand.READSTRING)
+      State.gameState = new P2InitState(this)
+      State.gameState.handle
       this.player2 = Player(readString, Console.RED)
     } else {
       this.player1 = Player("Peter Hans")
@@ -51,8 +38,10 @@ class GameController() extends Observable {
     setUserTroopsDefault("TopLeft", player1)
     setUserTroopsDefault("BottomRight", player2)
 
-    State.gameState = new P1State(this)
     currentPlayer = player1
+
+    State.gameState = new P1State(this)
+    State.gameState.handle
 
     println("------ End of Initialisation ------")
 
@@ -60,12 +49,6 @@ class GameController() extends Observable {
     //notifyObservers(PRINTSTRING)
 
     //gameState = new P1State(this)
-  }
-
-  def switchPlayer(): Unit = {
-
-    PlayerState.handle(this)
-    notifyObservers(PRINTSTRING)
   }
 
   private def setUserTroopsDefault(pos: String, player: Player): Unit = {
@@ -121,33 +104,23 @@ class GameController() extends Observable {
     //undoManager.doStep(new SetCommand(to._1, to._2, Field.getCell(from._1, from._2),
     //                                  to._1, to._2, Field.getCell(to._1, to._2)))
     State.gameState = new PrintFieldState(this)
-    notifyObservers(ObserverCommand.PRINTSTRING)
     ReturnValues.VALID
   }
 
   def undo = {
     undoManager.undoStep
     State.gameState = new PrintFieldState(this)
-    notifyObservers(ObserverCommand.PRINTSTRING)
   }
 
   def redo = {
     undoManager.redoStep
     State.gameState = new PrintFieldState(this)
-    notifyObservers(ObserverCommand.PRINTSTRING)
   }
 
-  //  def setCell(x:Int, y:Int, entity: Entity): Unit ={
-  //    Field.
-  //  }
   def isEnd: Boolean =
     player1.getUnitAmount == 0 || player2.getUnitAmount == 0 || State.gameState.state == QUIT
 
   def getPlayerName: String =
     currentPlayer.getPlayerName
 
-  def nextPlayerMove(): Unit = {
-    State.gameState = new PrintFieldState(this)
-    notifyObservers(ObserverCommand.READCOMMAND)
-  }
 }

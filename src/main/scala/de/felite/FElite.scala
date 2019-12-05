@@ -5,7 +5,7 @@ import de.felite.model.{Field, Player}
 import de.felite.util.{ObserverCommand, ReturnValues}
 import de.felite.view.Tui
 import de.felite.controller.status.GameStateString._
-import de.felite.controller.status.State
+import de.felite.controller.status.{InitState, NextCmdState, State}
 
 object FElite {
 
@@ -25,7 +25,8 @@ object FElite {
     while (!controller.isEnd) {
 
       while (State.gameState.state != END && State.gameState.state != QUIT) {
-        controller.nextPlayerMove()
+        State.gameState = new NextCmdState(controller)
+        State.gameState.handle
       }
     }
   }

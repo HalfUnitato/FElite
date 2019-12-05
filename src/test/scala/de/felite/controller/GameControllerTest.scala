@@ -48,7 +48,7 @@ class controllerTest extends TestBaseClass {
          controller.attack((0, 0), (0, 1)) shouldBe ReturnValues.VALID
        }
     }
-    "switch to player" should {
+    /*"switch to player" should {
       "not fail" in {
         controller.getPlayerName == "Marin"
         controller.switchPlayer()
@@ -58,9 +58,9 @@ class controllerTest extends TestBaseClass {
       }
       "next layer move" should {
         "not fail" in {
-         //noException shouldBe thrownBy(controller.nextPlayerMove("0 0 m 0 1"))
+         noException shouldBe thrownBy(controller.nextPlayerMove("0 0 m 0 1"))
         }
       }
-    }
+    } */
   }
 }
