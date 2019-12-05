@@ -15,39 +15,39 @@ class StatusTest extends TestBaseClass {
       "work" in {
         State.gameState = EndState(controller)
         State.gameState.handle shouldBe State.gameState.handle
-        State.gameState.toString() shouldBe State.gameState.toString()
+        State.gameState.toString() shouldBe GameStateString.message(GameStateString.END)
 
         State.gameState = InitState(controller)
         State.gameState.handle shouldBe State.gameState.handle
-        State.gameState.toString() shouldBe State.gameState.toString()
+        State.gameState.toString() shouldBe GameStateString.message(GameStateString.INIT)
 
         State.gameState = NextCmdState(controller)
         State.gameState.handle shouldBe State.gameState.handle
-        State.gameState.toString() shouldBe State.gameState.toString()
+        State.gameState.toString() shouldBe GameStateString.message(GameStateString.NEXT_CMD)
 
         State.gameState = P1InitState(controller)
         State.gameState.handle shouldBe State.gameState.handle
-        State.gameState.toString() shouldBe State.gameState.toString()
+        State.gameState.toString() shouldBe GameStateString.message(GameStateString.P1_INI)
 
         State.gameState = P2InitState(controller)
         State.gameState.handle shouldBe State.gameState.handle
-        State.gameState.toString() shouldBe State.gameState.toString()
+        State.gameState.toString() shouldBe GameStateString.message(GameStateString.P2_INI)
 
         State.gameState = P1State(controller)
         State.gameState.handle shouldBe State.gameState.handle
-        State.gameState.toString() shouldBe State.gameState.toString()
+        State.gameState.toString() shouldBe GameStateString.message(GameStateString.P1)
 
         State.gameState = P2State(controller)
         State.gameState.handle shouldBe State.gameState.handle
-        State.gameState.toString() shouldBe State.gameState.toString()
+        State.gameState.toString() shouldBe GameStateString.message(GameStateString.P2)
 
         State.gameState = PrintFieldState(controller)
         State.gameState.handle shouldBe State.gameState.handle
-        State.gameState.toString() shouldBe State.gameState.toString()
+        State.gameState.toString() shouldBe GameStateString.message(GameStateString.PRINT_FIELD) + "\n" + controller.FieldToString
 
         State.gameState = QuitState(controller)
         State.gameState.handle shouldBe State.gameState.handle
-        State.gameState.toString() shouldBe State.gameState.toString()
+        State.gameState.toString() shouldBe GameStateString.message(GameStateString.QUIT)
       }
     }
   }
