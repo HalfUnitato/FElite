@@ -8,12 +8,13 @@ import de.felite.util.ObserverCommand.PRINTSTRING
 case class EndState(controller: GameController) extends CurrentState {
   val state: GameState = GameStateString.END
 
-  override def handle(): Unit = {
+  override def handle() = {
     State.gameState = new EndState(controller)
     controller.notifyObservers(ObserverCommand.PRINTSTRING)
     controller.undoManager.reset
     PlayerState.handle(controller)
     controller.notifyObservers(PRINTSTRING)
+    state
   }
 
   override def toString(): String = {
