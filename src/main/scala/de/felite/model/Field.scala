@@ -3,7 +3,10 @@ package de.felite.model
 import de.felite.model.entity.Entity
 import de.felite.model.entity.figure.Troop
 import de.felite.model.entity.obstacle.{Grass, Obstacle, Rock}
+import de.felite.util
 import de.felite.util.{FileIO, ReturnValues}
+
+import scala.util.{Failure, Success, Try}
 
 object Field {
   private val scal: Int = 3
@@ -38,14 +41,10 @@ object Field {
   }
 
   def setCell(entity: Entity, x: Int, y: Int): ReturnValues.Value = {
-    try {
-      // teste IndexZugriffe
-      matrix(y)(x)
+    Try(matrix(y)(x)) match {
+      case Success(v) => matrix(y)(x) = entity
+      case Failure(e) => return ReturnValues.INVALID
     }
-    catch {
-      case _: Throwable => return ReturnValues.INVALID
-    }
-    matrix(y)(x) = entity
     ReturnValues.VALID
   }
 
