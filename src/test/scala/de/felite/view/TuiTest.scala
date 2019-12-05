@@ -52,7 +52,7 @@ class TuiTest extends TestBaseClass {
         tui.playerTurn("-1 0 m 0 1") shouldBe ReturnValues.INVALID
         tui.playerTurn("0 0 m 9 1") shouldBe ReturnValues.INVALID
         tui.playerTurn("0 0 c 20 1") shouldBe ReturnValues.INVALID
-        an[NumberFormatException] shouldBe thrownBy(tui.playerTurn("O 0 m 20 1"))
+        tui.playerTurn("O 0 m 20 1") shouldBe ReturnValues.INVALID
         tui.playerTurn("0 m 20 1") shouldBe ReturnValues.INVALID
       }
       "end" in {
