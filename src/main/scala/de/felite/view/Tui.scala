@@ -8,6 +8,8 @@ import de.felite.model.{Field, Player}
 import de.felite.util.{Observer, ObserverCommand, ReturnValues}
 import de.felite.util.ObserverCommand._
 
+import scala.util.{Failure, Success, Try}
+
 class Tui(controller: GameController) extends Observer {
   controller.add(this)
 
@@ -39,23 +41,29 @@ class Tui(controller: GameController) extends Observer {
       case _ =>
         input.split(" ").toList match {
           case xF :: yF :: action :: xT :: yT :: Nil =>
-            action match {
-              case "m" =>
-                if (controller.move((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
-                  ReturnValues.VALID
-                } else {
-                  printString("invalid move")
-                  ReturnValues.INVALID
+            Try(xF.toInt, yF.toInt, xT.toInt, yT.toInt) match {
+              case Success(v) =>
+                action match {
+                  case "m" =>
+                    if (controller.move((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+                      ReturnValues.VALID
+                    } else {
+                      printString("invalid move")
+                      ReturnValues.INVALID
+                    }
+                  case "a" =>
+                    if (controller.attack((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+                      ReturnValues.VALID
+                    } else {
+                      printString("invalid attack")
+                      ReturnValues.INVALID
+                    }
+                  case _ =>
+                    printString("invalid move/attack")
+                    ReturnValues.INVALID
                 }
-              case "a" =>
-                if (controller.attack((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
-                  ReturnValues.VALID
-                } else {
-                  printString("invalid attack")
-                  ReturnValues.INVALID
-                }
-              case _ =>
-                printString("invalid command/action")
+              case Failure(e) =>
+                printString("index is not a number")
                 ReturnValues.INVALID
             }
           case _ =>

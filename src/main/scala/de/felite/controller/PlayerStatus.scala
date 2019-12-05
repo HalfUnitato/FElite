@@ -25,5 +25,4 @@ object PlayerState {
     state = GameState.P2
     controller.currentPlayer = controller.player2
   }
-
 }
