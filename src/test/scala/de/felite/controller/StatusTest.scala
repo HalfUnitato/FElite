@@ -48,7 +48,6 @@ class StatusTest extends TestBaseClass {
         State.gameState = QuitState(controller)
         State.gameState.handle shouldBe State.gameState.handle
         State.gameState.toString() shouldBe State.gameState.toString()
-
       }
     }
   }
