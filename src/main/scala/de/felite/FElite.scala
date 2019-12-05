@@ -4,7 +4,8 @@ import de.felite.controller.GameController
 import de.felite.model.{Field, Player}
 import de.felite.util.{ObserverCommand, ReturnValues}
 import de.felite.view.Tui
-import de.felite.controller.GameState._
+import de.felite.controller.status.GameStateString._
+import de.felite.controller.status.State
 
 object FElite {
 
@@ -21,9 +22,9 @@ object FElite {
 
     //Main read input passes it to tui?
     //what about ObserverCommand.READCOMMAND
-    while (!controller.isEnd && controller.gameState != QUIT) {
+    while (!controller.isEnd) {
 
-      while (controller.gameState != END && controller.gameState != QUIT) {
+      while (State.gameState.state != END && State.gameState.state != QUIT) {
         controller.nextPlayerMove()
       }
     }

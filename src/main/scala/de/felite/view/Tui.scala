@@ -2,9 +2,7 @@ package de.felite.view
 
 
 import de.felite.controller.GameController
-import de.felite.controller.GameState
-import de.felite.controller.GameState._
-import de.felite.model.{Field, Player}
+import de.felite.controller.status.State
 import de.felite.util.{Observer, ObserverCommand, ReturnValues}
 import de.felite.util.ObserverCommand._
 
@@ -106,23 +104,10 @@ class Tui(controller: GameController) extends Observer {
   }
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
-    var str: String = ""
 
-    if (controller.gameState == P1 || controller.gameState == P2) {
-      str =
-        //if (GameController.gameState == GameState.P1 || GameController.gameState == GameState.P2)
-        controller.getPlayerName
-      //else
-      //  ""
-    }
-    str += GameState.message(controller.gameState)
+    println(State.gameState.toString())
 
-    println(str)
-
-    if (controller.gameState == PRINT_FIELD) {
-      println(controller.FieldToString)
-    }
-    else if (observerCommand == READSTRING) {
+    if (observerCommand == READSTRING) {
       controller.readString = scala.io.StdIn.readLine()
     }
     else if (observerCommand == READCOMMAND) {

@@ -1,6 +1,6 @@
-package de.felite.controller
+package de.felite.controller.status
 
-object GameState extends Enumeration {
+object GameStateString extends Enumeration {
   type GameState = Value
   val QUIT, INIT, END, P1, P2, P1_INI, P2_INI, PRINT_FIELD, NEXT_CMD = Value
 

@@ -3,7 +3,6 @@ package de.felite.model
 import de.felite.model.entity.Entity
 import de.felite.model.entity.figure.Troop
 import de.felite.model.entity.obstacle.{Grass, Obstacle, Rock}
-import de.felite.util
 import de.felite.util.{FileIO, ReturnValues}
 
 import scala.util.{Failure, Success, Try}

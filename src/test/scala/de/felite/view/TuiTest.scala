@@ -1,7 +1,8 @@
 package de.felite.view
 
 import de.felite.TestBaseClass
-import de.felite.controller.{GameController, GameState}
+import de.felite.controller.GameController
+import de.felite.controller.status.{GameStateString, State}
 import de.felite.model.{Field, Player}
 import de.felite.util.{ObserverCommand, ReturnValues}
 
@@ -39,7 +40,7 @@ class TuiTest extends TestBaseClass {
       }
       "quit" in {
         tui.playerTurn("quit")
-        controller.gameState shouldBe GameState.QUIT
+        State.gameState shouldBe GameStateString.QUIT
       }
       /*"cancel" in {
         tui.playerTurn("cancel")

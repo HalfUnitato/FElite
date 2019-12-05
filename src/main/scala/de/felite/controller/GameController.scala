@@ -1,6 +1,7 @@
 package de.felite.controller
 
-import de.felite.controller.GameState._
+import de.felite.controller.status._
+import de.felite.controller.status.GameStateString._
 import de.felite.model.entity.Entity
 import de.felite.model.{Field, Player}
 import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier, Troop}
@@ -10,7 +11,6 @@ import de.felite.util.ObserverCommand._
 
 class GameController() extends Observable {
   private val undoManager = new UndoManager(this)
-  var gameState: GameState = INIT
   var player1: Player = _
   var player2: Player = _
   var currentPlayer: Player = player1
@@ -20,13 +20,13 @@ class GameController() extends Observable {
 
   def quit: Unit = {
     // quit Game
-    gameState = QUIT
+    State.gameState = new QuitState
     notifyObservers(ObserverCommand.PRINTSTRING)
   }
 
   def end: Unit = {
     // end Turn
-    gameState = END
+    State.gameState = new EndState(this)
     notifyObservers(ObserverCommand.PRINTSTRING)
     undoManager.reset
     switchPlayer()
@@ -36,11 +36,11 @@ class GameController() extends Observable {
     println("------ Start of Initialisation ------")
 
     if (testflag == 0) {
-      gameState = P1_INI
+      State.gameState = new P1InitState
       notifyObservers(ObserverCommand.READSTRING)
       this.player1 = Player(readString, Console.BLUE)
 
-      gameState = P2_INI
+      State.gameState = new P2InitState
       notifyObservers(ObserverCommand.READSTRING)
       this.player2 = Player(readString, Console.RED)
     } else {
@@ -51,15 +51,15 @@ class GameController() extends Observable {
     setUserTroopsDefault("TopLeft", player1)
     setUserTroopsDefault("BottomRight", player2)
 
-    gameState = P1
+    State.gameState = new P1State(this)
     currentPlayer = player1
 
     println("------ End of Initialisation ------")
 
-    gameState = PRINT_FIELD
-    notifyObservers(PRINTSTRING)
+    //gameState = new PrintFieldState(this)
+    //notifyObservers(PRINTSTRING)
 
-    gameState = P1
+    //gameState = new P1State(this)
   }
 
   def switchPlayer(): Unit = {
@@ -107,8 +107,8 @@ class GameController() extends Observable {
     //check if currentPlayer owns Soldier specified at from
     if (currentPlayer.containsSoldier(Field.getField(from._2)(from._1)) == ReturnValues.VALID) {
       undoManager.doStep(new SetCommand(from._1, from._2, Field.getCell(from._1, from._2), to._1, to._2, Field.getCell(to._1, to._2)))
-      gameState = PRINT_FIELD
-      notifyObservers(ObserverCommand.PRINTSTRING)
+      //gameState = new PrintFieldState(this)
+      //notifyObservers(ObserverCommand.PRINTSTRING)
       return ReturnValues.VALID
     }
 
@@ -120,20 +120,20 @@ class GameController() extends Observable {
     // missing plausi-Check -----
     //undoManager.doStep(new SetCommand(to._1, to._2, Field.getCell(from._1, from._2),
     //                                  to._1, to._2, Field.getCell(to._1, to._2)))
-    gameState = PRINT_FIELD
+    State.gameState = new PrintFieldState(this)
     notifyObservers(ObserverCommand.PRINTSTRING)
     ReturnValues.VALID
   }
 
   def undo = {
     undoManager.undoStep
-    gameState = PRINT_FIELD
+    State.gameState = new PrintFieldState(this)
     notifyObservers(ObserverCommand.PRINTSTRING)
   }
 
   def redo = {
     undoManager.redoStep
-    gameState = PRINT_FIELD
+    State.gameState = new PrintFieldState(this)
     notifyObservers(ObserverCommand.PRINTSTRING)
   }
 
@@ -141,13 +141,13 @@ class GameController() extends Observable {
   //    Field.
   //  }
   def isEnd: Boolean =
-    player1.getUnitAmount == 0 || player2.getUnitAmount == 0
+    player1.getUnitAmount == 0 || player2.getUnitAmount == 0 || State.gameState.state == QUIT
 
   def getPlayerName: String =
-    (if (gameState == GameState.P1) player1 else player2).getPlayerName
+    currentPlayer.getPlayerName
 
   def nextPlayerMove(): Unit = {
-    gameState = NEXT_CMD
+    State.gameState = new PrintFieldState(this)
     notifyObservers(ObserverCommand.READCOMMAND)
   }
 }
