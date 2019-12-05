@@ -7,7 +7,7 @@ import de.felite.util.ObserverCommand
 case class NextCmdState(controller: GameController) extends CurrentState {
   val state: GameState = GameStateString.NEXT_CMD
 
-  override def handle() ={
+  override def handle() = {
     controller.notifyObservers(ObserverCommand.READCOMMAND)
     state
   }
