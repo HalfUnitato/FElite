@@ -28,6 +28,7 @@ class GameController() extends Observable {
     // end Turn
     gameState = END
     notifyObservers(ObserverCommand.PRINTSTRING)
+    undoManager.reset
     switchPlayer()
   }
 
