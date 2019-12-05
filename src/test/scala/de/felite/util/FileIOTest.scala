@@ -6,14 +6,14 @@ import de.felite.model.entity.Entity
 class FileIOTest extends TestBaseClass {
   "A FileIO" when {
     "setting the scale" in {
-      noException shouldBe thrownBy(FileIO.setScal(3))
+      FileIO.setScal(3) shouldBe ReturnValues.VALID
     }
     "getting the scale" in {
       FileIO.getScal should be (3)
     }
     "readFromFIle" should {
-      "not throw an Exception " in {
-        noException shouldBe thrownBy(FileIO.readFromFile())
+      "valid" in {
+        FileIO.readFromFile() shouldBe FileIO.readFromFile()
       }
       "return a field" in {
         val field = FileIO.readFromFile()

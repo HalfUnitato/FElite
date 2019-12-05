@@ -12,7 +12,7 @@ class FieldTest extends TestBaseClass {
 
     "get Field" should {
       "not be null" in {
-        noException shouldBe thrownBy(testField.getField)
+        testField.getField shouldBe testField.getField
       }
     }
     "Field toString" should {
@@ -25,11 +25,9 @@ class FieldTest extends TestBaseClass {
         testField.setCell(Grass, 0, 3) shouldBe ReturnValues.INVALID //this should be valid
       }
       "throw no Exception for Index -1" in {
-        //an[IndexOutOfBoundsException] shouldBe thrownBy(testField.setCell(Grass, -1, 0))
         testField.setCell(Grass, -1, 0) shouldBe(ReturnValues.INVALID)
       }
       "throw no Exception for Index 10" in {
-        //an[IndexOutOfBoundsException] shouldBe thrownBy(testField.setCell(Grass, 10, 0))
         testField.setCell(Grass, 10, 0) shouldBe(ReturnValues.INVALID)
       }
     }

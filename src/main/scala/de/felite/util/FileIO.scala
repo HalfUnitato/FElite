@@ -32,8 +32,9 @@ object FileIO {
     //    Array(Array(Grass,Tree,Tree),Array(Rock,Grass,Grass),Array(Grass,Grass,Grass))
   }
 
-  def setScal(s: Int): Unit = {
+  def setScal(s: Int): ReturnValues.Value = {
     scal = s
+    ReturnValues.VALID
   }
 
   def getScal: Int = {

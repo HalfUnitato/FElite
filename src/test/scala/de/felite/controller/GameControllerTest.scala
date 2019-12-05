@@ -12,7 +12,7 @@ class controllerTest extends TestBaseClass {
   "The GameControl" when {
     "Initialization" should {
       "not throw Exceptions " in {
-        noException shouldBe thrownBy(controller.init())
+        controller.init() shouldBe controller.init()
       }
     }
     "player info" when {
