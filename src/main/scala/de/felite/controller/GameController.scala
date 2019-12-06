@@ -88,7 +88,7 @@ class GameController() extends Observable {
     }
 
     //check if currentPlayer owns Soldier specified at from
-    if (currentPlayer.containsSoldier(Field.getField(from._2)(from._1)) == ReturnValues.VALID) {
+    if (currentPlayer.containsSoldier(Field.getCell(from._2,from._1)) == ReturnValues.VALID) {
       undoManager.doStep(new SetCommand(from._1, from._2, Field.getCell(from._1, from._2), to._1, to._2, Field.getCell(to._1, to._2)))
       //gameState = new PrintFieldState(this)
       //notifyObservers(ObserverCommand.PRINTSTRING)

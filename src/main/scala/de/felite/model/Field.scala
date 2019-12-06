@@ -5,6 +5,7 @@ import de.felite.model.entity.figure.Troop
 import de.felite.model.entity.obstacle.{Grass, Obstacle, Rock}
 import de.felite.util.{FileIO, ReturnValues}
 
+import scala.collection.mutable.ListBuffer
 import scala.util.{Failure, Success, Try}
 
 object Field {
@@ -14,9 +15,10 @@ object Field {
 
   // return Field
   // BUT NEVER THE ORIGINAL ONE!!!
-  def getField: Array[Array[Entity]] = matrix.clone()
+  def getField: Array[Array[Option[Entity]]] = matrix.clone()
 
   override def toString: String = {
+
     var base = ""
     for (i <- 0 until FileIO.getScal)
       base += "\t" + i
@@ -26,11 +28,10 @@ object Field {
       base += i + "\t"
       for (x <- y) {
         x match {
-          case troop: Troop => base += troop.getColor
-          case obs: Obstacle => base += obs.getColor
-          case _ => base += Console.RESET
+          case Some(b) => base += b.sign()
+          case None => base += Console.RESET
         }
-        base += x.sign() + "\t"
+        base += "\t"
         base += Console.RESET
       }
       i += 1
@@ -41,14 +42,17 @@ object Field {
 
   def setCell(entity: Entity, x: Int, y: Int): ReturnValues.Value = {
     Try(matrix(y)(x)) match {
-      case Success(v) => matrix(y)(x) = entity
+      case Success(v) => matrix(y)(x) = Some(entity)
       case Failure(e) => return ReturnValues.INVALID
     }
     ReturnValues.VALID
   }
 
   def getCell(x: Int, y: Int) = {
-    matrix(y)(x)
+    matrix(y)(x) match {
+      case Some(t) => t
+      case None => Grass
+    }
   }
 
   def getScal: Int = {

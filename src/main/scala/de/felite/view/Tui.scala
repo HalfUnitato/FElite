@@ -41,35 +41,39 @@ class Tui(controller: GameController) extends Observer {
       case _ =>
         input.split(" ").toList match {
           case xF :: yF :: action :: xT :: yT :: Nil =>
-            Try(xF.toInt, yF.toInt, xT.toInt, yT.toInt) match {
-              case Success(v) =>
-                action match {
-                  case "m" =>
-                    if (controller.move((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
-                      ReturnValues.VALID
-                    } else {
-                      printString("invalid move")
-                      ReturnValues.INVALID
-                    }
-                  case "a" =>
-                    if (controller.attack((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
-                      ReturnValues.VALID
-                    } else {
-                      printString("invalid attack")
-                      ReturnValues.INVALID
-                    }
-                  case _ =>
-                    printString("invalid move/attack")
-                    ReturnValues.INVALID
-                }
-              case Failure(e) =>
-                printString("index is not a number")
-                ReturnValues.INVALID
-            }
+            tryMove(xF, yF, action, xT, yT)
           case _ =>
             printString("unkown command")
             ReturnValues.INVALID
         }
+    }
+  }
+
+  def tryMove(xF: String, yF: String, action: String, xT: String, yT: String) = {
+    Try(xF.toInt, yF.toInt, xT.toInt, yT.toInt) match {
+      case Success(v) =>
+        action match {
+          case "m" =>
+            if (controller.move((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+              ReturnValues.VALID
+            } else {
+              printString("invalid move")
+              ReturnValues.INVALID
+            }
+          case "a" =>
+            if (controller.attack((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == ReturnValues.VALID) {
+              ReturnValues.VALID
+            } else {
+              printString("invalid attack")
+              ReturnValues.INVALID
+            }
+          case _ =>
+            printString("invalid move/attack")
+            ReturnValues.INVALID
+        }
+      case Failure(e) =>
+        printString("index is not a number")
+        ReturnValues.INVALID
     }
   }
 
