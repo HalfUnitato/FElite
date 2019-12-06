@@ -23,26 +23,40 @@ object Field {
     for (i <- 0 until FileIO.getScal)
       base += "\t" + i
     base += "\n"
+
     var i = 0
     for (y <- matrix) {
       base += i + "\t"
       for (x <- y) {
         x match {
-          case Some(b) => base += b.sign()
+          case Some(b) => {
+            b match {
+              case troop: Troop => base += troop.getColor
+              case obs: Obstacle => base += obs.getColor
+              case _ => base += Console.RESET
+            }
+            base += b.sign() + "\t"
+            base += Console.RESET
+          }
           case None => base += Console.RESET
         }
-        base += "\t"
-        base += Console.RESET
       }
+
       i += 1
       base += "\n"
     }
+
     base
   }
 
   def setCell(entity: Entity, x: Int, y: Int): ReturnValues.Value = {
     Try(matrix(y)(x)) match {
-      case Success(v) => matrix(y)(x) = Some(entity)
+      case Success(v) => {
+        if (entity == Nil)
+          matrix(y)(x) = None
+        else
+          matrix(y)(x) = Some(entity)
+      }
       case Failure(e) => return ReturnValues.INVALID
     }
     ReturnValues.VALID
