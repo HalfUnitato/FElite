@@ -25,8 +25,7 @@ object FElite {
     while (!controller.isEnd) {
 
       while (State.gameState.state != END && State.gameState.state != QUIT) {
-        State.gameState = new NextCmdState(controller)
-        State.gameState.handle
+       tui.playerTurn(scala.io.StdIn.readLine())
       }
     }
   }

@@ -9,7 +9,9 @@ import de.felite.util.{Observable, ObserverCommand, ReturnValues, UndoManager}
 import de.felite.util.ReturnValues._
 import de.felite.util.ObserverCommand._
 
-class GameController() extends Observable {
+import scala.swing.Publisher
+
+class GameController extends Observable{
   val undoManager = new UndoManager(this)
   var player1: Player = _
   var player2: Player = _
@@ -122,5 +124,5 @@ class GameController() extends Observable {
 
   def getPlayerName: String =
     currentPlayer.getPlayerName
-
+  def blockSize:Int = Math.sqrt(Field.getScal).toInt
 }

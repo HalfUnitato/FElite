@@ -110,15 +110,10 @@ class Tui(controller: GameController) extends Observer {
   }
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
-
     println(State.gameState.toString())
 
     if (observerCommand == READSTRING) {
       controller.readString = scala.io.StdIn.readLine()
-    }
-    else if (observerCommand == READCOMMAND) {
-      val command = scala.io.StdIn.readLine()
-      playerTurn(command)
     }
   }
 }
