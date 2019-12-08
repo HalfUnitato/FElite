@@ -50,38 +50,6 @@ class Gui(controller: GameController) extends Frame with Observer {
     add(gridPanel, BorderPanel.Position.Center)
     add(statusline, BorderPanel.Position.South)
   }
-  /*
-    menuBar = new MenuBar {
-      contents += new Menu("File") {
-        mnemonic = Key.F
-        contents += new MenuItem(Action("New") { controller.createEmptyGrid(controller.gridSize) })
-        contents += new MenuItem(Action("Random") { controller.createRandomGrid(controller.gridSize,controller.gridSize) })
-        contents += new MenuItem(Action("Quit") { System.exit(0) })
-      }
-      contents += new Menu("Edit") {
-        mnemonic = Key.E
-        contents += new MenuItem(Action("Undo") { controller.undo })
-        contents += new MenuItem(Action("Redo") { controller.redo })
-      }
-      contents += new Menu("Solve") {
-        mnemonic = Key.S
-        contents += new MenuItem(Action("Solve") { controller.solve })
-      }
-      contents += new Menu("Highlight") {
-        mnemonic = Key.H
-        for { index <- 0 to controller.gridSize } {
-          contents += new MenuItem(Action(index.toString) { controller.highlight(index) })
-        }
-      }
-      contents += new Menu("Options") {
-        mnemonic = Key.O
-        contents += new MenuItem(Action("Show all candidates") { controller.toggleShowAllCandidates })
-        contents += new MenuItem(Action("Size 1*1") { controller.resize(1) })
-        contents += new MenuItem(Action("Size 4*4") { controller.resize(4) })
-        contents += new MenuItem(Action("Size 9*9") { controller.resize(9) })
-
-      }
-    }*/
 
   visible = true
   redraw

@@ -22,17 +22,16 @@ class Tui(controller: GameController) extends Observer {
         controller.redo
         ReturnValues.VALID
       case "p" =>
-        printString(controller.FieldToString)
+        State.gameState = PrintFieldState(controller)
+      State.gameState.handle
         ReturnValues.VALID
       case "quit" =>
-        State.gameState = new QuitState(controller)
+        State.gameState = QuitState(controller)
         State.gameState.handle
         ReturnValues.VALID
-      /*case "cancel" =>
-        controller.gameState = ReturnValues.CANCEL
-        ReturnValues.VALID*/
+
       case "end" =>
-        State.gameState = new EndState(controller)
+        State.gameState = EndState(controller)
         State.gameState.handle
         ReturnValues.VALID
       case "help" =>

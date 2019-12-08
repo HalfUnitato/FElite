@@ -3,18 +3,21 @@ package de.felite.view
 import de.felite.controller.GameController
 import de.felite.model.Field
 
-import scala.swing._
-import scala.swing.event._
+import scala.swing.{BoxPanel, Color, Dimension, FlowPanel, Font, Label, Orientation, Swing}
+
+//import scala.swing._
+import scala.swing.event.MouseClicked
+//import scala.swing.event._
 
 class CellPanel(x: Int, y: Int, controller: GameController) extends FlowPanel {
 
-  val givenCellColor = new Color(200, 200, 255)
+  //val givenCellColor = new Color(200, 200, 255)
   val cellColor = new Color(224, 224, 255)
-  val highlightedCellColor = new Color(192, 255, 192)
+  //val highlightedCellColor = new Color(192, 255, 192)
 
   def myCell = Field.getCell(x, y)
 
-  def cellText(x: Int, y: Int):String  = "a" // Field.getCell(x, y).sign() ++ " "
+  def cellText(x: Int, y: Int):String  = Field.getCell(x, y).sign().toString
 
   val label =
     new Label {
@@ -26,8 +29,14 @@ class CellPanel(x: Int, y: Int, controller: GameController) extends FlowPanel {
     contents += label
     preferredSize = new Dimension(51, 51)
     //background = if (controller.isGiven(row, column)) givenCellColor else cellColor
-    //border = Swing.BeveledBorder(Swing.Raised)
+    border = Swing.BeveledBorder(Swing.Raised)
     listenTo(mouse.clicks)
+
+    reactions += {
+      case MouseClicked(src,pt,mod,clicks,pops) => {
+        // speicher kordinaten fuer den move-befehl!!
+      }
+    }
   }
 
   def redraw = {
@@ -35,6 +44,5 @@ class CellPanel(x: Int, y: Int, controller: GameController) extends FlowPanel {
     label.text = cellText(x, y)
     contents += cell
     repaint
-
   }
 }
