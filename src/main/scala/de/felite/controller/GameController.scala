@@ -5,7 +5,7 @@ import de.felite.controller.status.GameStateString._
 import de.felite.model.entity.Entity
 import de.felite.model.{Field, Player}
 import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier, SoldierFactory, Troop}
-import de.felite.model.entity.obstacle.Grass
+import de.felite.model.entity.obstacle.{Grass, Obstacle}
 import de.felite.util.{Observable, ObserverCommand, UndoManager}
 import de.felite.util.ObserverCommand._
 
@@ -137,7 +137,9 @@ class GameController() extends Observable {
 
     if (alreadyVisited.contains(cP))
       return false
-
+    val tmp = Field.getCell(cP._1,cP._2)
+    if(tmp.asInstanceOf[Obstacle].sign() != Grass.sign)
+      return false
     alreadyVisited = cP :: alreadyVisited
     for {x <- cP._1 - 1 to cP._2 + 1
          y <- cP._1 - 1 to cP._2 + 1} {
