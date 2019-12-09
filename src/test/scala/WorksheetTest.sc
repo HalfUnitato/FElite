@@ -1,4 +1,3 @@
-import de.felite.util.ReturnValues
 
 "10 12 m 10 12".toList.filter(c => c != ' ').map(c => c.toString)
 

@@ -5,7 +5,6 @@ import de.felite.controller.status._
 import de.felite.model.Field
 import de.felite.model.entity.figure.Soldier
 import de.felite.model.entity.obstacle.Grass
-import de.felite.util.ReturnValues
 class StatusTest extends TestBaseClass {
   var controller: GameController = new GameController
   controller.init(1)

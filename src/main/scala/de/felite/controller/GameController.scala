@@ -5,8 +5,7 @@ import de.felite.controller.status.GameStateString._
 import de.felite.model.entity.Entity
 import de.felite.model.{Field, Player}
 import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier, Troop}
-import de.felite.util.{Observable, ObserverCommand, ReturnValues, UndoManager}
-import de.felite.util.ReturnValues._
+import de.felite.util.{Observable, ObserverCommand, UndoManager}
 import de.felite.util.ObserverCommand._
 
 class GameController() extends Observable {
@@ -78,33 +77,30 @@ class GameController() extends Observable {
 
   def FieldToString = Field.toString
 
-  def move(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
+  def movement(from: (Int, Int), to: (Int, Int)): Boolean = {
+    val fEntity: Entity = Field.getCell(from._1, from._2)
+    if (!currentPlayer.containsSoldier(fEntity))
+      return false
+
+    val tEntity: Entity = Field.getCell(to._1, to._2)
     val tmpScal = Field.getScal
 
-    //check if outOBounds
-    if (from._1 >= tmpScal || from._2 >= tmpScal || to._1 >= tmpScal || to._2 >= tmpScal
-      || from._1 < 0 || from._2 < 0 || to._1 < 0 || to._2 < 0) {
-      return INVALID
-    }
-
     //check if currentPlayer owns Soldier specified at from
-    if (currentPlayer.containsSoldier(Field.getCell(from._2,from._1)) == ReturnValues.VALID) {
+    if (currentPlayer.containsSoldier(Field.getCell(from._2, from._1))) {
       undoManager.doStep(new SetCommand(from._1, from._2, Field.getCell(from._1, from._2), to._1, to._2, Field.getCell(to._1, to._2)))
       //gameState = new PrintFieldState(this)
       //notifyObservers(ObserverCommand.PRINTSTRING)
-      return ReturnValues.VALID
+      return true
     }
-
-    //else return invalid
-    ReturnValues.INVALID
+    false
   }
 
-  def attack(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
+  private def attack(from: (Int, Int), to: (Int, Int)): Boolean = {
     // missing plausi-Check -----
     //undoManager.doStep(new SetCommand(to._1, to._2, Field.getCell(from._1, from._2),
     //                                  to._1, to._2, Field.getCell(to._1, to._2)))
     State.gameState = new PrintFieldState(this)
-    ReturnValues.VALID
+    true
   }
 
   def undo = {
