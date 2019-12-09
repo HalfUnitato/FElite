@@ -16,5 +16,5 @@ case class Soldier(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos
 
 }
 object BuildSolider{
-  def buldSoldier(x:Int, y:Int, player : Player) = Soldier(3, 6, 1, 4, 6, x, y, player)
+  def buldSoldier(x:Int, y:Int, player : Player, health:Int = 6) = Soldier(3, 6, 1, 4, health, x, y, player)
 }

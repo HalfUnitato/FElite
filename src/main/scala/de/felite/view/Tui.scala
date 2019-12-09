@@ -40,8 +40,8 @@ class Tui(controller: GameController) extends Observer {
         true
       case _ =>
         input.split(" ").toList match {
-          case xF :: yF :: action :: xT :: yT :: Nil =>
-            tryMove(xF, yF, action, xT, yT)
+          case xF :: yF :: xT :: yT :: Nil =>
+            tryMove(xF, yF, xT, yT)
           case _ =>
             printString("unkown command")
             false
@@ -49,7 +49,7 @@ class Tui(controller: GameController) extends Observer {
     }
   }
 
-  def tryMove(xF: String, yF: String, action: String, xT: String, yT: String):Boolean = {
+  def tryMove(xF: String, yF: String, xT: String, yT: String):Boolean = {
     Try(xF.toInt, yF.toInt, xT.toInt, yT.toInt) match {
       case Success(v) =>
             if (controller.movement((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == true) {

@@ -16,5 +16,5 @@ case class Archer(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos:
 }
 
 object BuildArcher{
-  def buildArcher(x:Int, y:Int, player : Player) = Archer(2, 3, 4, 2, 3, x, y, player)
+  def buildArcher(x:Int, y:Int, player : Player, health:Int = 6) = Archer(2, 3, 4, 2, health, x, y, player)
 }
