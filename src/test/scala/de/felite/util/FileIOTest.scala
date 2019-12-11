@@ -6,7 +6,7 @@ import de.felite.model.entity.Entity
 class FileIOTest extends TestBaseClass {
   "A FileIO" when {
     "setting the scale" in {
-      FileIO.setScal(3) shouldBe ReturnValues.VALID
+      FileIO.setScal(3) shouldBe true
     }
     "getting the scale" in {
       FileIO.getScal should be (3)
@@ -17,7 +17,7 @@ class FileIOTest extends TestBaseClass {
       }
       "return a field" in {
         val field = FileIO.readFromFile()
-        field.isInstanceOf[Array[Array[Entity]]] shouldBe true
+        field.isInstanceOf[Array[Array[Option[Entity]]]] shouldBe true
       }
     }
   }

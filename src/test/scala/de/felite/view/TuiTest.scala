@@ -4,7 +4,7 @@ import de.felite.TestBaseClass
 import de.felite.controller.GameController
 import de.felite.controller.status.{GameStateString, State}
 import de.felite.model.{Field, Player}
-import de.felite.util.{ObserverCommand, ReturnValues}
+import de.felite.util.ObserverCommand
 
 import scala.util.control.Exception
 
@@ -27,16 +27,16 @@ class TuiTest extends TestBaseClass {
     //How to use input? where to read input?
     "playerTurn" should {
       "undo move" in {
-        tui.playerTurn("undo") shouldBe ReturnValues.VALID
+        tui.playerTurn("undo") shouldBe true
       }
       "redo move" in {
-        tui.playerTurn("redo") shouldBe ReturnValues.VALID
+        tui.playerTurn("redo") shouldBe true
       }
       "print the field" in {
-        tui.playerTurn("p") shouldBe ReturnValues.VALID
+        tui.playerTurn("p") shouldBe true
       }
       "print the help" in {
-        tui.playerTurn("help") shouldBe ReturnValues.VALID
+        tui.playerTurn("help") shouldBe true
       }
       "quit" in {
         tui.playerTurn("quit")
@@ -48,27 +48,27 @@ class TuiTest extends TestBaseClass {
       }*/
       "execute the command" in {
         //controller.switchPlayer()
-        tui.playerTurn("0 0 m 0 1") shouldBe ReturnValues.VALID
-        tui.playerTurn("0 0 a 0 1") shouldBe ReturnValues.VALID
-        tui.playerTurn("-1 0 m 0 1") shouldBe ReturnValues.INVALID
-        tui.playerTurn("0 0 m 9 1") shouldBe ReturnValues.INVALID
-        tui.playerTurn("0 0 c 20 1") shouldBe ReturnValues.INVALID
-        tui.playerTurn("O 0 m 20 1") shouldBe ReturnValues.INVALID
-        tui.playerTurn("0 m 20 1") shouldBe ReturnValues.INVALID
+        tui.playerTurn("0 0 1 1") shouldBe true
+        tui.playerTurn("1 0 1 2") shouldBe true
+        tui.playerTurn("-1 0 0 1") shouldBe false
+        tui.playerTurn("0 0 9 1") shouldBe false
+        tui.playerTurn("0 0 20 1") shouldBe false
+        tui.playerTurn("O 0 20 1") shouldBe false
+        tui.playerTurn("0 20 1") shouldBe false
       }
       "end" in {
-        tui.playerTurn("end") shouldBe ReturnValues.VALID
+        tui.playerTurn("end") shouldBe true
       }
     }
     /*"update" when {
       "ObserverCommand" should {
         "be PrintString" in {
           GameController.printString = "Marin is doof"
-          tui.update(ObserverCommand.PRINTSTRING) shouldBe ReturnValues.VALID
+          tui.update(ObserverCommand.PRINTSTRING) shouldBe true
         }
         "be ReadCommand" in {
           GameController.cmdStr = "sickPWftw"
-          tui.update(ObserverCommand.READCOMMAND) shouldBe ReturnValues.INVALID
+          tui.update(ObserverCommand.READCOMMAND) shouldBe false
         }
       }
     }*/

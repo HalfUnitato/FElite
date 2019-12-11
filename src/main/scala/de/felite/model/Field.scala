@@ -3,7 +3,7 @@ package de.felite.model
 import de.felite.model.entity.Entity
 import de.felite.model.entity.figure.Troop
 import de.felite.model.entity.obstacle.{Grass, Obstacle, Rock}
-import de.felite.util.{FileIO, ReturnValues}
+import de.felite.util.FileIO
 
 import scala.collection.mutable.ListBuffer
 import scala.util.{Failure, Success, Try}
@@ -49,7 +49,7 @@ object Field {
     base
   }
 
-  def setCell(entity: Entity, x: Int, y: Int): ReturnValues.Value = {
+  def setCell(entity: Entity, x: Int, y: Int): Boolean = {
     Try(matrix(y)(x)) match {
       case Success(v) => {
         if (entity == Nil)
@@ -57,9 +57,9 @@ object Field {
         else
           matrix(y)(x) = Some(entity)
       }
-      case Failure(e) => return ReturnValues.INVALID
+      case Failure(e) => return false
     }
-    ReturnValues.VALID
+    true
   }
 
   def getCell(x: Int, y: Int) = {

@@ -4,14 +4,14 @@ import de.felite.controller.status._
 import de.felite.controller.status.GameStateString._
 import de.felite.model.entity.Entity
 import de.felite.model.{Field, Player}
-import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier, Troop}
-import de.felite.util.{Observable, ObserverCommand, ReturnValues, UndoManager}
-import de.felite.util.ReturnValues._
+import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier, SoldierFactory, Troop}
+import de.felite.model.entity.obstacle.{Grass, Obstacle}
+import de.felite.util.{Observable, ObserverCommand, UndoManager}
 import de.felite.util.ObserverCommand._
 
-import scala.swing.Publisher
+import scala.util.{Failure, Success, Try}
 
-class GameController extends Observable{
+class GameController() extends Observable {
   val undoManager = new UndoManager(this)
   var player1: Player = _
   var player2: Player = _
@@ -78,35 +78,88 @@ class GameController extends Observable{
     Field.setCell(archer, x, y)
   }
 
-  def FieldToString = Field.toString
+  def FieldToString: String = Field.toString
 
-  def move(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
-    val tmpScal = Field.getScal
-
-    //check if outOBounds
-    if (from._1 >= tmpScal || from._2 >= tmpScal || to._1 >= tmpScal || to._2 >= tmpScal
-      || from._1 < 0 || from._2 < 0 || to._1 < 0 || to._2 < 0) {
-      return INVALID
+  def tryMove(from:(String,String),to:(String,String)):Boolean = {
+    Try(Field.getCell(from._1.toInt,from._2.toInt), Field.getCell(to._1.toInt, to._2.toInt)) match {
+      case Success(v) =>
+        movement((from._1.toInt,from._2.toInt), (to._1.toInt, to._2.toInt))
+      case Failure(e) =>
+        false
     }
-
-    //check if currentPlayer owns Soldier specified at from
-    if (currentPlayer.containsSoldier(Field.getCell(from._2,from._1)) == ReturnValues.VALID) {
-      undoManager.doStep(new SetCommand(from._1, from._2, Field.getCell(from._1, from._2), to._1, to._2, Field.getCell(to._1, to._2)))
-      //gameState = new PrintFieldState(this)
-      //notifyObservers(ObserverCommand.PRINTSTRING)
-      return ReturnValues.VALID
-    }
-
-    //else return invalid
-    ReturnValues.INVALID
   }
+  def movement(from: (Int, Int), to: (Int, Int)): Boolean = {
+    // is usage of troop valid?
+    val fEntity: Entity = Field.getCell(from._1, from._2)
 
-  def attack(from: (Int, Int), to: (Int, Int)): ReturnValues.Value = {
-    // missing plausi-Check -----
-    //undoManager.doStep(new SetCommand(to._1, to._2, Field.getCell(from._1, from._2),
-    //                                  to._1, to._2, Field.getCell(to._1, to._2)))
-    State.gameState = new PrintFieldState(this)
-    ReturnValues.VALID
+    if (!currentPlayer.containsSoldier(fEntity))
+      return false
+
+    // is destination valid?
+    val tEntity: Entity = Field.getCell(to._1, to._2)
+    var range: Int = 0
+
+    // Troop from enemy?
+    if (tEntity.isInstanceOf[Troop] && !currentPlayer.containsSoldier(tEntity)) {
+      range = fEntity.asInstanceOf[Troop].attackRange()
+    }
+    // or Grass -> no Rock / Tree
+    else if (tEntity.sign() == Grass.sign) {
+      range = fEntity.asInstanceOf[Troop].moveRange()
+    } else return false
+
+    alreadyVisited = Nil
+
+    if (!movePlausiR(from, to, range))
+      return false
+
+    // attack
+    if (Field.getCell(to._1, to._2).isInstanceOf[Troop]) {
+      doAttack(from,fEntity,to,tEntity)
+    }
+    // move
+    else {
+      undoManager.doStep(new SetCommand(from._1, from._2, Grass,
+        to._1, to._2, fEntity))
+    }
+    true
+  }
+private def doAttack(from:(Int,Int),fEntity:Entity,to:(Int,Int),tEntity:Entity)={
+    undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
+    to._1, to._2,
+    if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
+      Grass
+    } else {
+      SoldierFactory.create(
+        tEntity.sign(), to,
+        tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
+        tEntity.asInstanceOf[Troop].owner()
+      )
+    }))
+}
+  private var alreadyVisited: List[(Int, Int)] = Nil
+
+  def movePlausiR(cP: (Int, Int), goal: (Int, Int), range: Int): Boolean = {
+    Try(Field.getCell(cP._1, cP._2)) match {
+      case Failure(e) => return false
+      case Success(s) =>
+    }
+    if (cP._1 == goal._1 && cP._2 == goal._2)
+      return true
+    if (range == 0)
+      return false
+    if (alreadyVisited.contains(cP))
+      return false
+    val tmp = Field.getCell(cP._1, cP._2)
+    if (!tmp.isInstanceOf[Troop] && tmp.asInstanceOf[Obstacle].sign() != Grass.sign)
+      return false
+    alreadyVisited = cP :: alreadyVisited
+    for {x <- cP._1 - 1 to cP._2 + 1
+         y <- cP._1 - 1 to cP._2 + 1} {
+      if (movePlausiR((x, y), goal, range - 1))
+        return true
+    }
+    false
   }
 
   def undo = {
@@ -124,5 +177,5 @@ class GameController extends Observable{
 
   def getPlayerName: String =
     currentPlayer.getPlayerName
-  def blockSize:Int = Math.sqrt(Field.getScal).toInt
+
 }

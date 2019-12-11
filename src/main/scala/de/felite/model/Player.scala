@@ -3,7 +3,7 @@ package de.felite.model
 import de.felite.model.entity.Entity
 import de.felite.model.entity.figure.Troop
 import de.felite.model.entity.obstacle.Obstacle
-import de.felite.util.{PackTroops, ReturnValues}
+import de.felite.util.PackTroops
 
 import scala.collection.mutable.ListBuffer
 
@@ -12,28 +12,28 @@ case class Player(private val name: String = "John Doe", private val color: Stri
   private var playerTroops = new ListBuffer[Troop]()
   private var unitAmount = 42 //UnitList.length
 
-  def addPlayerTroop(troop: Troop): ReturnValues.Value = {
+  def addPlayerTroop(troop: Troop): Boolean = {
 
     if (playerTroops.contains(troop))
-      return ReturnValues.INVALID
+      return false
 
     playerTroops += troop
-    ReturnValues.VALID
+    true
   }
 
-  def removeTroop(troop: Troop): ReturnValues.Value = {
+  def removeTroop(troop: Troop):Boolean  = {
     if (!playerTroops.contains(troop)) {
-      return ReturnValues.INVALID
+     return  false
     }
     playerTroops.remove(playerTroops.indexOf(troop))
-    ReturnValues.VALID
+    true
   }
 
-  def containsSoldier(soldier: Entity): ReturnValues.Value = {
+  def containsSoldier(soldier: Entity):Boolean = {
     if(playerTroops.contains(soldier))
-              ReturnValues.VALID
+      true
     else
-        ReturnValues.INVALID
+      false
   }
 
   def getPlayerName: String = name

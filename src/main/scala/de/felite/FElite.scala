@@ -2,7 +2,7 @@ package de.felite
 
 import de.felite.controller.GameController
 import de.felite.model.{Field, Player}
-import de.felite.util.{ObserverCommand, ReturnValues}
+import de.felite.util.ObserverCommand
 import de.felite.view.Tui
 import de.felite.controller.status.GameStateString._
 import de.felite.controller.status.{InitState, NextCmdState, State}

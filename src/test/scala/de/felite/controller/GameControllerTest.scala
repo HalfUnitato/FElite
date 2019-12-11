@@ -1,13 +1,13 @@
 package de.felite.controller
 
 import de.felite.model.{Field, Player}
-import de.felite.util.{FileIO, ReturnValues}
+import de.felite.util.FileIO
 import de.felite.{TestBaseClass, util}
 
 class controllerTest extends TestBaseClass {
   val playerOne = Player("Marin", Console.BLUE)
   val playerTwo = Player("Lukas", Console.RED)
-  val controller:GameController = new GameController()
+  val controller: GameController = new GameController()
 
   "The GameControl" when {
     "Initialization" should {
@@ -28,25 +28,32 @@ class controllerTest extends TestBaseClass {
       }
     }
     "troop actions" should {
+      "attack" in {
+        controller.movement((1, 0), (1, 2)) shouldBe true
+      }
+      "attack failed" in {
+        controller.movement((1, 0), (0, 0)) shouldBe false
+      }
       "move not fail" in {
-        controller.move((0, 0), (0, 1)) shouldBe util.ReturnValues.VALID
+        controller.movement((0, 0), (1, 1)) shouldBe true
+        controller.movement((1, 2), (0, 1)) shouldBe false
       }
       "undo not fail" in {
-        controller.move((0, 0), (0, 1))
+        controller.movement((0, 0), (0, 1))
         controller.undo
       }
       "redo not fail" in {
-        controller.move((0, 0), (0, 1))
+        controller.movement((0, 0), (0, 1))
         controller.undo
         controller.redo
       }
       "move fail" in {
-        controller.move((0, 5), (0, 1)) shouldBe ReturnValues.INVALID
-        controller.move((1, 1), (0, 1)) shouldBe ReturnValues.INVALID
+        controller.tryMove((0.toString, 5.toString), (0.toString, 1.toString)) shouldBe false
+        controller.tryMove((1.toString, 1.toString), (0.toString, 1.toString)) shouldBe false
       }
-       "attack not fail" in {
-         controller.attack((0, 0), (0, 1)) shouldBe ReturnValues.VALID
-       }
+      //       "attack not fail" in {
+      //         controller.attack((0, 0), (0, 1)) shouldBe ReturnValues.VALID
+      //       }
     }
     /*"switch to player" should {
       "not fail" in {

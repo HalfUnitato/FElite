@@ -2,7 +2,6 @@ package de.felite.model
 
 import de.felite.TestBaseClass
 import de.felite.model.entity.figure.{Archer, Soldier, Troop}
-import de.felite.util.ReturnValues
 
 class PlayerTest extends TestBaseClass {
   "A Player" when {
@@ -24,26 +23,26 @@ class PlayerTest extends TestBaseClass {
         player.getUnitAmount == 42
       }
       "can add troops" in {
-        player.addPlayerTroop(archer1) shouldBe ReturnValues.VALID
-        player.addPlayerTroop(archer2) shouldBe ReturnValues.VALID
-        player.addPlayerTroop(soldier1) shouldBe ReturnValues.VALID
-        player.addPlayerTroop(soldier2) shouldBe ReturnValues.VALID
-        player.addPlayerTroop(soldier2) shouldBe ReturnValues.INVALID
+        player.addPlayerTroop(archer1) shouldBe true
+        player.addPlayerTroop(archer2) shouldBe true
+        player.addPlayerTroop(soldier1) shouldBe true
+        player.addPlayerTroop(soldier2) shouldBe true
+        player.addPlayerTroop(soldier2) shouldBe false
         // field.setSoldier(soldier, x, y)
       }
       "can check for troops" in {
-        player.containsSoldier(archer1.asInstanceOf[Troop]) shouldBe ReturnValues.VALID
-        player.containsSoldier(archer2.asInstanceOf[Troop]) shouldBe ReturnValues.VALID
-        player.containsSoldier(soldier1.asInstanceOf[Troop]) shouldBe ReturnValues.VALID
-        player.containsSoldier(soldier2.asInstanceOf[Troop]) shouldBe ReturnValues.VALID
-        player.containsSoldier(soldierX.asInstanceOf[Troop]) shouldBe ReturnValues.INVALID
+        player.containsSoldier(archer1.asInstanceOf[Troop]) shouldBe true
+        player.containsSoldier(archer2.asInstanceOf[Troop]) shouldBe true
+        player.containsSoldier(soldier1.asInstanceOf[Troop]) shouldBe true
+        player.containsSoldier(soldier2.asInstanceOf[Troop]) shouldBe true
+        player.containsSoldier(soldierX.asInstanceOf[Troop]) shouldBe false
       }
       "can remove troops" in {
-        player.removeTroop(archer1) shouldBe ReturnValues.VALID
-        player.removeTroop(archer2) shouldBe ReturnValues.VALID
-        player.removeTroop(soldier1) shouldBe ReturnValues.VALID
-        player.removeTroop(soldier2) shouldBe ReturnValues.VALID
-        player.removeTroop(soldier2) shouldBe ReturnValues.INVALID
+        player.removeTroop(archer1) shouldBe true
+        player.removeTroop(archer2) shouldBe true
+        player.removeTroop(soldier1) shouldBe true
+        player.removeTroop(soldier2) shouldBe true
+        player.removeTroop(soldier2) shouldBe false
       }
     }
   }
