@@ -25,12 +25,12 @@ class GameController() extends Observable {
     println("------ Start of Initialisation ------")
 
     if (testflag == 0) {
-      State.gameState = new P1InitState(this)
-      State.gameState.handle
+      State.gameState = P1InitState(this)
+      State.gameState.handle()
       this.player1 = Player(readString, Console.BLUE)
 
-      State.gameState = new P2InitState(this)
-      State.gameState.handle
+      State.gameState = P2InitState(this)
+      State.gameState.handle()
       this.player2 = Player(readString, Console.RED)
     } else {
       this.player1 = Player("Peter Hans")
@@ -42,8 +42,8 @@ class GameController() extends Observable {
 
     currentPlayer = player1
 
-    State.gameState = new P1State(this)
-    State.gameState.handle
+    State.gameState = P1State(this)
+    State.gameState.handle()
 
     println("------ End of Initialisation ------")
 
@@ -62,8 +62,8 @@ class GameController() extends Observable {
       x = 0
     }
     else if (pos.equals("BottomRight")) {
-      y = Field.getScal - 1
-      x = Field.getScal - 2
+      y = Field.getScale - 1
+      x = Field.getScale - 2
     }
 
     val soldier = BuildSolider.buldSoldier(x, y, player)
@@ -124,7 +124,7 @@ class GameController() extends Observable {
     }
     true
   }
-private def doAttack(from:(Int,Int),fEntity:Entity,to:(Int,Int),tEntity:Entity)={
+private def doAttack(from:(Int,Int),fEntity:Entity,to:(Int,Int),tEntity:Entity): Unit ={
     undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
     to._1, to._2,
     if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
@@ -162,14 +162,14 @@ private def doAttack(from:(Int,Int),fEntity:Entity,to:(Int,Int),tEntity:Entity)=
     false
   }
 
-  def undo = {
+  def undo(): Unit = {
     undoManager.undoStep
-    State.gameState = new PrintFieldState(this)
+    State.gameState = PrintFieldState(this)
   }
 
-  def redo = {
+  def redo(): Unit = {
     undoManager.redoStep
-    State.gameState = new PrintFieldState(this)
+    State.gameState = PrintFieldState(this)
   }
 
   def isEnd: Boolean =
