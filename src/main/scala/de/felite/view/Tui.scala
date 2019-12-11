@@ -41,7 +41,12 @@ class Tui(controller: GameController) extends Observer {
       case _ =>
         input.split(" ").toList match {
           case xF :: yF :: xT :: yT :: Nil =>
-            controller.tryMove(xF, yF, xT, yT)
+            if (!controller.tryMove((xF, yF), (xT, yT))) {
+              println("move not valid")
+              false
+            } else {
+              true
+            }
           case _ =>
             printString("unkown command")
             false

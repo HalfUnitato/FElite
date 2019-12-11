@@ -48,8 +48,8 @@ class TuiTest extends TestBaseClass {
       }*/
       "execute the command" in {
         //controller.switchPlayer()
-        tui.playerTurn("0 0 0 1") shouldBe true
-        tui.playerTurn("0 0 0 1") shouldBe true
+        tui.playerTurn("0 0 1 1") shouldBe true
+        tui.playerTurn("1 0 1 2") shouldBe true
         tui.playerTurn("-1 0 0 1") shouldBe false
         tui.playerTurn("0 0 9 1") shouldBe false
         tui.playerTurn("0 0 20 1") shouldBe false

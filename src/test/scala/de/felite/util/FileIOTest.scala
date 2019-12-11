@@ -17,7 +17,7 @@ class FileIOTest extends TestBaseClass {
       }
       "return a field" in {
         val field = FileIO.readFromFile()
-        field.isInstanceOf[Array[Array[Entity]]] shouldBe true
+        field.isInstanceOf[Array[Array[Option[Entity]]]] shouldBe true
       }
     }
   }

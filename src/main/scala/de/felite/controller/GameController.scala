@@ -80,10 +80,10 @@ class GameController() extends Observable {
 
   def FieldToString: String = Field.toString
 
-  def tryMove(xF: String, yF: String, xT: String, yT: String):Boolean = {
-    Try(xF.toInt, yF.toInt, xT.toInt, yT.toInt) match {
+  def tryMove(from:(String,String),to:(String,String)):Boolean = {
+    Try(Field.getCell(from._1.toInt,from._2.toInt), Field.getCell(to._1.toInt, to._2.toInt)) match {
       case Success(v) =>
-        movement((xF.toInt, yF.toInt), (xT.toInt, yT.toInt))
+        movement((from._1.toInt,from._2.toInt), (to._1.toInt, to._2.toInt))
       case Failure(e) =>
         false
     }
