@@ -99,30 +99,31 @@ class GameController() extends Observable {
     else if (tEntity.sign() == Grass.sign) {
       range = fEntity.asInstanceOf[Troop].moveRange()
     } else return false
-
+    alreadyVisited = Nil
     if (!movementR(from, to, range))
       return false
 
     // attack
     if (Field.getCell(to._1, to._2).isInstanceOf[Troop]) {
+
       undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
         to._1, to._2,
-        if(tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() < 0){
+        if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
           Grass
         } else {
           SoldierFactory.create(
-              tEntity.sign(),to,
-              tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
-              tEntity.asInstanceOf[Troop].owner()
-            )
+            tEntity.sign(), to,
+            tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
+            tEntity.asInstanceOf[Troop].owner()
+          )
         }))
     }
     // move
     else {
-      undoManager.doStep(new SetCommand(from._1, from._2, fEntity,
+      undoManager.doStep(new SetCommand(from._1, from._2, Grass,
         to._1, to._2, fEntity))
     }
-    false
+    true
   }
 
   private var alreadyVisited: List[(Int, Int)] = Nil
@@ -134,11 +135,12 @@ class GameController() extends Observable {
     }
     if (cP._1 == goal._1 && cP._2 == goal._2)
       return true
-
+    if (range == 0)
+      return false
     if (alreadyVisited.contains(cP))
       return false
-    val tmp = Field.getCell(cP._1,cP._2)
-    if(tmp.asInstanceOf[Obstacle].sign() != Grass.sign)
+    val tmp = Field.getCell(cP._1, cP._2)
+    if (!tmp.isInstanceOf[Troop] && tmp.asInstanceOf[Obstacle].sign() != Grass.sign)
       return false
     alreadyVisited = cP :: alreadyVisited
     for {x <- cP._1 - 1 to cP._2 + 1

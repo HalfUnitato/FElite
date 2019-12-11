@@ -52,7 +52,7 @@ class Tui(controller: GameController) extends Observer {
   def tryMove(xF: String, yF: String, xT: String, yT: String):Boolean = {
     Try(xF.toInt, yF.toInt, xT.toInt, yT.toInt) match {
       case Success(v) =>
-            if (controller.movement((xF.toInt, yF.toInt), (xT.toInt, yT.toInt)) == true) {
+            if (controller.movement((xF.toInt, yF.toInt), (xT.toInt, yT.toInt))) {
               true
             } else {
               printString("invalid move")
