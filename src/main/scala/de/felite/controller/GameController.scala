@@ -78,8 +78,16 @@ class GameController() extends Observable {
     Field.setCell(archer, x, y)
   }
 
-  def FieldToString = Field.toString
+  def FieldToString: String = Field.toString
 
+  def tryMove(xF: String, yF: String, xT: String, yT: String):Boolean = {
+    Try(xF.toInt, yF.toInt, xT.toInt, yT.toInt) match {
+      case Success(v) =>
+        movement((xF.toInt, yF.toInt), (xT.toInt, yT.toInt))
+      case Failure(e) =>
+        false
+    }
+  }
   def movement(from: (Int, Int), to: (Int, Int)): Boolean = {
     // is usage of troop valid?
     val fEntity: Entity = Field.getCell(from._1, from._2)
@@ -99,24 +107,15 @@ class GameController() extends Observable {
     else if (tEntity.sign() == Grass.sign) {
       range = fEntity.asInstanceOf[Troop].moveRange()
     } else return false
+
     alreadyVisited = Nil
-    if (!movementR(from, to, range))
+
+    if (!movePlausiR(from, to, range))
       return false
 
     // attack
     if (Field.getCell(to._1, to._2).isInstanceOf[Troop]) {
-
-      undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
-        to._1, to._2,
-        if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
-          Grass
-        } else {
-          SoldierFactory.create(
-            tEntity.sign(), to,
-            tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
-            tEntity.asInstanceOf[Troop].owner()
-          )
-        }))
+      doAttack(from,fEntity,to,tEntity)
     }
     // move
     else {
@@ -125,10 +124,22 @@ class GameController() extends Observable {
     }
     true
   }
-
+private def doAttack(from:(Int,Int),fEntity:Entity,to:(Int,Int),tEntity:Entity)={
+    undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
+    to._1, to._2,
+    if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
+      Grass
+    } else {
+      SoldierFactory.create(
+        tEntity.sign(), to,
+        tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
+        tEntity.asInstanceOf[Troop].owner()
+      )
+    }))
+}
   private var alreadyVisited: List[(Int, Int)] = Nil
 
-  def movementR(cP: (Int, Int), goal: (Int, Int), range: Int): Boolean = {
+  def movePlausiR(cP: (Int, Int), goal: (Int, Int), range: Int): Boolean = {
     Try(Field.getCell(cP._1, cP._2)) match {
       case Failure(e) => return false
       case Success(s) =>
@@ -145,7 +156,7 @@ class GameController() extends Observable {
     alreadyVisited = cP :: alreadyVisited
     for {x <- cP._1 - 1 to cP._2 + 1
          y <- cP._1 - 1 to cP._2 + 1} {
-      if (movementR((x, y), goal, range - 1))
+      if (movePlausiR((x, y), goal, range - 1))
         return true
     }
     false

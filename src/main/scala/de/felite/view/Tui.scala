@@ -41,26 +41,11 @@ class Tui(controller: GameController) extends Observer {
       case _ =>
         input.split(" ").toList match {
           case xF :: yF :: xT :: yT :: Nil =>
-            tryMove(xF, yF, xT, yT)
+            controller.tryMove(xF, yF, xT, yT)
           case _ =>
             printString("unkown command")
             false
         }
-    }
-  }
-
-  def tryMove(xF: String, yF: String, xT: String, yT: String):Boolean = {
-    Try(xF.toInt, yF.toInt, xT.toInt, yT.toInt) match {
-      case Success(v) =>
-            if (controller.movement((xF.toInt, yF.toInt), (xT.toInt, yT.toInt))) {
-              true
-            } else {
-              printString("invalid move")
-              false
-            }
-      case Failure(e) =>
-        printString("index is not a number")
-        false
     }
   }
 
