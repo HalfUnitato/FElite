@@ -15,38 +15,39 @@ class Gui(controller: GameController) extends Frame with Observer {
 
   controller.add(this)
 
-  title = "HTWG Sudoku"
-  var cells = Array.ofDim[CellPanel](Field.getScal, Field.getScal)
+  title = "Fire Emblem lite"
+
+  val scale: Int = Field.getScal
+
+  preferredSize = new Dimension(640,480)
 
 
-  def gridPanel = new GridPanel(controller.blockSize, controller.blockSize) {
+
+
+
+  var cells: Array[Array[CellButton]] = Array.ofDim[CellButton](scale, scale)
+
+
+  def gridPanel: GridPanel = new GridPanel(scale, scale) {
     border = LineBorder(java.awt.Color.BLACK, 2)
     background = java.awt.Color.BLACK
     for {
-      outerRow <- 0 until controller.blockSize
-      outerColumn <- 0 until controller.blockSize
+      column <- 0 until scale
+      row <- 0 until scale
     } {
-      contents += new GridPanel(controller.blockSize, controller.blockSize) {
-        border = LineBorder(java.awt.Color.BLACK, 2)
-        for {
-          innerRow <- 0 until controller.blockSize
-          innerColumn <- 0 until controller.blockSize
-        } {
-          val x = outerRow * controller.blockSize + innerRow
-          val y = outerColumn * controller.blockSize + innerColumn
-          val cellPanel = new CellPanel(x, y, controller)
-          cells(x)(y) = cellPanel
-          contents += cellPanel
-          listenTo(cellPanel)
-        }
-      }
+      val cellButton = new CellButton(row, column)
+      cells(row)(column) = cellButton
+      cellButton.setView()
+      contents += cellButton
+      listenTo(cellButton)
     }
   }
 
-  val statusline = new TextField(State.gameState.toString(), 20)
+  val statusline = new TextField(State.gameState.toString, 20)
+  val statusTop = new Label(State.gameState.toString)
 
   contents = new BorderPanel {
-    //add(highlightpanel, BorderPanel.Position.North)
+    add(statusTop, BorderPanel.Position.North)
     add(gridPanel, BorderPanel.Position.Center)
     add(statusline, BorderPanel.Position.South)
   }
@@ -61,19 +62,19 @@ class Gui(controller: GameController) extends Frame with Observer {
 //  }
 
 
-  def redraw = {
+  def redraw(): Unit = {
     for {
       row <- 0 until Field.getScal
       column <- 0 until Field.getScal
-    } cells(row)(column).redraw
+    } //cells(row)(column).redraw
     statusline.text = controller.printString
     repaint
   }
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
 
-    println(State.gameState.toString())
-    redraw
+    println(State.gameState.toString)
+    redraw()
     if (observerCommand == READSTRING) {
       //popup
       controller.readString = "Klaus"

@@ -16,12 +16,6 @@ trait Troop extends Entity {
 
   def owner():Player = Player()
 
-  def getColor:String = owner().getPlayerColor
+  override def getColor:String = owner().getPlayerColor
 
-  /*def move(from:Cell, to:Cell): Unit = {
-
-  }*/
-
-  //missing: position:Cell, target:Cell
-//  def attackTarget(t:Troop)
 }

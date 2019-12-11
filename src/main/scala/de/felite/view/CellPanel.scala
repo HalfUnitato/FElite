@@ -27,7 +27,7 @@ class CellPanel(x: Int, y: Int, controller: GameController) extends FlowPanel {
 
   val cell = new BoxPanel(Orientation.Vertical) {
     contents += label
-    preferredSize = new Dimension(51, 51)
+//    preferredSize = new Dimension(150, 50)
     //background = if (controller.isGiven(row, column)) givenCellColor else cellColor
     border = Swing.BeveledBorder(Swing.Raised)
     listenTo(mouse.clicks)

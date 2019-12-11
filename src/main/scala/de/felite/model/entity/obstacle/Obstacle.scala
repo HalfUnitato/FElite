@@ -9,5 +9,5 @@ trait Obstacle extends Entity {
 
   def color(): String
 
-  def getColor:String = color()
+  override def getColor:String = color()
 }
