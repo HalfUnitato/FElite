@@ -19,7 +19,7 @@ class GameController() extends Observable {
   var printString: String = _
   var readString: String = _
   var cmdStr: String = _
-  var btnCoord:(String, String) = ("-1","-1")
+  var btnCoord:(Int, Int) = (-1,-1)
 
 
   def init(testflag: Int = 0): Unit = {
@@ -81,10 +81,10 @@ class GameController() extends Observable {
 
   def FieldToString: String = Field.toString
 
-  def tryMove(from:(String,String),to:(String,String)):Boolean = {
-    Try(Field.getCell(from._1.toInt,from._2.toInt), Field.getCell(to._1.toInt, to._2.toInt)) match {
+  def tryMove(from:(Int,Int),to:(Int,Int)):Boolean = {
+    Try(Field.getCell(from._1,from._2), Field.getCell(to._1, to._2)) match {
       case Success(v) =>
-        movement((from._1.toInt,from._2.toInt), (to._1.toInt, to._2.toInt))
+        movement((from._1,from._2), (to._1, to._2))
       case Failure(e) =>
         false
     }

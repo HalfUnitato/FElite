@@ -19,7 +19,7 @@ class CellPanel(x: Int, y: Int, controller: GameController) extends FlowPanel {
 
   def cellText(x: Int, y: Int):String  = Field.getCell(x, y).sign().toString
 
-  val label =
+  val label: Label =
     new Label {
       text = cellText(x, y)
       font = new Font("Verdana", 1, 36)
