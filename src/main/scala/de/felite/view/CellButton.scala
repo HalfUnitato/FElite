@@ -2,23 +2,38 @@ package de.felite.view
 
 import java.awt.Color
 
+import de.felite.controller.GameController
 import de.felite.model.Field
 import de.felite.model.entity.Entity
 
-import scala.swing.{Button, Font, Label}
+import scala.swing.event.MouseClicked
+import scala.swing.{Button, Component, Font, Label, Point}
 
-class CellButton(x: Int, y: Int) extends Button {
+class CellButton(x: Int, y: Int, controller: GameController) extends Button {
 
   def myCell: Entity = Field.getCell(x, y)
 
   def getCellSign(x: Int, y: Int): String = myCell.sign().toString
 
-  val cellText: String = getCellSign(x,y)
+  val brown = new Color(51, 25, 0)
+
+  val cellText: String = getCellSign(x, y)
+
 
   text = cellText
   font = new Font("Verdana", 1, 36)
 
-  val brown = new Color(51,25,0)
+  listenTo(mouse.clicks)
+  reactions += {
+    case MouseClicked(src, _, _, _, _) => buttonClick(src)
+  }
+
+  private def buttonClick(srcCmp: Component): Unit = {
+    println("I am a " + text)
+    println("I am Button at" + x + y)
+    controller.btnCoord = (x.toString,y.toString)
+  }
+
 
   def setView(): Unit = {
     val str = myCell.getColor
@@ -35,18 +50,19 @@ class CellButton(x: Int, y: Int) extends Button {
       case Console.GREEN =>
         //Grass
         background = Color.GREEN
-        text = ""
+      //        text = ""
       case Console.CYAN =>
         //Rock
         background = Color.GRAY
-        text = ""
+      //        text = ""
       case Console.MAGENTA =>
         //Tree
         background = brown
-        text = ""
+      //        text = ""
       case _ =>
-        Color.BLACK
+        background = Color.BLACK
 
     }
   }
+
 }

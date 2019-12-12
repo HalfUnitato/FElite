@@ -19,6 +19,7 @@ class GameController() extends Observable {
   var printString: String = _
   var readString: String = _
   var cmdStr: String = _
+  var btnCoord:(String, String) = _
 
 
   def init(testflag: Int = 0): Unit = {

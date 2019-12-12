@@ -9,15 +9,12 @@ TODO:Troops owner test
 TODO: im help die Bedeutung der Symbole erklären
 TODO: skalierbares Spielfeld, almost?
 TODO: trivialer Fall bei Spielfeld -> schnell gewinnen/verlieren
-TODO: attack
-TODO: MVC Strukture enforcing
-TODO: Observer etc.
 
 # LowerPrio:
 
+TODO: cut asking for Playername and just use DummyNames
 TODO: push working tui to master?
-TODO: todo.txt kategorien?
-TODO: Rework ReturnValues to Boolean
+TODO: todo.txt Kategorien?
 
 # UnknownPrio:
 

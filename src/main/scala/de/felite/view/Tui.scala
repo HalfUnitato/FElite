@@ -11,6 +11,7 @@ import scala.util.{Failure, Success, Try}
 class Tui(controller: GameController) extends Observer {
   controller.add(this)
 
+
   def playerTurn(input: String): Boolean = {
     //input is useless?
     //where to put input reading

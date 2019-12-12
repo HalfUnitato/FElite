@@ -15,17 +15,17 @@ class Gui(controller: GameController) extends Frame with Observer {
 
   controller.add(this)
 
+
+  val scale: Int = Field.getScale
+  val statusline = new TextField(State.gameState.toString, 20)
+  val statusTop = new Label(State.gameState.toString)
+
+  var cells: Array[Array[CellButton]] = Array.ofDim[CellButton](scale, scale)
+
   title = "Fire Emblem lite"
-
-  val scale: Int = Field.getScal
-
   preferredSize = new Dimension(640,480)
 
 
-
-
-
-  var cells: Array[Array[CellButton]] = Array.ofDim[CellButton](scale, scale)
 
 
   def gridPanel: GridPanel = new GridPanel(scale, scale) {
@@ -35,16 +35,13 @@ class Gui(controller: GameController) extends Frame with Observer {
       column <- 0 until scale
       row <- 0 until scale
     } {
-      val cellButton = new CellButton(row, column)
+      val cellButton = new CellButton(row, column, controller)
       cells(row)(column) = cellButton
       cellButton.setView()
       contents += cellButton
-      listenTo(cellButton)
     }
   }
 
-  val statusline = new TextField(State.gameState.toString, 20)
-  val statusTop = new Label(State.gameState.toString)
 
   contents = new BorderPanel {
     add(statusTop, BorderPanel.Position.North)
@@ -53,7 +50,7 @@ class Gui(controller: GameController) extends Frame with Observer {
   }
 
   visible = true
-  redraw
+  redraw()
 
 //  reactions += {
 //    case event: GridSizeChanged => resize(event.newSize)
@@ -64,8 +61,8 @@ class Gui(controller: GameController) extends Frame with Observer {
 
   def redraw(): Unit = {
     for {
-      row <- 0 until Field.getScal
-      column <- 0 until Field.getScal
+      row <- 0 until Field.getScale
+      column <- 0 until Field.getScale
     } //cells(row)(column).redraw
     statusline.text = controller.printString
     repaint
