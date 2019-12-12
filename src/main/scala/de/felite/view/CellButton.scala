@@ -35,14 +35,14 @@ class CellButton(x: Int, y: Int, controller: GameController) extends Button with
   private def buttonClick(srcCmp: Component): Unit = {
     /*println("I am a " + text)
     println("I am Button at" + x + y)*/
-    if (controller.btnCoord._1 == "-1" && controller.btnCoord._2 == "-1") {
-      controller.btnCoord = (x.toString,y.toString)
+    if (controller.btnCoord._1 == -1 && controller.btnCoord._2 == -1) {
+      controller.btnCoord = (x,y)
     } else {
-      if (!controller.tryMove(controller.btnCoord,(x.toString,y.toString))) {
+      if (!controller.tryMove(controller.btnCoord,(x,y))) {
         JOptionPane.showMessageDialog(null,"My Goodness this is so concise")
       }
 //      controller.sta
-      controller.btnCoord = ("-1","-1")
+      controller.btnCoord = (-1,-1)
     }
   }
 

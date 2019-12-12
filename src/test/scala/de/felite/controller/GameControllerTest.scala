@@ -48,8 +48,8 @@ class controllerTest extends TestBaseClass {
         controller.redo
       }
       "move fail" in {
-        controller.tryMove((0.toString, 5.toString), (0.toString, 1.toString)) shouldBe false
-        controller.tryMove((1.toString, 1.toString), (0.toString, 1.toString)) shouldBe false
+        controller.tryMove((0, 5), (0, 1)) shouldBe false
+        controller.tryMove((1, 1), (0, 1)) shouldBe false
       }
       //       "attack not fail" in {
       //         controller.attack((0, 0), (0, 1)) shouldBe ReturnValues.VALID
