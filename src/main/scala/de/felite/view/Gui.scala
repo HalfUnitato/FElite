@@ -3,7 +3,7 @@ package de.felite.view
 import de.felite.controller.GameController
 import de.felite.controller.status.State
 import de.felite.model.Field
-import de.felite.util.{Observer, ObserverCommand}
+import de.felite.util.{Observable, Observer, ObserverCommand}
 
 import scala.swing._
 import scala.swing.Swing.LineBorder
@@ -11,7 +11,7 @@ import scala.swing.event._
 import scala.io.Source._
 import de.felite.util.ObserverCommand._
 
-class Gui(controller: GameController) extends Frame with Observer {
+class Gui(controller: GameController) extends Frame with Observer{
 
   controller.add(this)
 

@@ -5,12 +5,14 @@ import java.awt.Color
 import de.felite.controller.GameController
 import de.felite.model.Field
 import de.felite.model.entity.Entity
+import de.felite.util.{Observer, ObserverCommand}
 import javax.swing.JOptionPane
 
 import scala.swing.event.MouseClicked
-import scala.swing.{Button, Component, Font, Label, Point}
+import scala.swing.{Button, Component, Font, Label, Point, Swing}
 
-class CellButton(x: Int, y: Int, controller: GameController) extends Button {
+class CellButton(x: Int, y: Int, controller: GameController) extends Button with Observer {
+  controller.add(this)
 
   def myCell: Entity = Field.getCell(x, y)
 
@@ -19,6 +21,7 @@ class CellButton(x: Int, y: Int, controller: GameController) extends Button {
   val brown = new Color(51, 25, 0)
 
   val cellText: String = getCellSign(x, y)
+  border = Swing.BeveledBorder(Swing.Lowered)
 
 
   text = cellText
@@ -26,22 +29,20 @@ class CellButton(x: Int, y: Int, controller: GameController) extends Button {
 
   listenTo(mouse.clicks)
   reactions += {
-    case MouseClicked(src, _, _, _, _) => buttonClick(src)
+    case MouseClicked(src,pt,mod,clicks,pops) => buttonClick(src)
   }
 
   private def buttonClick(srcCmp: Component): Unit = {
-    println("I am a " + text)
-    println("I am Button at" + x + y)
-    if (controller.btnCoord._1 == "-1") {
-      println("NOOOOO")
+    /*println("I am a " + text)
+    println("I am Button at" + x + y)*/
+    if (controller.btnCoord._1 == "-1" && controller.btnCoord._2 == "-1") {
       controller.btnCoord = (x.toString,y.toString)
     } else {
       if (!controller.tryMove(controller.btnCoord,(x.toString,y.toString))) {
-        println("Hello?!")
         JOptionPane.showMessageDialog(null,"My Goodness this is so concise")
       }
+//      controller.sta
       controller.btnCoord = ("-1","-1")
-      println("else but no if")
     }
   }
 
@@ -76,4 +77,5 @@ class CellButton(x: Int, y: Int, controller: GameController) extends Button {
     }
   }
 
+  override def update(observerCommand: ObserverCommand.Value): Unit = setView()
 }
