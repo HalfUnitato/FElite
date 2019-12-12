@@ -19,7 +19,8 @@ class GameController() extends Observable {
   var printString: String = _
   var readString: String = _
   var cmdStr: String = _
-  var btnCoord:(Int, Int) = (-1,-1)
+  var btnStartCoord:(Int, Int) = (-1,-1)
+  var btnEndCoord:(Int, Int) = (-1,-1)
 
 
   def init(testflag: Int = 0): Unit = {
@@ -85,6 +86,9 @@ class GameController() extends Observable {
     Try(Field.getCell(from._1,from._2), Field.getCell(to._1, to._2)) match {
       case Success(v) =>
         movement((from._1,from._2), (to._1, to._2))
+        State.gameState = PrintFieldState(this)
+        State.gameState.handle()
+        true
       case Failure(e) =>
         false
     }
@@ -166,11 +170,13 @@ private def doAttack(from:(Int,Int),fEntity:Entity,to:(Int,Int),tEntity:Entity):
   def undo(): Unit = {
     undoManager.undoStep
     State.gameState = PrintFieldState(this)
+    State.gameState.handle()
   }
 
   def redo(): Unit = {
     undoManager.redoStep
     State.gameState = PrintFieldState(this)
+    State.gameState.handle()
   }
 
   def isEnd: Boolean =

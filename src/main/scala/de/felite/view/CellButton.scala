@@ -11,10 +11,12 @@ import javax.swing.JOptionPane
 import scala.swing.event.MouseClicked
 import scala.swing.{Button, Component, Font, Label, Point, Swing}
 
-class CellButton(x: Int, y: Int, controller: GameController) extends Button with Observer {
-  controller.add(this)
+class CellButton(x: Int, y: Int, controller: GameController) extends Button{
 
-  def myCell: Entity = Field.getCell(x, y)
+  def getX:Int = x
+  def getY:Int = y
+
+  var myCell: Entity = Field.getCell(x, y)
 
   def getCellSign(x: Int, y: Int): String = myCell.sign().toString
 
@@ -24,28 +26,14 @@ class CellButton(x: Int, y: Int, controller: GameController) extends Button with
   border = Swing.BeveledBorder(Swing.Lowered)
 
 
-  text = cellText
+
   font = new Font("Verdana", 1, 36)
 
-  listenTo(mouse.clicks)
-  reactions += {
-    case MouseClicked(src,pt,mod,clicks,pops) => buttonClick(src)
+  def remake(): Unit = {
+    myCell = Field.getCell(x,y)
+    text = cellText
+    setView()
   }
-
-  private def buttonClick(srcCmp: Component): Unit = {
-    /*println("I am a " + text)
-    println("I am Button at" + x + y)*/
-    if (controller.btnCoord._1 == -1 && controller.btnCoord._2 == -1) {
-      controller.btnCoord = (x,y)
-    } else {
-      if (!controller.tryMove(controller.btnCoord,(x,y))) {
-        JOptionPane.showMessageDialog(null,"My Goodness this is so concise")
-      }
-//      controller.sta
-      controller.btnCoord = (-1,-1)
-    }
-  }
-
 
   def setView(): Unit = {
     val str = myCell.getColor
@@ -75,7 +63,7 @@ class CellButton(x: Int, y: Int, controller: GameController) extends Button with
         background = Color.BLACK
 
     }
+    repaint()
   }
 
-  override def update(observerCommand: ObserverCommand.Value): Unit = setView()
 }

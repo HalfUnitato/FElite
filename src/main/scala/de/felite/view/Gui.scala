@@ -10,6 +10,7 @@ import scala.swing.Swing.LineBorder
 import scala.swing.event._
 import scala.io.Source._
 import de.felite.util.ObserverCommand._
+import javax.swing.JOptionPane
 
 class Gui(controller: GameController) extends Frame with Observer{
 
@@ -39,6 +40,41 @@ class Gui(controller: GameController) extends Frame with Observer{
       cells(row)(column) = cellButton
       cellButton.setView()
       contents += cellButton
+      listenTo(cellButton)
+    }
+    reactions += {
+      case ButtonClicked(cBtn: CellButton) =>
+        println("Clicked the Button")
+        buttonClick(cBtn)
+        redraw()
+      case _ =>
+    }
+  }
+
+  private def buttonClick(btn:CellButton): Unit = {
+    println("I am: " + btn.text)
+    val x = btn.getX
+    val y = btn.getY
+
+    if (controller.btnStartCoord._1 == -1 && controller.btnStartCoord._2 == -1) {
+      controller.btnStartCoord = (x,y)
+    } else {
+      controller.btnEndCoord = (x,y)
+      if (!controller.tryMove(controller.btnStartCoord,(x,y))) {
+        JOptionPane.showMessageDialog(null,"My Goodness this is so concise")
+      }
+      println("btnStartCoord:" + controller.btnStartCoord)
+      println("btnEndCoord:" + controller.btnEndCoord)
+      if (controller.btnStartCoord._1 != -1 && controller.btnEndCoord._1 != -1) {
+        val tmp = cells(controller.btnStartCoord._1)(controller.btnStartCoord._2)
+        cells(controller.btnStartCoord._1)(controller.btnStartCoord._2) = cells(controller.btnEndCoord._1)(controller.btnEndCoord._2)
+        cells(controller.btnEndCoord._1)(controller.btnEndCoord._2) = tmp
+      }
+      cells(controller.btnStartCoord._1)(controller.btnStartCoord._2).remake()
+      cells(controller.btnEndCoord._1)(controller.btnEndCoord._2).remake()
+      repaint()
+      controller.btnStartCoord = (-1,-1)
+      controller.btnEndCoord = (-1,-1)
     }
   }
 
@@ -52,24 +88,17 @@ class Gui(controller: GameController) extends Frame with Observer{
   visible = true
   redraw()
 
-//  reactions += {
-//    case event: GridSizeChanged => resize(event.newSize)
-//    case event: CellChanged => redraw
-//    case event: CandidatesChanged => redraw
-//  }
-
 
   def redraw(): Unit = {
     for {
       row <- 0 until Field.getScale
       column <- 0 until Field.getScale
-    } //cells(row)(column).redraw
-    statusline.text = controller.printString
+    } cells(row)(column).remake()
+//    statusline.text = controller.printString
     repaint
   }
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
-
     println(State.gameState.toString)
     redraw()
     if (observerCommand == READSTRING) {
