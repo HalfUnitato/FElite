@@ -5,6 +5,7 @@ import java.awt.Color
 import de.felite.controller.GameController
 import de.felite.model.Field
 import de.felite.model.entity.Entity
+import javax.swing.JOptionPane
 
 import scala.swing.event.MouseClicked
 import scala.swing.{Button, Component, Font, Label, Point}
@@ -31,7 +32,17 @@ class CellButton(x: Int, y: Int, controller: GameController) extends Button {
   private def buttonClick(srcCmp: Component): Unit = {
     println("I am a " + text)
     println("I am Button at" + x + y)
-    controller.btnCoord = (x.toString,y.toString)
+    if (controller.btnCoord._1 == "-1") {
+      println("NOOOOO")
+      controller.btnCoord = (x.toString,y.toString)
+    } else {
+      if (!controller.tryMove(controller.btnCoord,(x.toString,y.toString))) {
+        println("Hello?!")
+        JOptionPane.showMessageDialog(null,"My Goodness this is so concise")
+      }
+      controller.btnCoord = ("-1","-1")
+      println("else but no if")
+    }
   }
 
 
