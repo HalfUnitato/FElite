@@ -10,7 +10,6 @@ import scala.collection.mutable.ListBuffer
 case class Player(private val name: String = "John Doe", private val color: String = Console.BLACK) {
 
   private var playerTroops = new ListBuffer[Troop]()
-  private var unitAmount = 42 //UnitList.length
 
   def addPlayerTroop(troop: Troop): Boolean = {
 
@@ -40,5 +39,5 @@ case class Player(private val name: String = "John Doe", private val color: Stri
 
   def getPlayerColor: String = color
 
-  def getUnitAmount: Int = unitAmount
+  def getUnitAmount: Int = playerTroops.size
 }

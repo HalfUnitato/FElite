@@ -8,6 +8,7 @@ import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier
 import de.felite.model.entity.obstacle.{Grass, Obstacle}
 import de.felite.util.{Observable, ObserverCommand, UndoManager}
 import de.felite.util.ObserverCommand._
+import de.felite.view.gui.InitGui
 
 import scala.util.{Failure, Success, Try}
 
@@ -27,6 +28,7 @@ class GameController() extends Observable {
     println("------ Start of Initialisation ------")
 
     if (testflag == 0) {
+//      val initgui = new InitGui(this)
       State.gameState = P1InitState(this)
       State.gameState.handle()
       this.player1 = Player(readString, Console.BLUE)
@@ -85,10 +87,10 @@ class GameController() extends Observable {
   def tryMove(from:(Int,Int),to:(Int,Int)):Boolean = {
     Try(Field.getCell(from._1,from._2), Field.getCell(to._1, to._2)) match {
       case Success(v) =>
-        movement((from._1,from._2), (to._1, to._2))
+        val bool = movement((from._1,from._2), (to._1, to._2))
         State.gameState = PrintFieldState(this)
         State.gameState.handle()
-        true
+        bool
       case Failure(e) =>
         false
     }

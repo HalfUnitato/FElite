@@ -1,15 +1,12 @@
-package de.felite.view
+package de.felite.view.gui
 
 import java.awt.Color
 
 import de.felite.controller.GameController
 import de.felite.model.Field
 import de.felite.model.entity.Entity
-import de.felite.util.{Observer, ObserverCommand}
-import javax.swing.JOptionPane
 
-import scala.swing.event.MouseClicked
-import scala.swing.{Button, Component, Font, Label, Point, Swing}
+import scala.swing.{Button, Font, Swing}
 
 class CellButton(x: Int, y: Int, controller: GameController) extends Button{
 
@@ -50,20 +47,21 @@ class CellButton(x: Int, y: Int, controller: GameController) extends Button{
       case Console.GREEN =>
         //Grass
         background = Color.GREEN
-      //        text = ""
+        foreground = Color.BLACK
       case Console.CYAN =>
         //Rock
         background = Color.GRAY
-      //        text = ""
+        foreground = Color.BLACK
       case Console.MAGENTA =>
         //Tree
         background = brown
-      //        text = ""
+        foreground = Color.BLACK
       case _ =>
+        // should never happen
         background = Color.BLACK
+        foreground = Color.WHITE
 
     }
-    repaint()
   }
 
 }

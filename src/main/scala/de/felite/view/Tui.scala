@@ -23,7 +23,9 @@ class Tui(controller: GameController) extends Observer {
         controller.redo
         true
       case "p" =>
-        printString(controller.FieldToString)
+        State.gameState = PrintFieldState(controller)
+        State.gameState.handle()
+//        printString(controller.FieldToString)
         true
       case "quit" =>
         State.gameState = new QuitState(controller)

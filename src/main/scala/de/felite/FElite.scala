@@ -3,9 +3,10 @@ package de.felite
 import de.felite.controller.GameController
 import de.felite.model.{Field, Player}
 import de.felite.util.ObserverCommand
-import de.felite.view.{Gui, Tui}
+import de.felite.view.Tui
 import de.felite.controller.status.GameStateString._
 import de.felite.controller.status.{GameStateString, InitState, NextCmdState, State}
+import de.felite.view.gui.GameGui
 
 object FElite {
 
@@ -20,13 +21,10 @@ object FElite {
 
     controller.init()
 
-    val gui = new Gui(controller)
+//    val gui = new GameGui(controller)
 
 
-    //Main read input passes it to tui?
-    //what about ObserverCommand.READCOMMAND
     while (!controller.isEnd) {
-
       while (State.gameState.state != END && State.gameState.state != QUIT) {
        tui.playerTurn(scala.io.StdIn.readLine())
       }
