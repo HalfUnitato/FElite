@@ -22,7 +22,7 @@ class CellButton(x: Int, y: Int, controller: GameController) extends Button{
 
   val brown = new Color(51, 25, 0)
 
-  val cellText: String = getCellSign(x, y)
+  def cellText: String = getCellSign(x, y)
   border = Swing.BeveledBorder(Swing.Lowered)
 
 
