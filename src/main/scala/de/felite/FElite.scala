@@ -16,18 +16,16 @@ object FElite {
   def main(args: Array[String]): Unit = {
 
     println("Welcome to Fire Emblem lite")
-    val controller:GameController = new GameController()
+    val controller: GameController = new GameController()
     val tui = new Tui(controller)
 
     controller.init()
 
-//    val gui = new GameGui(controller)
+    //    val gui = new GameGui(controller)
 
 
-    while (!controller.isEnd) {
-      while (State.gameState.state != END && State.gameState.state != QUIT) {
-       tui.playerTurn(scala.io.StdIn.readLine())
-      }
+    while (!controller.isEnd && (State.gameState.state != END && State.gameState.state != QUIT)) {
+      tui.playerTurn(scala.io.StdIn.readLine())
     }
   }
 }
