@@ -9,7 +9,7 @@ import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier
 import de.felite.model.entity.obstacle.{Grass, Obstacle}
 import de.felite.util.{Observable, ObserverCommand, UndoManager}
 import de.felite.util.ObserverCommand._
-import de.felite.view.gui.InitGui
+import de.felite.view.gui.GameGui
 
 import scala.util.{Failure, Success, Try}
 
@@ -30,18 +30,14 @@ class GameController() extends GameControllerInterface {
     btnStartCoord = (-1, -1)
     btnEndCoord = (-1, -1)
 
-    if (testflag == 0) {
-      //      val initgui = new InitGui(this)
-      State.gameState = P1InitState(this)
-      State.gameState.handle()
-      this.player1 = Player(readString, Console.BLUE)
+  def init(testflag: Int = 1): Unit = {
+//    println("------ Start of Initialisation ------")
 
-      State.gameState = P2InitState(this)
-      State.gameState.handle()
-      this.player2 = Player(readString, Console.RED)
+    if (testflag == 0) {
+      printf("this should never print")
     } else {
-      this.player1 = Player("Peter Hans")
-      this.player2 = Player("Hans Peter")
+      this.player1 = Player("Ike", Console.BLUE)
+      this.player2 = Player("Zelgius", Console.RED)
     }
 
     setUserTroopsDefault("TopLeft", player1)
@@ -49,10 +45,12 @@ class GameController() extends GameControllerInterface {
 
     currentPlayer = player1
 
+
+//    println("------ End of Initialisation ------")
     State.gameState = P1State(this)
     State.gameState.handle()
-    //    player1.playerTroops.clear()
-    println("------ End of Initialisation ------")
+
+    val gamegui = new GameGui(this)
 
     //gameState = new PrintFieldState(this)
     //notifyObservers(PRINTSTRING)
