@@ -1,10 +1,10 @@
-package de.felite.controller.status
+package de.felite.controller.state.game
 
 object GameStateString extends Enumeration {
   type GameState = Value
   val QUIT, INIT, END, P1, P2, P1_INI, P2_INI, PRINT_FIELD, NEXT_CMD = Value
 
-  val map = Map[GameState, String](
+  val map: Map[GameState, String] = Map[GameState, String](
     P1_INI -> "Name of player number one:",
     P2_INI -> "Name of player number two:",
     P1 -> "'s Turn",
@@ -16,7 +16,7 @@ object GameStateString extends Enumeration {
     END -> "End of Turn"
   )
 
-  def message(gameState: GameState) = {
+  def message(gameState: GameState): String = {
     map(gameState)
   }
 }

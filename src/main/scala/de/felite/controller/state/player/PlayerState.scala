@@ -1,6 +1,7 @@
-package de.felite.controller.status
+package de.felite.controller.state.player
 
-import de.felite.controller.{GameController, GameControllerInterface}
+import de.felite.controller.GameControllerInterface
+import de.felite.controller.state.game.{GameStateString, P1State, P2State, State}
 
 object PlayerState {
   var state: GameStateString.Value = GameStateString.P1

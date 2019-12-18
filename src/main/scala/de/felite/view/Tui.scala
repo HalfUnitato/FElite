@@ -2,7 +2,8 @@ package de.felite.view
 
 
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.status._
+import de.felite.controller.state._
+import de.felite.controller.state.game.{EndState, PrintFieldState, QuitState, State}
 import de.felite.util.{Observer, ObserverCommand}
 import de.felite.util.ObserverCommand._
 

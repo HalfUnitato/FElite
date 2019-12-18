@@ -4,8 +4,8 @@ import de.felite.controller.{GameController, GameControllerInterface}
 import de.felite.model.{Field, Player}
 import de.felite.util.ObserverCommand
 import de.felite.view.Tui
-import de.felite.controller.status.GameStateString._
-import de.felite.controller.status.{GameStateString, InitState, NextCmdState, State}
+import de.felite.controller.state.game.GameStateString._
+import de.felite.controller.state.game.{GameStateString, State}
 import de.felite.view.gui.GameGui
 
 object FElite {

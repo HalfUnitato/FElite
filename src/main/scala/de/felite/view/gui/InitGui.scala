@@ -1,7 +1,7 @@
 package de.felite.view.gui
 
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.status.State
+import de.felite.controller.state.game.State
 import de.felite.util.{Observer, ObserverCommand}
 
 import scala.swing.{BorderPanel, Dimension, Frame, Label}

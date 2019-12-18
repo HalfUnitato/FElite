@@ -1,7 +1,8 @@
-package de.felite.controller.status
+package de.felite.controller.state.game
 
-import de.felite.controller.{GameController, GameControllerInterface}
-import de.felite.controller.status.GameStateString.GameState
+import de.felite.controller.GameControllerInterface
+import GameStateString.GameState
+import de.felite.controller.state.player.PlayerState
 import de.felite.util.ObserverCommand
 import de.felite.util.ObserverCommand.PRINTSTRING
 
@@ -17,7 +18,7 @@ case class EndState(controller: GameControllerInterface) extends CurrentState {
     state
   }
 
-  override def toString(): String = {
+  override def toString: String = {
     GameStateString.message(state)
   }
 }

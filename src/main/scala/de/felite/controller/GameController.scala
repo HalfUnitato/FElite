@@ -1,7 +1,8 @@
 package de.felite.controller
 
-import de.felite.controller.status._
-import de.felite.controller.status.GameStateString._
+import de.felite.controller.state.{game, _}
+import de.felite.controller.state.game.GameStateString._
+import de.felite.controller.state.game.{P1InitState, P1State, P2InitState, PrintFieldState, State}
 import de.felite.model.entity.Entity
 import de.felite.model.{Field, Player}
 import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier, SoldierFactory, Troop}
@@ -181,13 +182,13 @@ class GameController() extends GameControllerInterface {
 
   override def undo(): Unit = {
     undoManager.undoStep()
-    State.gameState = PrintFieldState(this)
+    State.gameState = game.PrintFieldState(this)
     State.gameState.handle()
   }
 
   override def redo(): Unit = {
     undoManager.redoStep()
-    State.gameState = PrintFieldState(this)
+    State.gameState = game.PrintFieldState(this)
     State.gameState.handle()
   }
 
