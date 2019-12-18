@@ -17,10 +17,10 @@ class Tui(controller: GameController) extends Observer {
     //where to put input reading
     input match {
       case "undo" =>
-        controller.undo
+        controller.undo()
         true
       case "redo" =>
-        controller.redo
+        controller.redo()
         true
       case "p" =>
         State.gameState = PrintFieldState(controller)
@@ -28,15 +28,15 @@ class Tui(controller: GameController) extends Observer {
 //        printString(controller.FieldToString)
         true
       case "quit" =>
-        State.gameState = new QuitState(controller)
-        State.gameState.handle
+        State.gameState = QuitState(controller)
+        State.gameState.handle()
         true
       /*case "cancel" =>
         controller.gameState = ReturnValues.CANCEL
         true*/
       case "end" =>
-        State.gameState = new EndState(controller)
-        State.gameState.handle
+        State.gameState = EndState(controller)
+        State.gameState.handle()
         true
       case "help" =>
         printHelp()
@@ -97,7 +97,7 @@ class Tui(controller: GameController) extends Observer {
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
 
-    println(State.gameState.toString())
+    println(State.gameState.toString)
 
     if (observerCommand == READSTRING) {
       controller.readString = scala.io.StdIn.readLine()
