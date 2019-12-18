@@ -1,7 +1,7 @@
 package de.felite.util
 
 import de.felite.TestBaseClass
-import de.felite.controller.GameController
+import de.felite.controller.{GameController, GameControllerInterface}
 import de.felite.model.entity.Entity
 
 class UndoManagerTest extends TestBaseClass {

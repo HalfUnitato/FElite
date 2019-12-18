@@ -1,14 +1,14 @@
 package de.felite.view
 
 
-import de.felite.controller.GameController
+import de.felite.controller.GameControllerInterface
 import de.felite.controller.status._
 import de.felite.util.{Observer, ObserverCommand}
 import de.felite.util.ObserverCommand._
 
 import scala.util.{Failure, Success, Try}
 
-class Tui(controller: GameController) extends Observer {
+class Tui(controller: GameControllerInterface) extends Observer {
   controller.add(this)
 
 
@@ -17,26 +17,26 @@ class Tui(controller: GameController) extends Observer {
     //where to put input reading
     input match {
       case "undo" =>
-        controller.undo
+        controller.undo()
         true
       case "redo" =>
-        controller.redo
+        controller.redo()
         true
       case "p" =>
         State.gameState = PrintFieldState(controller)
         State.gameState.handle()
-//        printString(controller.FieldToString)
+        //        printString(controller.FieldToString)
         true
       case "quit" =>
-        State.gameState = new QuitState(controller)
-        State.gameState.handle
+        State.gameState = QuitState(controller)
+        State.gameState.handle()
         true
       /*case "cancel" =>
         controller.gameState = ReturnValues.CANCEL
         true*/
       case "end" =>
-        State.gameState = new EndState(controller)
-        State.gameState.handle
+        State.gameState = EndState(controller)
+        State.gameState.handle()
         true
       case "help" =>
         printHelp()
@@ -46,18 +46,20 @@ class Tui(controller: GameController) extends Observer {
           case xF :: yF :: xT :: yT :: Nil =>
             Try(xF.toInt, yF.toInt, xT.toInt, yT.toInt) match {
               case Success(v) =>
-                if (!controller.tryMove((xF.toInt, yF.toInt), (xT.toInt, yT.toInt))) {
+                controller.btnStartCoord = (xF.toInt, yF.toInt)
+                controller.btnEndCoord = (xT.toInt, yT.toInt)
+                if (!controller.doMove) {
                   println("move not valid")
                   false
                 } else {
                   true
                 }
               case Failure(v) =>
-                println("invalid cooridantes!")
+                println("invalid coordinates!")
                 false
             }
           case _ =>
-            printString("unkown command")
+            printString("unknown command")
             false
         }
     }
@@ -97,7 +99,7 @@ class Tui(controller: GameController) extends Observer {
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
 
-    println(State.gameState.toString())
+    println(State.gameState.toString)
 
     if (observerCommand == READSTRING) {
       controller.readString = scala.io.StdIn.readLine()

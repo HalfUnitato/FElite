@@ -1,12 +1,12 @@
 package de.felite.controller.status
 
-import de.felite.controller.GameController
+import de.felite.controller.{GameController, GameControllerInterface}
 
 object PlayerState {
-  var state = GameStateString.P1
-  var controller: GameController = _
+  var state: GameStateString.Value = GameStateString.P1
+  var controller: GameControllerInterface = _
 
-  def handle(gameController:GameController) = {
+  def handle(gameController:GameControllerInterface): GameStateString.Value = {
     controller = gameController
     state match {
       case GameStateString.P1 => switchToPlayer2
@@ -16,15 +16,15 @@ object PlayerState {
     state
   }
 
-  def switchToPlayer1 = {
-    State.gameState = new P1State(controller)
+  def switchToPlayer1: GameStateString.Value = {
+    State.gameState = P1State(controller)
     state = GameStateString.P1
     controller.currentPlayer = controller.player1
     state
   }
 
-  def switchToPlayer2 = {
-    State.gameState = new P2State(controller)
+  def switchToPlayer2: GameStateString.Value = {
+    State.gameState = P2State(controller)
     state = GameStateString.P2
     controller.currentPlayer = controller.player2
     state

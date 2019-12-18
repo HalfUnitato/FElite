@@ -9,7 +9,7 @@ import scala.collection.mutable.ListBuffer
 
 case class Player(private val name: String = "John Doe", private val color: String = Console.BLACK) {
 
-  private var playerTroops = new ListBuffer[Troop]()
+  private val playerTroops = new ListBuffer[Troop]()
 
   def addPlayerTroop(troop: Troop): Boolean = {
 

@@ -2,13 +2,13 @@ package de.felite.view.gui
 
 import java.awt.Color
 
-import de.felite.controller.GameController
+import de.felite.controller.GameControllerInterface
 import de.felite.model.Field
 import de.felite.model.entity.Entity
 
 import scala.swing.{Button, Font, Swing}
 
-class CellButton(x: Int, y: Int, controller: GameController) extends Button{
+class CellButton(x: Int, y: Int, controller: GameControllerInterface) extends Button{
 
   def getX:Int = x
   def getY:Int = y

@@ -1,13 +1,13 @@
 package de.felite.controller.status
 
-import de.felite.controller.GameController
+import de.felite.controller.{GameController, GameControllerInterface}
 import de.felite.controller.status.GameStateString.GameState
 import de.felite.util.ObserverCommand
 
-case class PrintFieldState(controller:GameController) extends CurrentState {
+case class PrintFieldState(controller:GameControllerInterface) extends CurrentState {
   val state:GameState = GameStateString.PRINT_FIELD
 
-  override def handle() = {
+  override def handle(): GameState = {
     controller.notifyObservers(ObserverCommand.PRINTSTRING)
     state
   }

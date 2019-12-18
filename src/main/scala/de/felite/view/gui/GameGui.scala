@@ -1,6 +1,6 @@
 package de.felite.view.gui
 
-import de.felite.controller.GameController
+import de.felite.controller.GameControllerInterface
 import de.felite.controller.status.{EndState, QuitState, State}
 import de.felite.model.Field
 import de.felite.util.ObserverCommand._
@@ -11,7 +11,7 @@ import scala.swing.Swing.LineBorder
 import scala.swing._
 import scala.swing.event._
 
-class GameGui(controller: GameController) extends Frame with Observer {
+class GameGui(controller: GameControllerInterface) extends Frame with Observer {
 
   controller.add(this)
 
@@ -70,7 +70,7 @@ class GameGui(controller: GameController) extends Frame with Observer {
       controller.btnStartCoord = (x, y)
     } else {
       controller.btnEndCoord = (x, y)
-      val bool = controller.tryMove(controller.btnStartCoord, (x, y))
+      val bool = controller.doMove()
       println(bool)
       if (!bool) {
         println("invalid move")

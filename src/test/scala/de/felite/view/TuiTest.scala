@@ -1,7 +1,7 @@
 package de.felite.view
 
 import de.felite.TestBaseClass
-import de.felite.controller.GameController
+import de.felite.controller.{GameController, GameControllerInterface}
 import de.felite.controller.status.{GameStateString, State}
 import de.felite.model.{Field, Player}
 import de.felite.util.ObserverCommand
@@ -9,7 +9,7 @@ import de.felite.util.ObserverCommand
 import scala.util.control.Exception
 
 class TuiTest extends TestBaseClass {
-  val controller:GameController = new GameController()
+  val controller:GameControllerInterface = new GameController()
   val tui: Tui = new Tui(controller)
   "The Tui" when {
     controller.init(1)

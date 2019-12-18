@@ -1,6 +1,6 @@
 package de.felite
 
-import de.felite.controller.GameController
+import de.felite.controller.{GameController, GameControllerInterface}
 import de.felite.model.{Field, Player}
 import de.felite.util.ObserverCommand
 import de.felite.view.Tui
@@ -16,7 +16,7 @@ object FElite {
   def main(args: Array[String]): Unit = {
 
     println("Welcome to Fire Emblem lite")
-    val controller: GameController = new GameController()
+    val controller: GameControllerInterface = new GameController()
     val tui = new Tui(controller)
 
     controller.init()

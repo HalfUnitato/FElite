@@ -12,23 +12,25 @@ import de.felite.view.gui.InitGui
 
 import scala.util.{Failure, Success, Try}
 
-class GameController() extends Observable {
-  val undoManager = new UndoManager(this)
-  var player1: Player = _
-  var player2: Player = _
-  var currentPlayer: Player = player1
-  var printString: String = _
-  var readString: String = _
-  var cmdStr: String = _
-  var btnStartCoord:(Int, Int) = (-1,-1)
-  var btnEndCoord:(Int, Int) = (-1,-1)
+class GameController() extends GameControllerInterface {
+  override var undoManager: UndoManager = _
+  override var player1: Player = _
+  override var player2: Player = _
+  override var currentPlayer: Player = _
+  override var printString: String = _
+  override var readString: String = _
+  override var cmdStr: String = _
+  override var btnStartCoord: (Int, Int) = _
+  override var btnEndCoord: (Int, Int) = _
 
-
-  def init(testflag: Int = 0): Unit = {
+  override def init(testflag: Int = 0): Unit = {
     println("------ Start of Initialisation ------")
+    undoManager = new UndoManager(this)
+    btnStartCoord = (-1, -1)
+    btnEndCoord = (-1, -1)
 
     if (testflag == 0) {
-//      val initgui = new InitGui(this)
+      //      val initgui = new InitGui(this)
       State.gameState = P1InitState(this)
       State.gameState.handle()
       this.player1 = Player(readString, Console.BLUE)
@@ -48,7 +50,7 @@ class GameController() extends Observable {
 
     State.gameState = P1State(this)
     State.gameState.handle()
-//    player1.playerTroops.clear()
+    //    player1.playerTroops.clear()
     println("------ End of Initialisation ------")
 
     //gameState = new PrintFieldState(this)
@@ -82,12 +84,14 @@ class GameController() extends Observable {
     Field.setCell(archer, x, y)
   }
 
-  def FieldToString: String = Field.toString
+  override def FieldToString: String = Field.toString
 
-  def tryMove(from:(Int,Int),to:(Int,Int)):Boolean = {
-    Try(Field.getCell(from._1,from._2), Field.getCell(to._1, to._2)) match {
+  override def doMove(): Boolean = {
+    val from = btnStartCoord
+    val to = btnEndCoord
+    Try(Field.getCell(from._1, from._2), Field.getCell(to._1, to._2)) match {
       case Success(v) =>
-        val bool = movement((from._1,from._2), (to._1, to._2))
+        val bool = movement((from._1, from._2), (to._1, to._2))
         State.gameState = PrintFieldState(this)
         State.gameState.handle()
         bool
@@ -95,7 +99,8 @@ class GameController() extends Observable {
         false
     }
   }
-  def movement(from: (Int, Int), to: (Int, Int)): Boolean = {
+
+  private def movement(from: (Int, Int), to: (Int, Int)): Boolean = {
     // is usage of troop valid?
     val fEntity: Entity = Field.getCell(from._1, from._2)
 
@@ -122,7 +127,7 @@ class GameController() extends Observable {
 
     // attack
     if (Field.getCell(to._1, to._2).isInstanceOf[Troop]) {
-      doAttack(from,fEntity,to,tEntity)
+      doAttack(from, fEntity, to, tEntity)
     }
     // move
     else {
@@ -131,25 +136,27 @@ class GameController() extends Observable {
     }
     true
   }
-private def doAttack(from:(Int,Int),fEntity:Entity,to:(Int,Int),tEntity:Entity): Unit ={
+
+  private def doAttack(from: (Int, Int), fEntity: Entity, to: (Int, Int), tEntity: Entity): Unit = {
     undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
-    to._1, to._2,
-    if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
-      Grass
-    } else {
-      val tmp = SoldierFactory.create(
-        tEntity.sign(), to,
-        tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
-        tEntity.asInstanceOf[Troop].owner()
-      )
-      tmp.owner().addPlayerTroop(tmp)
-      tmp
-    }))
-  tEntity.asInstanceOf[Troop].owner().removeTroop(tEntity.asInstanceOf[Troop])
-}
+      to._1, to._2,
+      if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
+        Grass
+      } else {
+        val tmp = SoldierFactory.create(
+          tEntity.sign(), to,
+          tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
+          tEntity.asInstanceOf[Troop].owner()
+        )
+        tmp.owner().addPlayerTroop(tmp)
+        tmp
+      }))
+    tEntity.asInstanceOf[Troop].owner().removeTroop(tEntity.asInstanceOf[Troop])
+  }
+
   private var alreadyVisited: List[(Int, Int)] = Nil
 
-  def movePlausiR(cP: (Int, Int), goal: (Int, Int), range: Int): Boolean = {
+  private def movePlausiR(cP: (Int, Int), goal: (Int, Int), range: Int): Boolean = {
     Try(Field.getCell(cP._1, cP._2)) match {
       case Failure(e) => return false
       case Success(s) =>
@@ -172,22 +179,21 @@ private def doAttack(from:(Int,Int),fEntity:Entity,to:(Int,Int),tEntity:Entity):
     false
   }
 
-  def undo(): Unit = {
-    undoManager.undoStep
+  override def undo(): Unit = {
+    undoManager.undoStep()
     State.gameState = PrintFieldState(this)
     State.gameState.handle()
   }
 
-  def redo(): Unit = {
-    undoManager.redoStep
+  override def redo(): Unit = {
+    undoManager.redoStep()
     State.gameState = PrintFieldState(this)
     State.gameState.handle()
   }
 
-  def isEnd: Boolean =
+  override def isEnd: Boolean =
     player1.getUnitAmount == 0 || player2.getUnitAmount == 0 || State.gameState.state == QUIT
 
-  def getPlayerName: String =
+  override def getPlayerName: String =
     currentPlayer.getPlayerName
-
 }

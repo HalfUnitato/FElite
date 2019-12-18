@@ -1,12 +1,12 @@
 package de.felite.view.gui
 
-import de.felite.controller.GameController
+import de.felite.controller.GameControllerInterface
 import de.felite.controller.status.State
 import de.felite.util.{Observer, ObserverCommand}
 
 import scala.swing.{BorderPanel, Dimension, Frame, Label}
 
-class InitGui(controller:GameController) extends Frame with Observer {
+class InitGui(controller:GameControllerInterface) extends Frame with Observer {
 
   controller.add(this)
   
@@ -23,5 +23,5 @@ class InitGui(controller:GameController) extends Frame with Observer {
 
   
   controller.remove(this)
-  override def update(observerCommand: ObserverCommand.Value): Unit = ???
+  override def update(observerCommand: ObserverCommand.Value): Unit = printf("")
 }
