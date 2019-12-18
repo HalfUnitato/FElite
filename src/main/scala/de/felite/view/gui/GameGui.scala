@@ -2,11 +2,7 @@ package de.felite.view.gui
 
 import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.{EndState, QuitState, State}
-import de.felite.controller.GameController
-import de.felite.controller.status.{EndState, QuitState, State}
-import de.felite.controller.status.GameStateString._
 import de.felite.model.Field
-import de.felite.util.ObserverCommand._
 import de.felite.util.{Observer, ObserverCommand}
 import javax.swing.JOptionPane
 
@@ -14,13 +10,14 @@ import scala.swing.Swing.LineBorder
 import scala.swing._
 import scala.swing.event._
 
-class GameGui(controller: GameControllerInterface) extends Frame with Observer {
+class GameGui(controller: GameControllerInterface) extends MainFrame with Observer {
 
   controller.add(this)
 
   val scale: Int = Field.getScale
+
   def statusLine: FlowPanel = new FlowPanel() { //this should contain all static Information per Player
-    def getTurnName:String = State.gameState.toString
+    def getTurnName: String = controller.getPlayerName
     var turnName: Label = new Label(getTurnName)
     contents += turnName
   }
@@ -59,7 +56,7 @@ class GameGui(controller: GameControllerInterface) extends Frame with Observer {
     }
     reactions += {
       case ButtonClicked(cBtn: CellButton) =>
-//        println("Clicked the Button")
+        //        println("Clicked the Button")
         buttonClick(cBtn)
       case _ =>
     }
@@ -74,13 +71,13 @@ class GameGui(controller: GameControllerInterface) extends Frame with Observer {
       controller.btnStartCoord = (x, y)
     } else {
       controller.btnEndCoord = (x, y)
-      if (!controller.tryMove(controller.btnStartCoord, (x, y))) {
+      if (!controller.doMove()) {
         JOptionPane.showMessageDialog(null, "Move not valid")
         controller.btnStartCoord = (-1, -1)
         controller.btnEndCoord = (-1, -1)
       } else {
-//        println("btnStartCoord:" + controller.btnStartCoord)
-//        println("btnEndCoord:" + controller.btnEndCoord)
+        //        println("btnStartCoord:" + controller.btnStartCoord)
+        //        println("btnEndCoord:" + controller.btnEndCoord)
         if (controller.btnStartCoord._1 != -1 && controller.btnEndCoord._1 != -1) {
           val tmp = cells(controller.btnStartCoord._1)(controller.btnStartCoord._2)
           cells(controller.btnStartCoord._1)(controller.btnStartCoord._2) = cells(controller.btnEndCoord._1)(controller.btnEndCoord._2)
@@ -95,7 +92,8 @@ class GameGui(controller: GameControllerInterface) extends Frame with Observer {
   }
 
 
-  def mainPanel:BorderPanel = { new BorderPanel {
+  def mainPanel: BorderPanel = {
+    new BorderPanel {
       add(statusLine, BorderPanel.Position.North)
       add(gridPanel, BorderPanel.Position.Center)
       add(commandLine, BorderPanel.Position.South)
@@ -118,10 +116,8 @@ class GameGui(controller: GameControllerInterface) extends Frame with Observer {
       contents += new MenuItem(Action("Redo") {
         controller.redo()
       })
-
     }
     contents += new Menu("Options") {
-
     }
   }
 
@@ -130,6 +126,7 @@ class GameGui(controller: GameControllerInterface) extends Frame with Observer {
 
 
   def redraw(): Unit = {
+    contents = mainPanel
     for {
       row <- 0 until Field.getScale
       column <- 0 until Field.getScale
@@ -141,14 +138,7 @@ class GameGui(controller: GameControllerInterface) extends Frame with Observer {
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
     //println(State.gameState.toString)
-    val state = State.gameState.state
-    if (state == P1 || state == P2) {
-      contents = mainPanel
-    }
-    if (state == QUIT) {
-      JOptionPane.showMessageDialog(null, "Game Over \nThe Winner is ???")
-      closeOperation()
-    }
+
     redraw()
   }
 }

@@ -9,6 +9,7 @@ case class QuitState(controller:GameControllerInterface) extends CurrentState {
 
   override def handle(): GameState = {
     controller.notifyObservers(ObserverCommand.PRINTSTRING)
+    System.exit(0)
     state
   }
 

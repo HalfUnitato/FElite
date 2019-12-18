@@ -8,7 +8,7 @@ import de.felite.model.entity.figure.Soldier
 import de.felite.model.entity.obstacle.Grass
 class StatusTest extends TestBaseClass {
   var controller: GameController = new GameController
-  controller.init(1)
+  controller.init()
 
   "State" when {
     "state" should {

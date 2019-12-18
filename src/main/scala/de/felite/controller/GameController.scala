@@ -1,14 +1,13 @@
 package de.felite.controller
 
-import de.felite.controller.state.{game, _}
+import de.felite.controller.state.game
 import de.felite.controller.state.game.GameStateString._
-import de.felite.controller.state.game.{P1InitState, P1State, P2InitState, PrintFieldState, State}
+import de.felite.controller.state.game.{P1State, PrintFieldState, State}
 import de.felite.model.entity.Entity
-import de.felite.model.{Field, Player}
-import de.felite.model.entity.figure.{Archer, BuildArcher, BuildSolider, Soldier, SoldierFactory, Troop}
+import de.felite.model.entity.figure.{BuildArcher, BuildSolider, SoldierFactory, Troop}
 import de.felite.model.entity.obstacle.{Grass, Obstacle}
-import de.felite.util.{Observable, ObserverCommand, UndoManager}
-import de.felite.util.ObserverCommand._
+import de.felite.model.{Field, Player}
+import de.felite.util.UndoManager
 import de.felite.view.gui.GameGui
 
 import scala.util.{Failure, Success, Try}
@@ -24,21 +23,15 @@ class GameController() extends GameControllerInterface {
   override var btnStartCoord: (Int, Int) = _
   override var btnEndCoord: (Int, Int) = _
 
-  override def init(testflag: Int = 0): Unit = {
+  override def init(): Unit = {
     println("------ Start of Initialisation ------")
     undoManager = new UndoManager(this)
     btnStartCoord = (-1, -1)
     btnEndCoord = (-1, -1)
+    //    println("------ Start of Initialisation ------")
 
-  def init(testflag: Int = 1): Unit = {
-//    println("------ Start of Initialisation ------")
-
-    if (testflag == 0) {
-      printf("this should never print")
-    } else {
-      this.player1 = Player("Ike", Console.BLUE)
-      this.player2 = Player("Zelgius", Console.RED)
-    }
+    this.player1 = Player("Ike", Console.BLUE)
+    this.player2 = Player("Zelgius", Console.RED)
 
     setUserTroopsDefault("TopLeft", player1)
     setUserTroopsDefault("BottomRight", player2)
@@ -46,7 +39,7 @@ class GameController() extends GameControllerInterface {
     currentPlayer = player1
 
 
-//    println("------ End of Initialisation ------")
+    //    println("------ End of Initialisation ------")
     State.gameState = P1State(this)
     State.gameState.handle()
 
@@ -58,7 +51,9 @@ class GameController() extends GameControllerInterface {
     //gameState = new P1State(this)
   }
 
-  private def setUserTroopsDefault(pos: String, player: Player): Unit = {
+  private def setUserTroopsDefault(pos: String, player: Player): Unit
+
+  = {
     var y = 0
     var x = 0
 
@@ -83,9 +78,13 @@ class GameController() extends GameControllerInterface {
     Field.setCell(archer, x, y)
   }
 
-  override def FieldToString: String = Field.toString
+  override def FieldToString: String
 
-  override def doMove(): Boolean = {
+  = Field.toString
+
+  override def doMove(): Boolean
+
+  = {
     val from = btnStartCoord
     val to = btnEndCoord
     Try(Field.getCell(from._1, from._2), Field.getCell(to._1, to._2)) match {
@@ -99,7 +98,9 @@ class GameController() extends GameControllerInterface {
     }
   }
 
-  private def movement(from: (Int, Int), to: (Int, Int)): Boolean = {
+  private def movement(from: (Int, Int), to: (Int, Int)): Boolean
+
+  = {
     // is usage of troop valid?
     val fEntity: Entity = Field.getCell(from._1, from._2)
 
@@ -136,7 +137,9 @@ class GameController() extends GameControllerInterface {
     true
   }
 
-  private def doAttack(from: (Int, Int), fEntity: Entity, to: (Int, Int), tEntity: Entity): Unit = {
+  private def doAttack(from: (Int, Int), fEntity: Entity, to: (Int, Int), tEntity: Entity): Unit
+
+  = {
     undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
       to._1, to._2,
       if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
@@ -153,9 +156,12 @@ class GameController() extends GameControllerInterface {
     tEntity.asInstanceOf[Troop].owner().removeTroop(tEntity.asInstanceOf[Troop])
   }
 
-  private var alreadyVisited: List[(Int, Int)] = Nil
+  private var alreadyVisited: List[(Int, Int)] =
+    Nil
 
-  private def movePlausiR(cP: (Int, Int), goal: (Int, Int), range: Int): Boolean = {
+  private def movePlausiR(cP: (Int, Int), goal: (Int, Int), range: Int): Boolean
+
+  = {
     Try(Field.getCell(cP._1, cP._2)) match {
       case Failure(e) => return false
       case Success(s) =>
@@ -178,13 +184,17 @@ class GameController() extends GameControllerInterface {
     false
   }
 
-  override def undo(): Unit = {
+  override def undo(): Unit
+
+  = {
     undoManager.undoStep()
     State.gameState = game.PrintFieldState(this)
     State.gameState.handle()
   }
 
-  override def redo(): Unit = {
+  override def redo(): Unit
+
+  = {
     undoManager.redoStep()
     State.gameState = game.PrintFieldState(this)
     State.gameState.handle()
@@ -195,4 +205,5 @@ class GameController() extends GameControllerInterface {
 
   override def getPlayerName: String =
     currentPlayer.getPlayerName
+
 }

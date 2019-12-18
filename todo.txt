@@ -9,6 +9,7 @@ TODO:Troops owner test
 TODO: im help die Bedeutung der Symbole erklären
 TODO: skalierbares Spielfeld, almost?
 TODO: trivialer Fall bei Spielfeld -> schnell gewinnen/verlieren
+TODO: Endzustand?
 
 # LowerPrio:
 
