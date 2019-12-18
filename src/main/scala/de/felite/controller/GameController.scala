@@ -132,12 +132,15 @@ private def doAttack(from:(Int,Int),fEntity:Entity,to:(Int,Int),tEntity:Entity):
     if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
       Grass
     } else {
-      SoldierFactory.create(
+      val tmp = SoldierFactory.create(
         tEntity.sign(), to,
         tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
         tEntity.asInstanceOf[Troop].owner()
       )
+      tmp.owner().addPlayerTroop(tmp)
+      tmp
     }))
+  tEntity.asInstanceOf[Troop].owner().removeTroop(tEntity.asInstanceOf[Troop])
 }
   private var alreadyVisited: List[(Int, Int)] = Nil
 
