@@ -19,6 +19,7 @@ object FElite {
     val controller: GameControllerInterface = new GameController()
     val tui = new Tui(controller)
 
+
     controller.init()
 
     //    val gui = new GameGui(controller)

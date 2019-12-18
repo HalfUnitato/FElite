@@ -5,7 +5,7 @@ import de.felite.controller.state.game
 import de.felite.controller.state.game.GameStateString.GameState
 import de.felite.util.ObserverCommand
 
-class WonState(controller:GameControllerInterface) extends CurrentState {
+case class WonState(controller:GameControllerInterface) extends CurrentState {
   val state:GameState = GameStateString.WON
 
   override def handle(): GameState = {

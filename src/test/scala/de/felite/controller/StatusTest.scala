@@ -2,12 +2,13 @@ package de.felite.controller
 
 import de.felite.TestBaseClass
 import de.felite.controller.state._
-import de.felite.controller.state.game.{EndState, GameStateString, InitState, NextCmdState, P1InitState, P1State, P2InitState, P2State, PrintFieldState, QuitState, State}
+import de.felite.controller.state.game.{WonState, EndState, GameStateString, InitState, NextCmdState, P1InitState, P1State, P2InitState, P2State, PrintFieldState, QuitState, State}
 import de.felite.model.Field
 import de.felite.model.entity.figure.Soldier
 import de.felite.model.entity.obstacle.Grass
+
 class StatusTest extends TestBaseClass {
-  var controller: GameController = new GameController
+  val controller: GameController = new GameController
   controller.init()
 
   "State" when {
@@ -35,7 +36,7 @@ class StatusTest extends TestBaseClass {
 
         controller.state.gameState = P1State(controller)
         controller.state.gameState.handle shouldBe GameStateString.P1
-        controller.state.gameState.toString shouldBe controller.getPlayerName +  GameStateString.message(GameStateString.P1)
+        controller.state.gameState.toString shouldBe controller.getPlayerName + GameStateString.message(GameStateString.P1)
 
         controller.state.gameState = P2State(controller)
         controller.state.gameState.handle shouldBe GameStateString.P2
@@ -44,10 +45,6 @@ class StatusTest extends TestBaseClass {
         controller.state.gameState = PrintFieldState(controller)
         controller.state.gameState.handle shouldBe GameStateString.PRINT_FIELD
         controller.state.gameState.toString shouldBe GameStateString.message(GameStateString.PRINT_FIELD) + "\n" + controller.FieldToString
-
-        controller.state.gameState = QuitState(controller)
-        controller.state.gameState.handle shouldBe GameStateString.QUIT
-        controller.state.gameState.toString shouldBe GameStateString.message(GameStateString.QUIT)
       }
     }
   }

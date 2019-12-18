@@ -44,8 +44,7 @@ class GameController() extends GameControllerInterface {
     //    println("------ End of Initialisation ------")
     state.gameState = P1State(this)
     state.gameState.handle()
-
-    val gamegui = new GameGui(this)
+    new GameGui(this)
 
     //gameState = new PrintFieldState(this)
     //notifyObservers(PRINTSTRING)
@@ -203,7 +202,7 @@ class GameController() extends GameControllerInterface {
 
   private def isEnd: Any = {
     if (player1.getUnitAmount == 0 || player2.getUnitAmount == 0 || state.gameState.state == QUIT) {
-      state.gameState = new WonState(this)
+      state.gameState = WonState(this)
       state.gameState.handle()
     }
   }
