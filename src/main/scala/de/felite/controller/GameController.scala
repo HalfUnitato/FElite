@@ -48,7 +48,6 @@ class GameController() extends GameControllerInterface {
 
     //gameState = new PrintFieldState(this)
     //notifyObservers(PRINTSTRING)
-
     //gameState = new P1State(this)
   }
 
