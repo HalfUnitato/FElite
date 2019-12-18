@@ -1,5 +1,5 @@
 package de.felite.controller.state.game
 
-object State {
+class State {
   var gameState:CurrentState = _
 }

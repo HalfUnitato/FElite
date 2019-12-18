@@ -18,14 +18,14 @@ object PlayerState {
   }
 
   def switchToPlayer1: GameStateString.Value = {
-    State.gameState = P1State(controller)
+    controller.state.gameState = P1State(controller)
     state = GameStateString.P1
     controller.currentPlayer = controller.player1
     state
   }
 
   def switchToPlayer2: GameStateString.Value = {
-    State.gameState = P2State(controller)
+    controller.state.gameState = P2State(controller)
     state = GameStateString.P2
     controller.currentPlayer = controller.player2
     state

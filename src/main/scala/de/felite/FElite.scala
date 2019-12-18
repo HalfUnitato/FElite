@@ -24,7 +24,7 @@ object FElite {
     //    val gui = new GameGui(controller)
 
 
-    while (!controller.isEnd && (State.gameState.state != END && State.gameState.state != QUIT)) {
+    while (controller.state.gameState.state != END && controller.state.gameState.state != QUIT) {
       tui.playerTurn(scala.io.StdIn.readLine())
     }
   }

@@ -40,7 +40,7 @@ class TuiTest extends TestBaseClass {
       }
       "quit" in {
         tui.playerTurn("quit")
-        State.gameState.state shouldBe GameStateString.QUIT
+        controller.state.gameState.state shouldBe GameStateString.QUIT
       }
       /*"cancel" in {
         tui.playerTurn("cancel")

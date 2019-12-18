@@ -10,7 +10,7 @@ case class EndState(controller: GameControllerInterface) extends CurrentState {
   val state: GameState = GameStateString.END
 
   override def handle(): GameState = {
-    State.gameState = EndState(controller)
+    controller.state.gameState = EndState(controller)
     controller.notifyObservers(ObserverCommand.PRINTSTRING)
     controller.undoManager.reset()
     PlayerState.handle(controller)

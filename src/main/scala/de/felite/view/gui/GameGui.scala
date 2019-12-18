@@ -1,7 +1,7 @@
 package de.felite.view.gui
 
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.state.game.{EndState, QuitState, State}
+import de.felite.controller.state.game.{EndState, GameStateString, QuitState, State}
 import de.felite.model.Field
 import de.felite.util.{Observer, ObserverCommand}
 import javax.swing.JOptionPane
@@ -25,12 +25,12 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
 
   def commandLine: FlowPanel = new FlowPanel() {
     contents += new Button(Action("End Turn") {
-      State.gameState = EndState(controller)
-      State.gameState.handle()
+      controller.state.gameState = EndState(controller)
+      controller.state.gameState.handle()
     })
     contents += new Button(Action("Quit Game") {
-      State.gameState = QuitState(controller)
-      State.gameState.handle()
+      controller.state.gameState = QuitState(controller)
+      controller.state.gameState.handle()
     })
   }
 
@@ -105,8 +105,8 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
   menuBar = new MenuBar {
     contents += new Menu("File") {
       contents += new MenuItem(Action("Quit") {
-        State.gameState = QuitState(controller)
-        State.gameState.handle()
+        controller.state.gameState = QuitState(controller)
+        controller.state.gameState.handle()
       })
     }
     contents += new Menu("Edit") {
@@ -138,6 +138,8 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
     //println(State.gameState.toString)
+    if(controller.state.gameState.state == GameStateString.WON)
+        JOptionPane.showMessageDialog(null, controller.state.gameState.toString)
 
     redraw()
   }

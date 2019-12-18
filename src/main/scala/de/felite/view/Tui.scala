@@ -24,20 +24,20 @@ class Tui(controller: GameControllerInterface) extends Observer {
         controller.redo()
         true
       case "p" =>
-        State.gameState = PrintFieldState(controller)
-        State.gameState.handle()
+        controller.state.gameState = PrintFieldState(controller)
+        controller.state.gameState.handle()
         //        printString(controller.FieldToString)
         true
       case "quit" =>
-        State.gameState = QuitState(controller)
-        State.gameState.handle()
+        controller.state.gameState = QuitState(controller)
+        controller.state.gameState.handle()
         true
       /*case "cancel" =>
         controller.gameState = ReturnValues.CANCEL
         true*/
       case "end" =>
-        State.gameState = EndState(controller)
-        State.gameState.handle()
+        controller.state.gameState = EndState(controller)
+        controller.state.gameState.handle()
         true
       case "help" =>
         printHelp()
@@ -100,7 +100,7 @@ class Tui(controller: GameControllerInterface) extends Observer {
 
   override def update(observerCommand: ObserverCommand.Value): Unit = {
 
-    println(State.gameState.toString)
+    println(controller.state.gameState.toString)
 
     if (observerCommand == READSTRING) {
       controller.readString = scala.io.StdIn.readLine()

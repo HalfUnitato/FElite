@@ -2,7 +2,7 @@ package de.felite.controller
 
 import de.felite.controller.state.game
 import de.felite.controller.state.game.GameStateString._
-import de.felite.controller.state.game.{P1State, PrintFieldState, State}
+import de.felite.controller.state.game.{P1State, PrintFieldState, State, WonState}
 import de.felite.model.entity.Entity
 import de.felite.model.entity.figure.{BuildArcher, BuildSolider, SoldierFactory, Troop}
 import de.felite.model.entity.obstacle.{Grass, Obstacle}
@@ -13,6 +13,7 @@ import de.felite.view.gui.GameGui
 import scala.util.{Failure, Success, Try}
 
 class GameController() extends GameControllerInterface {
+  override var state:State = _
   override var undoManager: UndoManager = _
   override var player1: Player = _
   override var player2: Player = _
@@ -25,6 +26,7 @@ class GameController() extends GameControllerInterface {
 
   override def init(): Unit = {
     println("------ Start of Initialisation ------")
+    state = new State
     undoManager = new UndoManager(this)
     btnStartCoord = (-1, -1)
     btnEndCoord = (-1, -1)
@@ -40,8 +42,8 @@ class GameController() extends GameControllerInterface {
 
 
     //    println("------ End of Initialisation ------")
-    State.gameState = P1State(this)
-    State.gameState.handle()
+    state.gameState = P1State(this)
+    state.gameState.handle()
 
     val gamegui = new GameGui(this)
 
@@ -90,8 +92,8 @@ class GameController() extends GameControllerInterface {
     Try(Field.getCell(from._1, from._2), Field.getCell(to._1, to._2)) match {
       case Success(v) =>
         val bool = movement((from._1, from._2), (to._1, to._2))
-        State.gameState = PrintFieldState(this)
-        State.gameState.handle()
+        state.gameState = PrintFieldState(this)
+        state.gameState.handle()
         bool
       case Failure(e) =>
         false
@@ -137,9 +139,7 @@ class GameController() extends GameControllerInterface {
     true
   }
 
-  private def doAttack(from: (Int, Int), fEntity: Entity, to: (Int, Int), tEntity: Entity): Unit
-
-  = {
+  private def doAttack(from: (Int, Int), fEntity: Entity, to: (Int, Int), tEntity: Entity): Unit  = {
     undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
       to._1, to._2,
       if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
@@ -154,6 +154,7 @@ class GameController() extends GameControllerInterface {
         tmp
       }))
     tEntity.asInstanceOf[Troop].owner().removeTroop(tEntity.asInstanceOf[Troop])
+    isEnd
   }
 
   private var alreadyVisited: List[(Int, Int)] =
@@ -188,20 +189,24 @@ class GameController() extends GameControllerInterface {
 
   = {
     undoManager.undoStep()
-    State.gameState = game.PrintFieldState(this)
-    State.gameState.handle()
+    state.gameState = PrintFieldState(this)
+    state.gameState.handle()
   }
 
   override def redo(): Unit
 
   = {
     undoManager.redoStep()
-    State.gameState = game.PrintFieldState(this)
-    State.gameState.handle()
+    state.gameState = PrintFieldState(this)
+    state.gameState.handle()
   }
 
-  override def isEnd: Boolean =
-    player1.getUnitAmount == 0 || player2.getUnitAmount == 0 || State.gameState.state == QUIT
+  private def isEnd: Any = {
+    if (player1.getUnitAmount == 0 || player2.getUnitAmount == 0 || state.gameState.state == QUIT) {
+      state.gameState = new WonState(this)
+      state.gameState.handle()
+    }
+  }
 
   override def getPlayerName: String =
     currentPlayer.getPlayerName

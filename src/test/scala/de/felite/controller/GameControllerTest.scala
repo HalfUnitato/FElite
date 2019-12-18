@@ -22,11 +22,6 @@ class GameControllerTest extends TestBaseClass {
         }
       }
     }
-    "isEnd" should {
-      "fail" in {
-        controller.isEnd shouldBe false
-      }
-    }
     "troop actions" should {
       "attack" in {
         controller.btnStartCoord = (1, 0)
