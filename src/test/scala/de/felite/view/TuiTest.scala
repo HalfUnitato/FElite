@@ -1,7 +1,8 @@
 package de.felite.view
 
 import de.felite.TestBaseClass
-import de.felite.controller.{GameController, GameControllerInterface}
+import de.felite.controller.GameControllerInterface
+import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
 import de.felite.controller.state.game.{GameStateString, State}
 import de.felite.model.{Field, Player}
 import de.felite.util.ObserverCommand

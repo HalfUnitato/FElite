@@ -1,6 +1,6 @@
-package de.felite.controller
+package de.felite.controller.component.controllerImpl.controllerBaseImpl
 
-import de.felite.controller.state.game
+import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.GameStateString._
 import de.felite.controller.state.game.{P1State, PrintFieldState, State, WonState}
 import de.felite.model.entity.Entity
@@ -13,8 +13,8 @@ import de.felite.view.gui.GameGui
 import scala.util.{Failure, Success, Try}
 
 class GameController() extends GameControllerInterface {
-  override var state:State = _
-  override var undoManager: UndoManager = _
+  override var state: State = _
+  private var undoManager: UndoManager = _
   override var player1: Player = _
   override var player2: Player = _
   override var currentPlayer: Player = _
@@ -51,9 +51,7 @@ class GameController() extends GameControllerInterface {
     //gameState = new P1State(this)
   }
 
-  private def setUserTroopsDefault(pos: String, player: Player): Unit
-
-  = {
+  private def setUserTroopsDefault(pos: String, player: Player): Unit = {
     var y = 0
     var x = 0
 
@@ -137,7 +135,7 @@ class GameController() extends GameControllerInterface {
     true
   }
 
-  private def doAttack(from: (Int, Int), fEntity: Entity, to: (Int, Int), tEntity: Entity): Unit  = {
+  private def doAttack(from: (Int, Int), fEntity: Entity, to: (Int, Int), tEntity: Entity): Unit = {
     undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
       to._1, to._2,
       if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
@@ -209,4 +207,5 @@ class GameController() extends GameControllerInterface {
   override def getPlayerName: String =
     currentPlayer.getPlayerName
 
+  override def nextTurn(): Unit = undoManager.reset()
 }

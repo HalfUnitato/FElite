@@ -1,6 +1,6 @@
 package de.felite.controller.state.game
 
-import de.felite.controller.GameController
+import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
 import de.felite.controller.state.game.GameStateString.GameState
 import de.felite.util.ObserverCommand
 

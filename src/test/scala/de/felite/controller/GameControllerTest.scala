@@ -1,5 +1,6 @@
 package de.felite.controller
 
+import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
 import de.felite.model.{Field, Player}
 import de.felite.util.FileIO
 import de.felite.{TestBaseClass, util}

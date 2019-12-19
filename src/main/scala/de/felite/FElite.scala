@@ -1,6 +1,7 @@
 package de.felite
 
-import de.felite.controller.{GameController, GameControllerInterface}
+import de.felite.controller.GameControllerInterface
+import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
 import de.felite.model.{Field, Player}
 import de.felite.util.ObserverCommand
 import de.felite.view.Tui
