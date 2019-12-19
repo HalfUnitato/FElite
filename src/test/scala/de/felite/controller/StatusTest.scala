@@ -2,11 +2,7 @@ package de.felite.controller
 
 import de.felite.TestBaseClass
 import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
-import de.felite.controller.state._
-import de.felite.controller.state.game.{EndState, GameStateString, InitState, NextCmdState, P1InitState, P1State, P2InitState, P2State, PrintFieldState, QuitState, State, WonState}
-import de.felite.model.Field
-import de.felite.model.entity.figure.Soldier
-import de.felite.model.entity.obstacle.Grass
+import de.felite.controller.state.game.{EndState, GameStateString, InitState, NextCmdState, P1InitState, P1State, P2InitState, P2State, PrintFieldState}
 
 class StatusTest extends TestBaseClass {
   val controller: GameController = new GameController

@@ -1,8 +1,6 @@
 package de.felite.model
 
-import de.felite.model.entity.Entity
-import de.felite.model.entity.figure.Troop
-import de.felite.model.entity.obstacle.{Grass, Obstacle, Rock}
+import de.felite.model.entity.obstacle.Obstacle
 import de.felite.util.FileIO
 
 import scala.collection.mutable.ListBuffer
@@ -63,7 +61,7 @@ object Field {
   def getCell(x: Int, y: Int): Entity = {
     matrix(y)(x) match {
       case Some(t) => t
-      case None => Grass
+      case None => DefEntity
     }
   }
 

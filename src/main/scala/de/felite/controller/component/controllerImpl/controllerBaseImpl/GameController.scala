@@ -3,10 +3,9 @@ package de.felite.controller.component.controllerImpl.controllerBaseImpl
 import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.GameStateString._
 import de.felite.controller.state.game.{P1State, PrintFieldState, State, WonState}
-import de.felite.model.entity.Entity
-import de.felite.model.entity.figure.{BuildArcher, BuildSolider, SoldierFactory, Troop}
-import de.felite.model.entity.obstacle.{Grass, Obstacle}
-import de.felite.model.{Field, Player}
+import de.felite.model.entity.figure.{BuildArcher, BuildSolider}
+import de.felite.model.entity.obstacle.Obstacle
+import de.felite.model.{DefEntity, Entity, Field, Player, SoldierFactory, Troop}
 import de.felite.util.UndoManager
 import de.felite.view.gui.GameGui
 
@@ -76,13 +75,9 @@ class GameController() extends GameControllerInterface {
     Field.setCell(archer, x, y)
   }
 
-  override def FieldToString: String
+  override def FieldToString: String = Field.toString
 
-  = Field.toString
-
-  override def doMove(): Boolean
-
-  = {
+  override def doMove(): Boolean = {
     val from = btnStartCoord
     val to = btnEndCoord
     Try(Field.getCell(from._1, from._2), Field.getCell(to._1, to._2)) match {
@@ -114,7 +109,7 @@ class GameController() extends GameControllerInterface {
       range = fEntity.asInstanceOf[Troop].attackRange()
     }
     // or Grass -> no Rock / Tree
-    else if (tEntity.sign() == Grass.sign) {
+    else if (tEntity.sign() == DefEntity.sign) {
       range = fEntity.asInstanceOf[Troop].moveRange()
     } else return false
 
@@ -129,7 +124,7 @@ class GameController() extends GameControllerInterface {
     }
     // move
     else {
-      undoManager.doStep(new SetCommand(from._1, from._2, Grass,
+      undoManager.doStep(new SetCommand(from._1, from._2, DefEntity,
         to._1, to._2, fEntity))
     }
     true
@@ -139,7 +134,7 @@ class GameController() extends GameControllerInterface {
     undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
       to._1, to._2,
       if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
-        Grass
+        DefEntity
       } else {
         val tmp = SoldierFactory.create(
           tEntity.sign(), to,
@@ -170,7 +165,7 @@ class GameController() extends GameControllerInterface {
     if (alreadyVisited.contains(cP))
       return false
     val tmp = Field.getCell(cP._1, cP._2)
-    if (!tmp.isInstanceOf[Troop] && tmp.asInstanceOf[Obstacle].sign() != Grass.sign)
+    if (!tmp.isInstanceOf[Troop] && tmp.asInstanceOf[Obstacle].sign() != DefEntity.sign)
       return false
     alreadyVisited = cP :: alreadyVisited
     for {x <- cP._1 - 1 to cP._2 + 1

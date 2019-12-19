@@ -1,7 +1,7 @@
 package de.felite.util
 
 import de.felite.TestBaseClass
-import de.felite.model.entity.Entity
+import de.felite.model.Entity
 
 class FileIOTest extends TestBaseClass {
   "A FileIO" when {

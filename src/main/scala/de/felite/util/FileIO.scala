@@ -1,9 +1,9 @@
 package de.felite.util
 
-import de.felite.model.entity.Entity
-import de.felite.model.entity.obstacle.{Grass, Obstacle, Rock, Tree}
-import scala.util.control.Breaks._
+import de.felite.model.{DefEntity, Entity, ObstacleFactory}
+import de.felite.model.entity.obstacle.{Rock, Tree}
 
+import scala.util.control.Breaks._
 import scala.io.Source
 
 object FileIO {
@@ -21,7 +21,7 @@ object FileIO {
         }
         var i: Int = 0
         for (x <- v.toArray.slice(0, scal)) { //{ .slice(1,2))
-          arr(c)(i) = if (x.equals('r')) Some(Rock) else if (x.equals('t')) Some(Tree) else Some(Grass)
+          arr(c)(i) = Some(ObstacleFactory.create(x))
           i += 1
         }
         c += 1

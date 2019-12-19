@@ -1,9 +1,10 @@
 package de.felite.controller.component.controllerImpl.controllerMockImpl
 
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.state.game.State
-import de.felite.model.Player
+import de.felite.controller.state.game.{GameStateString, InitState, P1State, State}
+import de.felite.model.{Field, Player}
 import de.felite.util.UndoManager
+import de.felite.view.gui.GameGui
 
 class GameController extends GameControllerInterface{
   override var state: State = _
@@ -17,18 +18,22 @@ class GameController extends GameControllerInterface{
   override var btnEndCoord: (Int, Int) = _
 
   override def init(): Unit = {
-    state = new State()
-    player1 = Player()
-    player2 = Player()
+    println("------ Start of Initialisation ------")
+    state = new State
+    btnStartCoord = (-1, -1)
+    btnEndCoord = (-1, -1)
+
+    this.player1 = Player("Ike", Console.BLUE)
+    this.player2 = Player("Zelgius", Console.RED)
+
     currentPlayer = player1
-    printString = ""
-    readString =""
-    cmdStr = ""
-    btnStartCoord = (1,2)
-    btnEndCoord = (2,3)
+
+    state.gameState = P1State(this)
+    state.gameState.handle()
+    new GameGui(this)
   }
 
-  override def FieldToString: String = "Field"
+  override def FieldToString: String =  Field.toString
 
   override def doMove(): Boolean = true
 

@@ -1,10 +1,11 @@
 package de.felite.controller.state.game
 
+import de.felite.controller.GameControllerInterface
 import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
 import de.felite.controller.state.game.GameStateString.GameState
 import de.felite.util.ObserverCommand
 
-case class InitState(controller: GameController) extends CurrentState {
+case class InitState(controller: GameControllerInterface) extends CurrentState {
   val state: GameState = GameStateString.INIT
 
   override def handle(): GameState = {

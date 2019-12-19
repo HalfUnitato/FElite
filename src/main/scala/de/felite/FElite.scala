@@ -1,7 +1,7 @@
 package de.felite
 
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
+import de.felite.controller.component.controllerImpl._
 import de.felite.model.{Field, Player}
 import de.felite.util.ObserverCommand
 import de.felite.view.Tui
@@ -17,14 +17,11 @@ object FElite {
   def main(args: Array[String]): Unit = {
 
     println("Welcome to Fire Emblem lite")
-    val controller: GameControllerInterface = new GameController()
+    val controller: GameControllerInterface = new controllerBaseImpl.GameController()
     val tui = new Tui(controller)
 
 
     controller.init()
-
-    //    val gui = new GameGui(controller)
-
 
     while (controller.state.gameState.state != END && controller.state.gameState.state != QUIT) {
       tui.playerTurn(scala.io.StdIn.readLine())

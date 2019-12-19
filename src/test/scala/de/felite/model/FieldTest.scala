@@ -2,7 +2,6 @@ package de.felite.model
 
 import de.felite.TestBaseClass
 import de.felite.model.entity.figure.Soldier
-import de.felite.model.entity.obstacle.Grass
 
 class FieldTest extends TestBaseClass {
   "A Field" when {
@@ -21,13 +20,13 @@ class FieldTest extends TestBaseClass {
     }
     "performing a move" should {
       "be valid (currently it's invalid)" in {
-        testField.setCell(Grass, 0, 3) shouldBe false //this should be valid
+        testField.setCell(DefEntity, 0, 3) shouldBe false //this should be valid
       }
       "throw no Exception for Index -1" in {
-        testField.setCell(Grass, -1, 0) shouldBe(false)
+        testField.setCell(DefEntity, -1, 0) shouldBe false
       }
       "throw no Exception for Index 10" in {
-        testField.setCell(Grass, 10, 0) shouldBe(false)
+        testField.setCell(DefEntity, 10, 0) shouldBe false
       }
     }
     "set Soldier" should {

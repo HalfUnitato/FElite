@@ -1,7 +1,7 @@
 package de.felite.model
 
 import de.felite.TestBaseClass
-import de.felite.model.entity.figure.{Archer, Soldier, Troop}
+import de.felite.model.entity.figure.{Archer, Soldier}
 
 class PlayerTest extends TestBaseClass {
   "A Player" when {

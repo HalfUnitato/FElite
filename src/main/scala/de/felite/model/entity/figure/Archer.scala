@@ -1,7 +1,6 @@
 package de.felite.model.entity.figure
 
-import de.felite.model.Player
-import de.felite.model.entity.obstacle.Obstacle
+import de.felite.model.{Player, Troop}
 
 case class Archer(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos: Int, yPos: Int, player: Player) extends Troop {
   override val x: Int = xPos
@@ -16,5 +15,5 @@ case class Archer(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos:
 }
 
 object BuildArcher{
-  def buildArcher(x:Int, y:Int, player : Player, health:Int = 6) = Archer(2, 3, 4, 2, health, x, y, player)
+  def buildArcher(x:Int, y:Int, player : Player, health:Int = 6): Archer = Archer(2, 3, 4, 2, health, x, y, player)
 }

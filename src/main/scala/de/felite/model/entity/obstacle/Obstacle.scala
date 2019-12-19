@@ -1,6 +1,7 @@
 package de.felite.model.entity.obstacle
 
-import de.felite.model.entity.Entity
+import de.felite.model.Entity
+
 
 trait Obstacle extends Entity {
 

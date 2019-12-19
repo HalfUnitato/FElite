@@ -4,7 +4,7 @@ import java.awt.Color
 
 import de.felite.controller.GameControllerInterface
 import de.felite.model.Field
-import de.felite.model.entity.Entity
+import de.felite.model.Entity
 
 import scala.swing.{Button, Font, Swing}
 
