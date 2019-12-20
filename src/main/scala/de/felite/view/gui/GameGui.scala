@@ -117,8 +117,8 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
         controller.redo()
       })
     }
-    contents += new Menu("Options") {
-    }
+    /*contents += new Menu("Options") {
+    }*/
   }
 
   visible = true

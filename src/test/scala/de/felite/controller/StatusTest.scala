@@ -6,7 +6,7 @@ import de.felite.controller.state.game.{EndState, GameStateString, InitState, Ne
 
 class StatusTest extends TestBaseClass {
   val controller: GameController = new GameController
-  controller.init()
+  controller.init(1)
 
   "State" when {
     "state" should {

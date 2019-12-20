@@ -15,7 +15,7 @@ trait GameControllerInterface extends Observable  {
   var btnStartCoord: (Int, Int)
   var btnEndCoord: (Int, Int)
 
-  def init(): Unit
+  def init(test:Int = 0): Unit
 
   def FieldToString: String
 

@@ -13,7 +13,7 @@ class GameControllerTest extends TestBaseClass {
   "The GameControl" when {
     "Initialization" should {
       "init not fail " in {
-        controller.init() shouldBe controller.init()
+        controller.init(1) shouldBe controller.init(1)
       }
     }
     "player info" when {

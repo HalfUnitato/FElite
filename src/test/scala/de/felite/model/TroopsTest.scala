@@ -5,7 +5,7 @@ import de.felite.model.entity.figure.{Archer, BuildArcher, Soldier}
 
 
 class TroopsTest extends TestBaseClass {
-  val player = Player()
+  val player: Player = Player()
   "a new Troop" when {
     "a new Archer" should {
       //Archer(attV,defV,attR,mvR,xpos,ypos,owner)
@@ -58,7 +58,7 @@ class TroopsTest extends TestBaseClass {
         soldier.defense should equal(4)
       }
       "should not be the same" in {
-        soldier eq soldier2 should be(false)
+        soldier.equals(soldier2) should be(false)
       }
     }
   }
