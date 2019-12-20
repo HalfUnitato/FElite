@@ -19,7 +19,7 @@ TODO: give obstacles (without default) coordiantes
         defaultSize for Field into Module?
 
 # LowerPrio:
-TODO: Mnemonics for GUI
+TODO: Mnemonics and UX for GUI
 TODO: ModelInterface should be just one import
 TODO: cut asking for Playername and just use DummyNames
 TODO: push working tui to master?
