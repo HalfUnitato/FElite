@@ -2,6 +2,7 @@ package de.felite
 
 //import com.google.inject.Guice
 import de.felite.controller.GameControllerInterface
+import de.felite.controller.component.controllerBaseImpl.GameController
 import de.felite.controller.component.controllerImpl._
 import de.felite.model.{Field, Player}
 import de.felite.util.ObserverCommand
@@ -18,7 +19,7 @@ object FElite {
 
     println("Welcome to Fire Emblem lite")
 //    val injector = Guice.createInjector(new FEliteModule)
-    val controller: GameControllerInterface = new controllerBaseImpl.GameController//injector.getInstance(classOf[GameControllerInterface])
+    val controller: GameControllerInterface = new GameController//injector.getInstance(classOf[GameControllerInterface])
 
     controller.init()
 

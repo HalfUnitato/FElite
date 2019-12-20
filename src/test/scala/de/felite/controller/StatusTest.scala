@@ -1,7 +1,7 @@
 package de.felite.controller
 
 import de.felite.TestBaseClass
-import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
+import de.felite.controller.component.controllerBaseImpl.GameController
 import de.felite.controller.state.game.{EndState, GameStateString, InitState, NextCmdState, P1InitState, P1State, P2InitState, P2State, PrintFieldState}
 
 class StatusTest extends TestBaseClass {

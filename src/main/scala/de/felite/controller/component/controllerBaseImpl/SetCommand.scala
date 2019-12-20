@@ -1,4 +1,4 @@
-package de.felite.controller.component.controllerImpl.controllerBaseImpl
+package de.felite.controller.component.controllerBaseImpl
 
 import de.felite.model.{DefEntity, Entity, Field, Troop}
 import de.felite.util.Command

@@ -1,4 +1,4 @@
-package de.felite.controller.component.controllerImpl.controllerStubImpl
+package de.felite.controller.component.controllerStubImpl
 
 import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.{P1State, State}

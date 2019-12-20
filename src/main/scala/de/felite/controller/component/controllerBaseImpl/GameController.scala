@@ -1,4 +1,4 @@
-package de.felite.controller.component.controllerImpl.controllerBaseImpl
+package de.felite.controller.component.controllerBaseImpl
 
 import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.GameStateString._
