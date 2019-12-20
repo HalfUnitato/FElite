@@ -5,7 +5,7 @@ import de.felite.model.{Field, Player}
 import de.felite.util.FileIO
 import de.felite.{TestBaseClass, util}
 
-class GameControllerTest extends TestBaseClass {
+class GameControllerBaseImplTest extends TestBaseClass {
   val playerOne: Player = Player("Marin", Console.BLUE)
   val playerTwo: Player = Player("Lukas", Console.RED)
   val controller: GameControllerInterface = new GameController()
@@ -47,6 +47,12 @@ class GameControllerTest extends TestBaseClass {
         controller.btnEndCoord = (0, 1)
         controller.doMove()
         controller.undo()
+      }
+      "nextTurn not fail" in {
+        controller.btnStartCoord = (0, 0)
+        controller.btnEndCoord = (0, 1)
+        controller.doMove()
+        controller.nextTurn()
       }
       "redo not fail" in {
         controller.btnStartCoord = (0, 0)
