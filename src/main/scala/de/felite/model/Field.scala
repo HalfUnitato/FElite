@@ -1,9 +1,6 @@
 package de.felite.model
 
-import de.felite.model.entity.obstacle.Obstacle
 import de.felite.util.FileIO
-
-import scala.collection.mutable.ListBuffer
 import scala.util.{Failure, Success, Try}
 
 object Field {

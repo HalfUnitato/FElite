@@ -3,9 +3,7 @@ package de.felite.controller.component.controllerImpl.controllerBaseImpl
 import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.GameStateString._
 import de.felite.controller.state.game.{P1State, PrintFieldState, State, WonState}
-import de.felite.model.entity.figure.{BuildArcher, BuildSolider}
-import de.felite.model.entity.obstacle.Obstacle
-import de.felite.model.{DefEntity, Entity, Field, Player, SoldierFactory, Troop}
+import de.felite.model.{DefEntity, Entity, Field, Player, SoldierFactory, Troop, Obstacle}
 import de.felite.util.UndoManager
 import de.felite.view.gui.GameGui
 
@@ -23,7 +21,7 @@ class GameController() extends GameControllerInterface {
   override var btnStartCoord: (Int, Int) = _
   override var btnEndCoord: (Int, Int) = _
 
-  override def init(test:Int = 0): Unit = {
+  override def init(test: Int = 0): Unit = {
     println("------ Start of Initialisation ------")
     state = new State
     undoManager = new UndoManager(this)
@@ -43,7 +41,9 @@ class GameController() extends GameControllerInterface {
     //    println("------ End of Initialisation ------")
     state.gameState = P1State(this)
     state.gameState.handle()
-    if (test == 0) {new GameGui(this)}
+    if (test == 0) {
+      new GameGui(this)
+    }
 
 
     //gameState = new PrintFieldState(this)
@@ -64,8 +64,8 @@ class GameController() extends GameControllerInterface {
       x = Field.getScale - 2
     }
 
-    val soldier = BuildSolider.buldSoldier(x, y, player)
-    val archer = BuildArcher.buildArcher(x, y, player)
+    val soldier = SoldierFactory.create(typ = 's', pos = (x, y), player = player)
+    val archer = SoldierFactory.create(typ = 'a', pos = (x, y), player = player)
 
     player.addPlayerTroop(soldier.asInstanceOf[Troop])
     Field.setCell(soldier, x, y)

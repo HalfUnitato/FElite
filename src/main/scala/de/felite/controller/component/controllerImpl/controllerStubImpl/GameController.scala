@@ -1,9 +1,8 @@
-package de.felite.controller.component.controllerImpl.controllerMockImpl
+package de.felite.controller.component.controllerImpl.controllerStubImpl
 
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.state.game.{GameStateString, InitState, P1State, State}
+import de.felite.controller.state.game.{P1State, State}
 import de.felite.model.{Field, Player}
-import de.felite.util.UndoManager
 import de.felite.view.gui.GameGui
 
 class GameController extends GameControllerInterface{

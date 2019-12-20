@@ -117,7 +117,8 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
         controller.redo()
       })
     }
-    /*contents += new Menu("Options") {
+    /*contents += new Menu("Help") {
+      mnemonic = Key.F1
     }*/
   }
 

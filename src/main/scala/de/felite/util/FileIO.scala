@@ -1,10 +1,8 @@
 package de.felite.util
 
-import de.felite.model.{DefEntity, Entity, ObstacleFactory}
-import de.felite.model.entity.obstacle.{Rock, Tree}
-
-import scala.util.control.Breaks._
+import de.felite.model.{Entity, ObstacleFactory}
 import scala.io.Source
+import scala.util.control.Breaks._
 
 object FileIO {
   private var scal: Int = _
