@@ -16,7 +16,7 @@ class GameController extends GameControllerInterface{
   override var btnStartCoord: (Int, Int) = _
   override var btnEndCoord: (Int, Int) = _
 
-  override def init(test:Int = 0): Unit = {
+  override def init(): Unit = {
     println("------ Start of Initialisation ------")
     state = new State
     btnStartCoord = (-1, -1)
@@ -29,7 +29,6 @@ class GameController extends GameControllerInterface{
 
     state.gameState = P1State(this)
     state.gameState.handle()
-    if (test == 0) {new GameGui(this)}
 
   }
 

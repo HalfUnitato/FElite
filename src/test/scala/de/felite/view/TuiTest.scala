@@ -13,7 +13,7 @@ class TuiTest extends TestBaseClass {
   val controller:GameControllerInterface = new GameController()
   val tui: Tui = new Tui(controller)
   "The Tui" when {
-    controller.init(1)
+    controller.init()
     "print String" should {
       "not throw an ERROR when printing the fieldString" in {
         noException shouldBe thrownBy(tui.printString("t3st"))

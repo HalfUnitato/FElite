@@ -14,7 +14,7 @@ class GameControllerMockImplTest extends TestBaseClass {
   "The GameControl" when {
     "Initialization" should {
       "init not fail " in {
-        controller.init(1) shouldBe controller.init(1)
+        controller.init() shouldBe controller.init()
       }
     }
     "player info" when {

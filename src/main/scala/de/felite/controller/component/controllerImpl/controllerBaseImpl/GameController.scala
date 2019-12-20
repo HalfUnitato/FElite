@@ -21,7 +21,7 @@ class GameController() extends GameControllerInterface {
   override var btnStartCoord: (Int, Int) = _
   override var btnEndCoord: (Int, Int) = _
 
-  override def init(test: Int = 0): Unit = {
+  override def init(): Unit = {
     println("------ Start of Initialisation ------")
     state = new State
     undoManager = new UndoManager(this)
@@ -41,9 +41,6 @@ class GameController() extends GameControllerInterface {
     //    println("------ End of Initialisation ------")
     state.gameState = P1State(this)
     state.gameState.handle()
-    if (test == 0) {
-      new GameGui(this)
-    }
 
 
     //gameState = new PrintFieldState(this)
