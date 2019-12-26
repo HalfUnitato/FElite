@@ -1,12 +1,14 @@
 package de.felite.model
 
+import com.google.inject.Inject
+import com.google.inject.name.Named
 import de.felite.util.FileIO
+
 import scala.util.{Failure, Success, Try}
 
-object Field {
-  private val scale: Int = 3
-  private val fileName = FileIO.setScal(scale)
-  private val matrix = FileIO.readFromFile()
+class Field @Inject() ( @Named("DefaultSize") scal: Int) {
+  var fileName:String = "src/fieldbase.txt"
+  private val matrix = FileIO.readFromFile(scal,fileName)
 
   // return Field
   // BUT NEVER THE ORIGINAL ONE!!!
@@ -63,6 +65,6 @@ object Field {
   }
 
   def getScale: Int = {
-    scale
+    scal
   }
 }

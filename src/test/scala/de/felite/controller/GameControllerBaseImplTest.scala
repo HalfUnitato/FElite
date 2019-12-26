@@ -1,14 +1,13 @@
 package de.felite.controller
 
+import de.felite.TestBaseClass
 import de.felite.controller.component.controllerBaseImpl.GameController
 import de.felite.model.{Field, Player}
-import de.felite.util.FileIO
-import de.felite.{TestBaseClass, util}
 
 class GameControllerBaseImplTest extends TestBaseClass {
   val playerOne: Player = Player("Marin", Console.BLUE)
   val playerTwo: Player = Player("Lukas", Console.RED)
-  val controller: GameControllerInterface = new GameController()
+  val controller: GameControllerInterface = new GameController(new Field(3))
 
   "The GameControl" when {
     "Initialization" should {

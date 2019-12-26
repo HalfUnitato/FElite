@@ -24,7 +24,6 @@ TODO: ModelInterface should be just one import
 TODO: cut asking for Playername and just use DummyNames
 TODO: push working tui to master?
 
-
 # UnknownPrio:
 TODO: rework Array to ArraySeq
 TODO: todo.txt Kategorien?

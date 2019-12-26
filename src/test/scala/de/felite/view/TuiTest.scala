@@ -3,14 +3,10 @@ package de.felite.view
 import de.felite.TestBaseClass
 import de.felite.controller.GameControllerInterface
 import de.felite.controller.component.controllerBaseImpl.GameController
-import de.felite.controller.state.game.{GameStateString, State}
-import de.felite.model.{Field, Player}
-import de.felite.util.ObserverCommand
-
-import scala.util.control.Exception
+import de.felite.model.Field
 
 class TuiTest extends TestBaseClass {
-  val controller:GameControllerInterface = new GameController()
+  val controller:GameControllerInterface = new GameController(new Field(3))
   val tui: Tui = new Tui(controller)
   "The Tui" when {
     controller.init()

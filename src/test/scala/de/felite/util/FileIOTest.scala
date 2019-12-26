@@ -4,19 +4,18 @@ import de.felite.TestBaseClass
 import de.felite.model.Entity
 
 class FileIOTest extends TestBaseClass {
+  val scal: Int = 3
+  val fileName: String = "src/fieldbase.txt"
   "A FileIO" when {
-    "setting the scale" in {
-      FileIO.setScal(3) shouldBe true
-    }
     "getting the scale" in {
-      FileIO.getScal should be (3)
+      FileIO.getScal should be(scal)
     }
     "readFromFIle" should {
       "valid" in {
-        FileIO.readFromFile() shouldBe FileIO.readFromFile()
+        FileIO.readFromFile(scal, fileName) shouldBe FileIO.readFromFile(scal, fileName)
       }
       "return a field" in {
-        val field = FileIO.readFromFile()
+        val field = FileIO.readFromFile(scal, fileName)
         field.isInstanceOf[Array[Array[Option[Entity]]]] shouldBe true
       }
     }

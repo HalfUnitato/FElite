@@ -5,7 +5,7 @@ import de.felite.model.entity.figure.Soldier
 
 class FieldTest extends TestBaseClass {
   "A Field" when {
-    val testField = Field
+    val testField = new Field(3)
     val player = Player()
 
     "get Field" should {

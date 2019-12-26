@@ -1,15 +1,17 @@
 package de.felite.controller.component.controllerBaseImpl
 
+import com.google.inject.{Guice, Inject, Injector}
+import de.felite.FEliteModule
 import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.GameStateString._
 import de.felite.controller.state.game.{P1State, PrintFieldState, State, WonState}
-import de.felite.model.{DefEntity, Entity, Field, Player, SoldierFactory, Troop, Obstacle}
+import de.felite.model._
 import de.felite.util.UndoManager
-import de.felite.view.gui.GameGui
 
 import scala.util.{Failure, Success, Try}
 
-class GameController() extends GameControllerInterface {
+class GameController @Inject()  (_field: Field) extends GameControllerInterface {
+  override var field:Field = _field
   override var state: State = _
   private var undoManager: UndoManager = _
   override var player1: Player = _
@@ -21,7 +23,16 @@ class GameController() extends GameControllerInterface {
   override var btnStartCoord: (Int, Int) = _
   override var btnEndCoord: (Int, Int) = _
 
+  val injector: Injector = Guice.createInjector(new FEliteModule)
+
   override def init(): Unit = {
+    /*field.getScale match {
+      case 1 => field = injector.instance[Field](Names.named("test"))
+      case 4 => field = injector.instance[Field](Names.named("middle"))
+      case 9 => field = injector.instance[Field](Names.named("max"))
+      case _ =>
+    }*/
+
     println("------ Start of Initialisation ------")
     state = new State
     undoManager = new UndoManager(this)
@@ -57,34 +68,34 @@ class GameController() extends GameControllerInterface {
       x = 0
     }
     else if (pos.equals("BottomRight")) {
-      y = Field.getScale - 1
-      x = Field.getScale - 2
+      y = field.getScale - 1
+      x = field.getScale - 2
     }
 
     val soldier = SoldierFactory.create(typ = 's', pos = (x, y), player = player)
     val archer = SoldierFactory.create(typ = 'a', pos = (x, y), player = player)
 
     player.addPlayerTroop(soldier.asInstanceOf[Troop])
-    Field.setCell(soldier, x, y)
+    field.setCell(soldier, x, y)
 
     x += 1
 
     player.addPlayerTroop(archer.asInstanceOf[Troop])
-    Field.setCell(archer, x, y)
+    field.setCell(archer, x, y)
   }
 
-  override def FieldToString: String = Field.toString
+  override def fieldToString: String = field.toString
 
   override def doMove(): Boolean = {
-    val from = btnStartCoord
-    val to = btnEndCoord
-    Try(Field.getCell(from._1, from._2), Field.getCell(to._1, to._2)) match {
-      case Success(v) =>
+    val from: (Int, Int) = btnStartCoord
+    val to: (Int, Int) = btnEndCoord
+    Try(field.getCell(from._1, from._2), field.getCell(to._1, to._2)) match {
+      case Success(_) =>
         val bool = movement((from._1, from._2), (to._1, to._2))
         state.gameState = PrintFieldState(this)
         state.gameState.handle()
         bool
-      case Failure(e) =>
+      case Failure(_: Throwable) =>
         false
     }
   }
@@ -93,13 +104,13 @@ class GameController() extends GameControllerInterface {
 
   = {
     // is usage of troop valid?
-    val fEntity: Entity = Field.getCell(from._1, from._2)
+    val fEntity: Entity = field.getCell(from._1, from._2)
 
     if (!currentPlayer.containsSoldier(fEntity))
       return false
 
     // is destination valid?
-    val tEntity: Entity = Field.getCell(to._1, to._2)
+    val tEntity: Entity = field.getCell(to._1, to._2)
     var range: Int = 0
 
     // Troop from enemy?
@@ -117,19 +128,19 @@ class GameController() extends GameControllerInterface {
       return false
 
     // attack
-    if (Field.getCell(to._1, to._2).isInstanceOf[Troop]) {
+    if (field.getCell(to._1, to._2).isInstanceOf[Troop]) {
       doAttack(from, fEntity, to, tEntity)
     }
     // move
     else {
-      undoManager.doStep(new SetCommand(from._1, from._2, DefEntity,
+      undoManager.doStep(new SetCommand(this, from._1, from._2, DefEntity,
         to._1, to._2, fEntity))
     }
     true
   }
 
   private def doAttack(from: (Int, Int), fEntity: Entity, to: (Int, Int), tEntity: Entity): Unit = {
-    undoManager.doStep(new SetCommand(to._1, to._2, tEntity,
+    undoManager.doStep(new SetCommand(this, to._1, to._2, tEntity,
       to._1, to._2,
       if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
         DefEntity
@@ -149,10 +160,8 @@ class GameController() extends GameControllerInterface {
   private var alreadyVisited: List[(Int, Int)] =
     Nil
 
-  private def movePlausiR(cP: (Int, Int), goal: (Int, Int), range: Int): Boolean
-
-  = {
-    Try(Field.getCell(cP._1, cP._2)) match {
+  private def movePlausiR(cP: (Int, Int), goal: (Int, Int), range: Int): Boolean = {
+    Try(field.getCell(cP._1, cP._2)) match {
       case Failure(e) => return false
       case Success(s) =>
     }
@@ -162,12 +171,12 @@ class GameController() extends GameControllerInterface {
       return false
     if (alreadyVisited.contains(cP))
       return false
-    val tmp = Field.getCell(cP._1, cP._2)
+    val tmp = field.getCell(cP._1, cP._2)
     if (!tmp.isInstanceOf[Troop] && tmp.asInstanceOf[Obstacle].sign() != DefEntity.sign)
       return false
     alreadyVisited = cP :: alreadyVisited
-    for {x <- cP._1 - 1 to cP._2 + 1
-         y <- cP._1 - 1 to cP._2 + 1} {
+    for {x <- cP._1 - 1 to cP._1 + 1
+         y <- cP._2 - 1 to cP._2 + 1} {
       if (movePlausiR((x, y), goal, range - 1))
         return true
     }

@@ -1,8 +1,7 @@
 package de.felite.view.gui
 
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.state.game.{EndState, GameStateString, QuitState, State}
-import de.felite.model.Field
+import de.felite.controller.state.game.{EndState, GameStateString, QuitState}
 import de.felite.util.{Observer, ObserverCommand}
 import javax.swing.JOptionPane
 
@@ -14,7 +13,7 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
 
   controller.add(this)
 
-  val scale: Int = Field.getScale
+  val scale: Int = controller.field.getScale
 
   def statusLine: FlowPanel = new FlowPanel() { //this should contain all static Information per Player
     def getTurnName: String = controller.getPlayerName
@@ -129,8 +128,8 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
   def redraw(): Unit = {
     contents = mainPanel
     for {
-      row <- 0 until Field.getScale
-      column <- 0 until Field.getScale
+      row <- 0 until controller.field.getScale
+      column <- 0 until controller.field.getScale
     } cells(row)(column).remake()
     repaint
     centerOnScreen()

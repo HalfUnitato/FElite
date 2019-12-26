@@ -14,6 +14,6 @@ case class PrintFieldState(controller:GameControllerInterface) extends CurrentSt
 
 
   override def toString: String = {
-    GameStateString.message(state) + "\n" + controller.FieldToString
+    GameStateString.message(state) + "\n" + controller.fieldToString
   }
 }

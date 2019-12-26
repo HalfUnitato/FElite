@@ -2,8 +2,7 @@ package de.felite.controller.component.controllerStubImpl
 
 import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.{P1State, State}
-import de.felite.model.{Field, Player}
-import de.felite.view.gui.GameGui
+import de.felite.model._
 
 class GameController extends GameControllerInterface{
   override var state: State = _
@@ -32,7 +31,7 @@ class GameController extends GameControllerInterface{
 
   }
 
-  override def FieldToString: String =  Field.toString
+  override def fieldToString: String =  ""
 
   override def doMove(): Boolean = true
 
@@ -43,4 +42,6 @@ class GameController extends GameControllerInterface{
   override def getPlayerName: String = currentPlayer.getPlayerName
 
   override def nextTurn(): Unit = {}
+
+  override var field: Field = _
 }

@@ -1,10 +1,11 @@
 package de.felite.controller
 
 import de.felite.controller.state.game.State
-import de.felite.model.Player
-import de.felite.util.{Observable, UndoManager}
+import de.felite.model.{Field, Player}
+import de.felite.util.Observable
 
 trait GameControllerInterface extends Observable  {
+  var field:Field
   var state:State
   var player1: Player
   var player2: Player
@@ -17,7 +18,7 @@ trait GameControllerInterface extends Observable  {
 
   def init(): Unit
 
-  def FieldToString: String
+  def fieldToString: String
 
   def doMove(): Boolean
 
