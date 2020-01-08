@@ -3,12 +3,16 @@ package de.felite.model
 import de.felite.model.entity.figure.{BuildArcher, BuildSolider}
 import de.felite.model.entity.obstacle.{Rock, Tree}
 
+import scala.xml.Elem
+
 trait ModelInterface {}
 
 trait Entity {
+  def x(): Int
+  def y(): Int
   def sign(): Char
-
   def getColor: String
+  def toXML: Elem
 }
 
 trait PlayerTrait {
@@ -18,20 +22,16 @@ trait PlayerTrait {
 
   def removeTroop(troop: Troop): Boolean
 
+  def clearToopList(): Unit
+
   def containsSoldier(soldier: Entity): Boolean
 
   def getPlayerName: String
-
-  def getPlayerColor: String
 
   def getUnitAmount: Int
 }
 
 trait Troop extends Entity {
-  def x(): Int
-
-  def y(): Int
-
   def health(): Int
 
   def attack(): Int
@@ -44,12 +44,15 @@ trait Troop extends Entity {
 
   def owner(): Player = Player()
 
-  override def getColor: String = owner().getPlayerColor
-
+  override def toXML: Elem = {
+    <troop row={y().toString} col={x().toString} health={health()} player={owner()}>
+      {sign()}
+    </troop>
+  }
 }
 
 // Std Grass
-case object DefEntity extends Obstacle {
+case class DefEntity(x:Int,y:Int) extends Obstacle {
   val sign: Char = 'g'
   override val walkthrough: Boolean = true
   override val color: String = Console.GREEN
@@ -77,15 +80,21 @@ trait Obstacle extends Entity {
 
   def color(): String
 
+  def toXML: Elem = {
+    <obstacle row={y().toString} col={x().toString}>
+      {sign()}
+    </obstacle>
+  }
+
   override def getColor: String = color()
 }
 
 object ObstacleFactory {
-  def create(typ: Char): Obstacle = {
+  def create(typ: Char,x:Int, y:Int): Obstacle = {
     typ match {
-      case 'r' => Rock
-      case 'g' => DefEntity
-      case 't' => Tree
+      case 'r' => Rock(x,y)
+      case 'g' => DefEntity(x,y)
+      case 't' => Tree(x,y)
     }
   }
 }

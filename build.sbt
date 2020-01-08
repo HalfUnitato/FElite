@@ -14,4 +14,5 @@ libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.13" % "2.1.1"
 libraryDependencies += "com.google.inject" % "guice" % "4.2.2"
 libraryDependencies += "net.codingwell" %% "scala-guice" % "4.2.6"
 
+libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.2.0"
 // scalacOptions += "-deprecation" //display deprecation warnings

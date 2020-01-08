@@ -22,6 +22,7 @@ case class Player(private val name: String = "John Doe", private val color: Stri
     playerTroops.remove(playerTroops.indexOf(troop))
     true
   }
+  override def clearToopList() = playerTroops.clear()
 
   override def containsSoldier(soldier: Entity):Boolean = {
     if(playerTroops.contains(soldier))
@@ -31,8 +32,6 @@ case class Player(private val name: String = "John Doe", private val color: Stri
   }
 
   override def getPlayerName: String = name
-
-  override def getPlayerColor: String = color
 
   override def getUnitAmount: Int = playerTroops.size
 }

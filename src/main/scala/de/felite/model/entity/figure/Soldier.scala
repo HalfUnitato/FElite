@@ -13,6 +13,7 @@ case class Soldier(attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, xPos
   override val moveRange: Int = mvR
   override val owner: Player = player
 
+  override def getColor: String = ???
 }
 object BuildSolider{
   def buldSoldier(x:Int, y:Int, player : Player, health:Int = 6): Soldier = Soldier(3, 6, 1, 4, health, x, y, player)

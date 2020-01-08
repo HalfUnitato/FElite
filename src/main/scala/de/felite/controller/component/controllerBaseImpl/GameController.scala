@@ -7,6 +7,7 @@ import de.felite.controller.state.game.GameStateString._
 import de.felite.controller.state.game.{P1State, PrintFieldState, State, WonState}
 import de.felite.model._
 import de.felite.util.UndoManager
+import de.felite.util.fileIOComponent.FileIOInterface
 
 import scala.util.{Failure, Success, Try}
 
@@ -22,8 +23,8 @@ class GameController @Inject()  (_field: Field) extends GameControllerInterface 
   override var cmdStr: String = _
   override var btnStartCoord: (Int, Int) = _
   override var btnEndCoord: (Int, Int) = _
-
   val injector: Injector = Guice.createInjector(new FEliteModule)
+  val fileIO = injector.getInstance(classOf[FileIOInterface])
 
   override def init(): Unit = {
     /*field.getScale match {
@@ -183,22 +184,24 @@ class GameController @Inject()  (_field: Field) extends GameControllerInterface 
     false
   }
 
-  override def undo(): Unit
-
-  = {
+  override def undo(): Unit = {
     undoManager.undoStep()
     state.gameState = PrintFieldState(this)
     state.gameState.handle()
   }
 
-  override def redo(): Unit
-
-  = {
+  override def redo(): Unit = {
     undoManager.redoStep()
     state.gameState = PrintFieldState(this)
     state.gameState.handle()
   }
-
+  def load() = {
+    player1.clearToopList()
+    field = fileIO.load
+  }
+  def store() = {
+    fileIO.save(field)
+  }
   private def isEnd: Any = {
     if (player1.getUnitAmount == 0 || player2.getUnitAmount == 0 || state.gameState.state == QUIT) {
       state.gameState = WonState(this)
