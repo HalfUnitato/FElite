@@ -32,7 +32,7 @@ class Field @Inject() ( @Named("DefaultSize") scal: Int) {
               case obs: Obstacle => base += obs.getColor
               case _ => base += Console.RESET
             }
-            base += b.sign() + "\t"
+            base += b.sign + "\t"
             base += Console.RESET
           case None => base += Console.RESET
         }
@@ -60,7 +60,7 @@ class Field @Inject() ( @Named("DefaultSize") scal: Int) {
   def getCell(x: Int, y: Int): Entity = {
     matrix(y)(x) match {
       case Some(t) => t
-      case None => DefEntity
+      case None => ObstacleFactory.create('g',x,y)
     }
   }
 

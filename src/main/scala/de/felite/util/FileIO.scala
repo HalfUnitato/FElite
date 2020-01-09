@@ -22,7 +22,7 @@ object FileIO {
         }
         var i: Int = 0
         for (x <- v.toArray.slice(0, scal)) { //{ .slice(1,2))
-          arr(c)(i) = Some(ObstacleFactory.create(x))
+          arr(c)(i) = Some(ObstacleFactory.create(x,c,i))
           i += 1
         }
         c += 1

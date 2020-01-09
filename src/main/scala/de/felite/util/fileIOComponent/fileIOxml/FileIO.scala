@@ -6,8 +6,8 @@ import com.google.inject.Guice
 import com.google.inject.name.Names
 import de.felite.FEliteModule
 import de.felite.controller.GameControllerInterface
-import de.felite.model.entity.obstacle.{Rock, Tree}
-import de.felite.model.{DefEntity, Field, SoldierFactory}
+import de.felite.model.entity.obstacle.SimpleObstacle
+import de.felite.model.{Field, SoldierFactory}
 import de.felite.util.fileIOComponent.FileIOInterface
 import net.codingwell.scalaguice.InjectorExtensions._
 
@@ -26,7 +26,7 @@ class FileIO extends FileIOInterface {
       case _ =>
     }
 
-    val cellNode = (file \\ "cell")
+    val cellNode = file \\ "cell"
     for (cell <- cellNode) {
       val y: Int = (cell \ "@row").text.toInt
       val x: Int = (cell \ "@col").text.toInt
@@ -46,9 +46,9 @@ class FileIO extends FileIOInterface {
           field.setCell(troop, x, y)
           owner.addPlayerTroop(troop)
 
-        case "r" => field.setCell(Rock, x, y)
-        case "t" => field.setCell(Tree, x, y)
-        case _ => field.setCell(DefEntity, x, y) // default
+        case "r" =>field.setCell(SimpleObstacle(typ.charAt(0),x,y,_walkthrough = false), x, y)
+        case "t" =>field.setCell(SimpleObstacle(typ.charAt(0),x,y,_walkthrough = false), x, y)
+        case _ => field.setCell(SimpleObstacle(typ.charAt(0),x,y,_walkthrough = true), x, y) // default
       }
     }
     controller.field = field
@@ -68,7 +68,7 @@ class FileIO extends FileIOInterface {
       {for {
       y <- 0 until field.getScale
       x <- 0 until field.getScale
-    } yield  (field.getCell(x,y).toXML)
+    } yield  field.getCell(x,y).toXML
       //if (field.getCell(x, y).isInstanceOf[Troop]) troopToXML(field, x, y)
     //else obstacleToXML(field, x, y)}
       }

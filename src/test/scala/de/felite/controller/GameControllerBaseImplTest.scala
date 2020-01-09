@@ -5,8 +5,8 @@ import de.felite.controller.component.controllerBaseImpl.GameController
 import de.felite.model.{Field, Player}
 
 class GameControllerBaseImplTest extends TestBaseClass {
-  val playerOne: Player = Player("Marin", Console.BLUE)
-  val playerTwo: Player = Player("Lukas", Console.RED)
+  val playerOne: Player = Player("Marin", Console.BLUE,1)
+  val playerTwo: Player = Player("Lukas", Console.RED,2)
   val controller: GameControllerInterface = new GameController(new Field(3))
 
   "The GameControl" when {

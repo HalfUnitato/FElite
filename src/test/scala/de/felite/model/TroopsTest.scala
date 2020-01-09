@@ -1,34 +1,34 @@
 package de.felite.model
 
 import de.felite.TestBaseClass
-import de.felite.model.entity.figure.{Archer, BuildArcher, Soldier}
+import de.felite.model.entity.figure.FootPatrol
 
 
 class TroopsTest extends TestBaseClass {
-  val player: Player = Player()
+  val player: Player = Player(_number = 1)
   "a new Troop" when {
     "a new Archer" should {
       //Archer(attV,defV,attR,mvR,xpos,ypos,owner)
-      val archer = Archer(5, 3, 2, 4, 40, 0, 0, player)
-      val archer2 = BuildArcher.buildArcher(0, 0, player)
+      val archer = SoldierFactory.create('a',(0,1),20,player)
+      val archer2 = SoldierFactory.create('a',(0,1),20,player)
       "be of Instance Archer" in {
-        archer.isInstanceOf[Archer] should be(true)
+        archer.isInstanceOf[FootPatrol] should be(true)
       }
       "have AttackRange" in {
         archer.attackRange should be > 0
-        archer.attackRange should equal(2)
+        archer.attackRange should equal(4)
       }
       "have MoveRange" in {
         archer.moveRange should be > 0
-        archer.moveRange should equal(4)
+        archer.moveRange should equal(2)
       }
       "have ATT" in {
         archer.attack should be > 0
-        archer.attack should equal(5)
+        archer.attack should equal(1)
       }
       "have DEF" in {
         archer.defense should be > 0
-        archer.defense should equal(3)
+        archer.defense should equal(2)
       }
       "should not be the same as another one" in {
         archer eq archer2 should be(false)
@@ -36,10 +36,10 @@ class TroopsTest extends TestBaseClass {
     }
     "a new Soldier" should {
       //Archer(attV,defV,attR,mvR, health, Xpos, Ypos, Owner)
-      val soldier = Soldier(4, 4, 1, 5, 50, 0, 0, player)
-      val soldier2 = BuildArcher.buildArcher(0, 0, player)
+      val soldier = SoldierFactory.create('s',(0,0),20,player)
+      val soldier2 = SoldierFactory.create('s',(0,1),20,player)
       "be of Instance Soldier" in {
-        soldier.isInstanceOf[Soldier] should be(true)
+        soldier.isInstanceOf[FootPatrol] should be(true)
       }
       "have AttackRange" in {
         soldier.attackRange should be > 0
@@ -47,11 +47,11 @@ class TroopsTest extends TestBaseClass {
       }
       "have MoveRange" in {
         soldier.moveRange should be > 0
-        soldier.moveRange should equal(5)
+        soldier.moveRange should equal(4)
       }
       "have ATT" in {
         soldier.attack should be > 0
-        soldier.attack should equal(4)
+        soldier.attack should equal(2)
       }
       "have DEF" in {
         soldier.defense should be > 0

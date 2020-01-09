@@ -21,8 +21,8 @@ class GameController extends GameControllerInterface{
     btnStartCoord = (-1, -1)
     btnEndCoord = (-1, -1)
 
-    this.player1 = Player("Ike", Console.BLUE)
-    this.player2 = Player("Zelgius", Console.RED)
+    this.player1 = Player("Ike", Console.BLUE,1)
+    this.player2 = Player("Zelgius", Console.RED,2)
 
     currentPlayer = player1
 

@@ -11,8 +11,8 @@ import de.felite.util.fileIOComponent.FileIOInterface
 
 import scala.util.{Failure, Success, Try}
 
-class GameController @Inject()  (_field: Field) extends GameControllerInterface {
-  override var field:Field = _field
+class GameController @Inject()(_field: Field) extends GameControllerInterface {
+  override var field: Field = _field
   override var state: State = _
   private var undoManager: UndoManager = _
   override var player1: Player = _
@@ -24,7 +24,7 @@ class GameController @Inject()  (_field: Field) extends GameControllerInterface 
   override var btnStartCoord: (Int, Int) = _
   override var btnEndCoord: (Int, Int) = _
   val injector: Injector = Guice.createInjector(new FEliteModule)
-  val fileIO = injector.getInstance(classOf[FileIOInterface])
+  val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
 
   override def init(): Unit = {
     /*field.getScale match {
@@ -41,8 +41,8 @@ class GameController @Inject()  (_field: Field) extends GameControllerInterface 
     btnEndCoord = (-1, -1)
     //    println("------ Start of Initialisation ------")
 
-    this.player1 = Player("Ike", Console.BLUE)
-    this.player2 = Player("Zelgius", Console.RED)
+    this.player1 = Player("Ike", Console.BLUE, 1)
+    this.player2 = Player("Zelgius", Console.RED, 2)
 
     setUserTroopsDefault("TopLeft", player1)
     setUserTroopsDefault("BottomRight", player2)
@@ -101,9 +101,7 @@ class GameController @Inject()  (_field: Field) extends GameControllerInterface 
     }
   }
 
-  private def movement(from: (Int, Int), to: (Int, Int)): Boolean
-
-  = {
+  private def movement(from: (Int, Int), to: (Int, Int)): Boolean = {
     // is usage of troop valid?
     val fEntity: Entity = field.getCell(from._1, from._2)
 
@@ -114,12 +112,15 @@ class GameController @Inject()  (_field: Field) extends GameControllerInterface 
     val tEntity: Entity = field.getCell(to._1, to._2)
     var range: Int = 0
 
+    // destination == source or friendly mate
+    if (from == to || currentPlayer.containsSoldier(tEntity))
+      return false
+
     // Troop from enemy?
-    if (tEntity.isInstanceOf[Troop] && !currentPlayer.containsSoldier(tEntity)) {
+    if (tEntity.isInstanceOf[Troop] && !currentPlayer.containsSoldier(tEntity))
       range = fEntity.asInstanceOf[Troop].attackRange()
-    }
     // or Grass -> no Rock / Tree
-    else if (tEntity.sign() == DefEntity.sign) {
+    else if (tEntity.walkThrough) {
       range = fEntity.asInstanceOf[Troop].moveRange()
     } else return false
 
@@ -134,7 +135,7 @@ class GameController @Inject()  (_field: Field) extends GameControllerInterface 
     }
     // move
     else {
-      undoManager.doStep(new SetCommand(this, from._1, from._2, DefEntity,
+      undoManager.doStep(new SetCommand(this, from._1, from._2, ObstacleFactory.create('g', from._1, from._2),
         to._1, to._2, fEntity))
     }
     true
@@ -144,10 +145,10 @@ class GameController @Inject()  (_field: Field) extends GameControllerInterface 
     undoManager.doStep(new SetCommand(this, to._1, to._2, tEntity,
       to._1, to._2,
       if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
-        DefEntity
+        ObstacleFactory.create('g', to._1, to._2)
       } else {
         val tmp = SoldierFactory.create(
-          tEntity.sign(), to,
+          tEntity.sign, to,
           tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
           tEntity.asInstanceOf[Troop].owner()
         )
@@ -173,7 +174,7 @@ class GameController @Inject()  (_field: Field) extends GameControllerInterface 
     if (alreadyVisited.contains(cP))
       return false
     val tmp = field.getCell(cP._1, cP._2)
-    if (!tmp.isInstanceOf[Troop] && tmp.asInstanceOf[Obstacle].sign() != DefEntity.sign)
+    if (!tmp.walkThrough)
       return false
     alreadyVisited = cP :: alreadyVisited
     for {x <- cP._1 - 1 to cP._1 + 1
@@ -195,13 +196,16 @@ class GameController @Inject()  (_field: Field) extends GameControllerInterface 
     state.gameState = PrintFieldState(this)
     state.gameState.handle()
   }
-  def load() = {
+
+  def load(): Unit = {
     player1.clearToopList()
-    field = fileIO.load
+    field = fileIO.load(this)
   }
-  def store() = {
-    fileIO.save(field)
+
+  def store(): Unit = {
+    fileIO.store(field)
   }
+
   private def isEnd: Any = {
     if (player1.getUnitAmount == 0 || player2.getUnitAmount == 0 || state.gameState.state == QUIT) {
       state.gameState = WonState(this)

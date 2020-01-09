@@ -14,7 +14,7 @@ class CellButton(x: Int, y: Int, controller: GameControllerInterface) extends Bu
 
   var myCell: Entity = controller.field.getCell(x, y)
 
-  def getCellSign(x: Int, y: Int): String = myCell.sign().toString
+  def getCellSign(x: Int, y: Int): String = myCell.sign.toString
 
   val brown = new Color(51, 25, 0)
 
