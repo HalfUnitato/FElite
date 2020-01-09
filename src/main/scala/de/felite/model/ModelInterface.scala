@@ -18,7 +18,7 @@ trait Entity {
 
   def getColor: String
 
-  def toXML: Elem
+  def toXML(x: Int, y: Int): Elem
 }
 
 trait PlayerTrait {
@@ -54,7 +54,7 @@ trait Troop extends Entity {
 
   def owner(): Player
 
-  override def toXML: Elem = {
+  override def toXML(x: Int, y: Int): Elem = {
     <troop row={y.toString} col={x.toString} health={health().toString} player={owner().number.toString}>
       {sign}
     </troop>
@@ -77,7 +77,7 @@ trait Obstacle extends Entity {
 
   override def getColor: String = color()
 
-  def toXML: Elem = {
+  def toXML(x: Int, y: Int): Elem = {
     <obstacle row={y.toString} col={x.toString}>
       {sign}
     </obstacle>

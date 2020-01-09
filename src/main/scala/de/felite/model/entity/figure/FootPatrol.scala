@@ -2,8 +2,6 @@ package de.felite.model.entity.figure
 
 import de.felite.model.{Player, Troop}
 
-import scala.xml.Elem
-
 case class FootPatrol(sign: Char, attV: Int, defV: Int, attR: Int, mvR: Int, healthV: Int, x: Int, y: Int, player: Player, colour: String, _walkthrough: Boolean) extends Troop {
   override val walkThrough: Boolean = _walkthrough
   override val health: Int = healthV
@@ -12,12 +10,6 @@ case class FootPatrol(sign: Char, attV: Int, defV: Int, attR: Int, mvR: Int, hea
   override val attackRange: Int = attR
   override val moveRange: Int = mvR
   override val owner: Player = player
-
-  override def toXML: Elem = {
-    <troop row={y.toString} col={x.toString} health={health.toString} player={owner.number.toString}>
-      {sign}
-    </troop>
-  }
 
   override def getColor: String = colour
 }

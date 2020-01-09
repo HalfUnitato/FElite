@@ -1,5 +1,6 @@
 package de.felite.controller.component.controllerBaseImpl
 
+import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject, Injector}
 import de.felite.FEliteModule
 import de.felite.controller.GameControllerInterface
@@ -8,6 +9,7 @@ import de.felite.controller.state.game.{P1State, PrintFieldState, State, WonStat
 import de.felite.model._
 import de.felite.util.UndoManager
 import de.felite.util.fileIOComponent.FileIOInterface
+import net.codingwell.scalaguice.InjectorExtensions._
 
 import scala.util.{Failure, Success, Try}
 
@@ -27,12 +29,12 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
   val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
 
   override def init(): Unit = {
-    /*field.getScale match {
+    field.getScale match {
       case 1 => field = injector.instance[Field](Names.named("test"))
       case 4 => field = injector.instance[Field](Names.named("middle"))
       case 9 => field = injector.instance[Field](Names.named("max"))
       case _ =>
-    }*/
+    }
 
     println("------ Start of Initialisation ------")
     state = new State
@@ -74,13 +76,12 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     }
 
     val soldier = SoldierFactory.create(typ = 's', pos = (x, y), player = player)
-    val archer = SoldierFactory.create(typ = 'a', pos = (x, y), player = player)
-
     player.addPlayerTroop(soldier.asInstanceOf[Troop])
     field.setCell(soldier, x, y)
 
     x += 1
 
+    val archer = SoldierFactory.create(typ = 'a', pos = (x, y), player = player)
     player.addPlayerTroop(archer.asInstanceOf[Troop])
     field.setCell(archer, x, y)
   }
@@ -197,12 +198,12 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     state.gameState.handle()
   }
 
-  def load(): Unit = {
+  override def load(): Unit = {
     player1.clearToopList()
     field = fileIO.load(this)
   }
 
-  def store(): Unit = {
+  override def store(): Unit = {
     fileIO.store(field)
   }
 

@@ -17,7 +17,7 @@ class Field @Inject() ( @Named("DefaultSize") scal: Int) {
   override def toString: String = {
 
     var base = ""
-    for (i <- 0 until FileIO.getScal)
+    for (i <- matrix.indices)
       base += "\t" + i
     base += "\n"
 

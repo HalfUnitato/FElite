@@ -1,0 +1,38 @@
+<field size="6">
+    <obstacle row="0" col="0"> g </obstacle>
+    <troop row="0" col="1" health="3" player="1"> a </troop>
+    <obstacle row="0" col="2"> t </obstacle>
+    <obstacle row="0" col="3"> g </obstacle>
+    <obstacle row="0" col="4"> g </obstacle>
+    <obstacle row="0" col="5"> g </obstacle>
+    <obstacle row="1" col="0"> r </obstacle>
+    <troop row="1" col="1" health="6" player="1"> s </troop>
+    <obstacle row="1" col="2"> r </obstacle>
+    <obstacle row="1" col="3"> g </obstacle>
+    <obstacle row="1" col="4"> g </obstacle>
+    <obstacle row="1" col="5"> r </obstacle>
+    <obstacle row="2" col="0"> t </obstacle>
+    <obstacle row="2" col="1"> g </obstacle>
+    <obstacle row="2" col="2"> g </obstacle>
+    <obstacle row="2" col="3"> g </obstacle>
+    <obstacle row="2" col="4"> g </obstacle>
+    <obstacle row="2" col="5"> g </obstacle>
+    <obstacle row="3" col="0"> r </obstacle>
+    <obstacle row="3" col="1"> r </obstacle>
+    <obstacle row="3" col="2"> g </obstacle>
+    <obstacle row="3" col="3"> t </obstacle>
+    <obstacle row="3" col="4"> t </obstacle>
+    <obstacle row="3" col="5"> g </obstacle>
+    <obstacle row="4" col="0"> r </obstacle>
+    <obstacle row="4" col="1"> g </obstacle>
+    <obstacle row="4" col="2"> g </obstacle>
+    <obstacle row="4" col="3"> g </obstacle>
+    <obstacle row="4" col="4"> t </obstacle>
+    <obstacle row="4" col="5"> g </obstacle>
+    <obstacle row="5" col="0"> r </obstacle>
+    <obstacle row="5" col="1"> r </obstacle>
+    <obstacle row="5" col="2"> g </obstacle>
+    <obstacle row="5" col="3"> g </obstacle>
+    <troop row="5" col="4" health="6" player="2"> s </troop>
+    <troop row="5" col="5" health="3" player="2"> a </troop>
+</field>

@@ -20,37 +20,40 @@ class FileIO extends FileIOInterface {
     val size = (file \\ "field" \ "@size").text.toInt
     val injector = Guice.createInjector(new FEliteModule)
     size match {
-      case 4 => field = injector.instance[Field](Names.named("Small"))
-      case 5 => field = injector.instance[Field](Names.named("Middle"))
-      case 6 => field = injector.instance[Field](Names.named("Max"))
-      case _ =>
+      case 4 => field = injector.instance[Field](Names.named("small"))
+      case 6 => field = injector.instance[Field](Names.named("max"))
+      case _ => field = injector.instance[Field](Names.named("middle"))
     }
 
-    val cellNode = file \\ "cell"
-    for (cell <- cellNode) {
-      val y: Int = (cell \ "@row").text.toInt
-      val x: Int = (cell \ "@col").text.toInt
-      val typ: String = cell.text.trim
+    val obstacleNode = file \\ "obstacle"
+    for (obstacle <- obstacleNode) {
+      val y: Int = (obstacle \ "@row").text.toInt
+      val x: Int = (obstacle \ "@col").text.toInt
+      val typ: String = obstacle.text.trim
       typ match {
-        case "a" =>
-        case "s" =>
-          val health: Int = (cell \ "@health").text.toInt
-          val player: String = (cell \ "@player").text
-          val owner = if (player == "p1") controller.player1
-          else controller.player2
-
-          val troop = SoldierFactory.create(typ = typ.charAt(0),
-            pos = (x, y), health = health,
-            player = owner)
-
-          field.setCell(troop, x, y)
-          owner.addPlayerTroop(troop)
-
-        case "r" =>field.setCell(SimpleObstacle(typ.charAt(0),x,y,_walkthrough = false), x, y)
-        case "t" =>field.setCell(SimpleObstacle(typ.charAt(0),x,y,_walkthrough = false), x, y)
-        case _ => field.setCell(SimpleObstacle(typ.charAt(0),x,y,_walkthrough = true), x, y) // default
+        case "r" => field.setCell(SimpleObstacle(typ.charAt(0), x, y, _walkthrough = false), x, y)
+        case "t" => field.setCell(SimpleObstacle(typ.charAt(0), x, y, _walkthrough = false), x, y)
+        case _ => field.setCell(SimpleObstacle(typ.charAt(0), x, y, _walkthrough = true), x, y) // default
       }
     }
+    val troopNode = file \\ "troop"
+    for (troop <- troopNode) {
+      val y: Int = (troop \ "@row").text.toInt
+      val x: Int = (troop \ "@col").text.toInt
+      val typ: String = troop.text.trim
+      val health: Int = (troop \ "@health").text.toInt
+      val player: Int = (troop \ "@player").text.toInt
+      val owner = if (player == 1) controller.player1
+      else controller.player2
+
+      val troopVar = SoldierFactory.create(typ = typ.charAt(0),
+        pos = (x, y), health = health,
+        player = owner)
+
+      field.setCell(troopVar, x, y)
+      owner.addPlayerTroop(troopVar)
+    }
+
     controller.field = field
     field
   }
@@ -68,10 +71,7 @@ class FileIO extends FileIOInterface {
       {for {
       y <- 0 until field.getScale
       x <- 0 until field.getScale
-    } yield  field.getCell(x,y).toXML
-      //if (field.getCell(x, y).isInstanceOf[Troop]) troopToXML(field, x, y)
-    //else obstacleToXML(field, x, y)}
-      }
+    } yield field.getCell(x, y).toXML(x,y)}
     </field>
   }
 }

@@ -4,7 +4,7 @@ import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.{P1State, State}
 import de.felite.model._
 
-class GameController extends GameControllerInterface{
+class GameController extends GameControllerInterface {
   override var state: State = _
   override var player1: Player = _
   override var player2: Player = _
@@ -21,8 +21,8 @@ class GameController extends GameControllerInterface{
     btnStartCoord = (-1, -1)
     btnEndCoord = (-1, -1)
 
-    this.player1 = Player("Ike", Console.BLUE,1)
-    this.player2 = Player("Zelgius", Console.RED,2)
+    this.player1 = Player("Ike", Console.BLUE, 1)
+    this.player2 = Player("Zelgius", Console.RED, 2)
 
     currentPlayer = player1
 
@@ -31,7 +31,7 @@ class GameController extends GameControllerInterface{
 
   }
 
-  override def fieldToString: String =  ""
+  override def fieldToString: String = ""
 
   override def doMove(): Boolean = true
 
@@ -44,4 +44,8 @@ class GameController extends GameControllerInterface{
   override def nextTurn(): Unit = {}
 
   override var field: Field = _
+
+  override def load(): Unit = {}
+
+  override def store(): Unit = {}
 }

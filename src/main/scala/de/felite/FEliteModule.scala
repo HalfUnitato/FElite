@@ -10,7 +10,7 @@ import net.codingwell.scalaguice.ScalaModule
 
 class FEliteModule extends AbstractModule with ScalaModule {
 
-  val defSize: Int = 3
+  val defSize: Int = 6
 
   override def configure(): Unit = {
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defSize)

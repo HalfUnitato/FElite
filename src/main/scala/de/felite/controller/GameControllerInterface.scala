@@ -4,9 +4,9 @@ import de.felite.controller.state.game.State
 import de.felite.model.{Field, Player}
 import de.felite.util.Observable
 
-trait GameControllerInterface extends Observable  {
-  var field:Field
-  var state:State
+trait GameControllerInterface extends Observable {
+  var field: Field
+  var state: State
   var player1: Player
   var player2: Player
   var currentPlayer: Player
@@ -25,6 +25,10 @@ trait GameControllerInterface extends Observable  {
   def undo(): Unit
 
   def redo(): Unit
+
+  def load(): Unit
+
+  def store(): Unit
 
   def getPlayerName: String
 
