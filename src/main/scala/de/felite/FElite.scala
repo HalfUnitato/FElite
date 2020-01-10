@@ -4,7 +4,6 @@ import com.google.inject.Guice
 import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.GameStateString._
 import de.felite.view.Tui
-import de.felite.view.gui.GameGui
 
 object FElite {
 
@@ -22,7 +21,7 @@ object FElite {
     controller.init()
 
     val tui = new Tui(controller)
-    new GameGui(controller)
+    //new GameGui(controller)
 
 
 

@@ -1,6 +1,6 @@
-<game currentPlayer="2">
+<game currentPlayer="1">
     <field size="6">
-        <obstacle row="0" col="0"> g </obstacle>
+        <troop row="0" col="0" health="6" player="1"> s </troop>
         <troop row="0" col="1" health="3" player="1"> a </troop>
         <obstacle row="0" col="2"> t </obstacle>
         <obstacle row="0" col="3"> g </obstacle>
@@ -14,7 +14,7 @@
         <obstacle row="1" col="5"> r </obstacle>
         <obstacle row="2" col="0"> t </obstacle>
         <obstacle row="2" col="1"> g </obstacle>
-        <troop row="2" col="2" health="6" player="1"> s </troop>
+        <obstacle row="2" col="2"> g </obstacle>
         <obstacle row="2" col="3"> g </obstacle>
         <obstacle row="2" col="4"> g </obstacle>
         <obstacle row="2" col="5"> g </obstacle>

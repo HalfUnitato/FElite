@@ -2,13 +2,13 @@ package de.felite.model
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import de.felite.util.FileIO
 
 import scala.util.{Failure, Success, Try}
 
 class Field @Inject() ( @Named("DefaultSize") scal: Int) {
   var fileName:String = "src/fieldbase.txt"
-  private val matrix = FileIO.readFromFile(scal,fileName)
+  //private val matrix = FileIO.readFromFile(scal,fileName)
+  private val matrix : Array[Array[Option[Entity]]] = Array.ofDim(scal, scal)
 
   // return Field
   // BUT NEVER THE ORIGINAL ONE!!!
@@ -60,7 +60,7 @@ class Field @Inject() ( @Named("DefaultSize") scal: Int) {
   def getCell(x: Int, y: Int): Entity = {
     matrix(y)(x) match {
       case Some(t) => t
-      case None => ObstacleFactory.create('g',x,y)
+      case None => ObstacleFactory.create('g')
     }
   }
 

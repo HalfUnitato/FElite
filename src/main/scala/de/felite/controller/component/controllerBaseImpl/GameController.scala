@@ -30,21 +30,25 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
 
   override def init(): Unit = {
     field.getScale match {
-      case 1 => field = injector.instance[Field](Names.named("test"))
-      case 4 => field = injector.instance[Field](Names.named("middle"))
-      case 9 => field = injector.instance[Field](Names.named("max"))
+      case 4 => field = injector.instance[Field](Names.named("small"))
+      case 5 => field = injector.instance[Field](Names.named("middle"))
+      case 6 => field = injector.instance[Field](Names.named("max"))
       case _ =>
     }
+
+    this.player1 = Player("Ike", Console.BLUE, 1)
+    this.player2 = Player("Zelgius", Console.RED, 2)
 
     println("------ Start of Initialisation ------")
     state = new State
     undoManager = new UndoManager(this)
+
+    load("defField.xml", field.getScale)
+
     btnStartCoord = (-1, -1)
     btnEndCoord = (-1, -1)
     //    println("------ Start of Initialisation ------")
 
-    this.player1 = Player("Ike", Console.BLUE, 1)
-    this.player2 = Player("Zelgius", Console.RED, 2)
 
     setUserTroopsDefault("TopLeft", player1)
     setUserTroopsDefault("BottomRight", player2)
@@ -75,13 +79,13 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
       x = field.getScale - 2
     }
 
-    val soldier = SoldierFactory.create(typ = 's', pos = (x, y), player = player)
+    val soldier = SoldierFactory.create(typ = 's', player = player)
     player.addPlayerTroop(soldier.asInstanceOf[Troop])
     field.setCell(soldier, x, y)
 
     x += 1
 
-    val archer = SoldierFactory.create(typ = 'a', pos = (x, y), player = player)
+    val archer = SoldierFactory.create(typ = 'a', player = player)
     player.addPlayerTroop(archer.asInstanceOf[Troop])
     field.setCell(archer, x, y)
   }
@@ -136,7 +140,7 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     }
     // move
     else {
-      undoManager.doStep(new SetCommand(this, from._1, from._2, ObstacleFactory.create('g', from._1, from._2),
+      undoManager.doStep(new SetCommand(this, from._1, from._2, ObstacleFactory.create('g'),
         to._1, to._2, fEntity))
     }
     true
@@ -146,10 +150,10 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     undoManager.doStep(new SetCommand(this, to._1, to._2, tEntity,
       to._1, to._2,
       if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
-        ObstacleFactory.create('g', to._1, to._2)
+        ObstacleFactory.create('g')
       } else {
         val tmp = SoldierFactory.create(
-          tEntity.sign, to,
+          tEntity.sign,
           tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
           tEntity.asInstanceOf[Troop].owner()
         )
@@ -198,13 +202,16 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     state.gameState.handle()
   }
 
-  override def load(): Unit = {
+  override def load(fileName: String = "field.xml", size: Int = -1): Unit = {
     player1.clearToopList()
-    field = fileIO.load(this)
+    field = fileIO.load(this, fileName, size)
+
+    state.gameState = PrintFieldState(this)
+    state.gameState.handle()
   }
 
   override def store(): Unit = {
-    fileIO.store(field)
+    fileIO.store(field, this)
   }
 
   private def isEnd: Any = {

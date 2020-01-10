@@ -26,7 +26,7 @@ trait GameControllerInterface extends Observable {
 
   def redo(): Unit
 
-  def load(): Unit
+  def load(fileName: String = "field.xml", size: Int = -1): Unit
 
   def store(): Unit
 

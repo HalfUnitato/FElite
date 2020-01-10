@@ -45,7 +45,7 @@ class GameController extends GameControllerInterface {
 
   override var field: Field = _
 
-  override def load(): Unit = {}
+  override def load(fileName: String = "field.xml", size: Int): Unit = {}
 
   override def store(): Unit = {}
 }

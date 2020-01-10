@@ -4,7 +4,7 @@ import de.felite.controller.GameControllerInterface
 import de.felite.model.Field
 
 trait FileIOInterface {
-  def load(controller: GameControllerInterface): Field
+  def load(controller: GameControllerInterface, fileName: String, size: Int): Field
 
-  def store(field: Field): Unit
+  def store(field: Field, controller: GameControllerInterface): Unit
 }

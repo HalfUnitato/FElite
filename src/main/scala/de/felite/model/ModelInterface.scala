@@ -10,10 +10,6 @@ trait ModelInterface {}
 trait Entity {
   def walkThrough: Boolean = false
 
-  def x: Int
-
-  def y: Int
-
   def sign: Char
 
   def getColor: String
@@ -62,11 +58,11 @@ trait Troop extends Entity {
 }
 
 object SoldierFactory {
-  def create(typ: Char, pos: (Int, Int), health: Int = -1, player: Player): Troop = {
+  def create(typ: Char, health: Int = -1, player: Player): Troop = {
     if (health == -1) {
-      BuildFootPatrol.buildFootPatrol(typ, pos._1, pos._1, player, colour = player.colour)
+      BuildFootPatrol.buildFootPatrol(typ, player, colour = player.colour)
     } else {
-      BuildFootPatrol.buildFootPatrol(typ, pos._1, pos._1, player, health, player.colour)
+      BuildFootPatrol.buildFootPatrol(typ, player, health, player.colour)
     }
   }
 }
@@ -85,8 +81,8 @@ trait Obstacle extends Entity {
 }
 
 object ObstacleFactory {
-  def create(typ: Char, x: Int, y: Int): Obstacle = {
+  def create(typ: Char): Obstacle = {
     val bool: Boolean = if (typ == 'g') true else false
-    SimpleObstacle(typ, x, y, bool)
+    SimpleObstacle(typ, bool)
   }
 }
