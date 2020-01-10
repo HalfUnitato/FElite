@@ -12,7 +12,7 @@ object FElite {
   def main(args: Array[String]): Unit = {
 
     println("Welcome to Fire Emblem lite")
-//    val injector = Guice.createInjector(new FEliteModule)
+    //    val injector = Guice.createInjector(new FEliteModule)
 
     val injector = Guice.createInjector(new FEliteModule)
     val controller = injector.getInstance(classOf[GameControllerInterface])
@@ -22,8 +22,6 @@ object FElite {
 
     val tui = new Tui(controller)
     //new GameGui(controller)
-
-
 
     while (controller.state.gameState.state != END && controller.state.gameState.state != QUIT) {
       tui.playerTurn(scala.io.StdIn.readLine())
