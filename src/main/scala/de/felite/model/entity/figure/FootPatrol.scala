@@ -16,7 +16,7 @@ case class FootPatrol(sign: Char, attV: Int, defV: Int, attR: Int, mvR: Int, hea
 
 object BuildFootPatrol {
   def buildFootPatrol(typ: Char, player: Player, health: Int = -1, colour: String): FootPatrol = {
-   var _health = health
+    var _health = health
     if (typ == 's') {
       if (health == -1) _health = 6
       FootPatrol(typ, 2, 4, 1, 4, _health, player, colour, _walkthrough = true)

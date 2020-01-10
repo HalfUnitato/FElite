@@ -15,6 +15,24 @@ trait Entity {
   def getColor: String
 
   def toXML(x: Int, y: Int): Elem
+
+}
+
+object Entity {
+  import play.api.libs.json._
+
+  implicit val entityWrites: Writes[Entity] = (e: Entity) => Json.obj(
+    e.asInstanceOf match {
+      case _:Troop =>
+        "sign" -> e.sign.toString
+        "health" -> e.asInstanceOf[Troop].health()
+        "player" -> e.asInstanceOf[Troop].owner()._number
+      case _ =>
+        "sign" -> e.sign.toString
+    }
+  )
+
+  implicit val entityReads: Reads[Entity] = ???
 }
 
 trait PlayerTrait {
@@ -55,6 +73,7 @@ trait Troop extends Entity {
       {sign}
     </troop>
   }
+
 }
 
 object SoldierFactory {
@@ -73,12 +92,14 @@ trait Obstacle extends Entity {
 
   override def getColor: String = color()
 
-  def toXML(x: Int, y: Int): Elem = {
+  override def toXML(x: Int, y: Int): Elem = {
     <obstacle row={y.toString} col={x.toString}>
       {sign}
     </obstacle>
   }
 }
+
+object Obstacle
 
 object ObstacleFactory {
   def create(typ: Char): Obstacle = {
@@ -86,3 +107,5 @@ object ObstacleFactory {
     SimpleObstacle(typ, bool)
   }
 }
+
+object Troop

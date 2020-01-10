@@ -4,6 +4,7 @@ TODO: FileIO (XML und JSON)
 
 
 # HighPrio:
+TODO: field and fileIO both have a getScal / getScale method, remove one?
 TODO: Refactoring (READCOMMAND)
 
 TODO:Troops owner test
