@@ -1,6 +1,7 @@
 package de.felite.util.fileIOComponent.fileIOjson
 
 import java.io.{File, PrintWriter}
+import java.util
 
 import com.google.inject.Guice
 import com.google.inject.name.Names
@@ -87,35 +88,46 @@ class FileIO extends FileIOInterface {
   }
 
   def gameToJSON(field: Field, controller: GameControllerInterface): JsValue = {
-    val obstList: List[JsValue] = Nil//not wokring...
-    val troopList: List[JsValue] = Nil
+    val scale = field.getScale
+    val troopamount = controller.player1.getUnitAmount + controller.player2.getUnitAmount
+    val obstamount = scale * scale - troopamount
+
+    val obstArray = new Array[JsValue](obstamount)
+    val troopArray = new Array[JsValue](troopamount)
+
+    var i = 0
+    var j = 0
+
     for {
-      y <- 0 until field.getScale
-      x <- 0 until field.getScale
+      y <- 0 until scale
+      x <- 0 until scale
     } {
       val cell = field.getCell(x, y)
       val cellStr = cell.sign.toString
-      if (!cellStr.equals("s") || !cellStr.equals("a")) {
-        obstList :+ Json.obj(
+      if (!cellStr.equals("s") && !cellStr.equals("a")) {
+        obstArray(i) = Json.obj(
           "row" -> x,
           "col" -> y,
-          "sign" -> cellStr)
+          "sign" -> cellStr
+        )
+        i += 1
       } else {
-       troopList :+ Json.obj(
+        troopArray(j) = Json.obj(
           "row" -> x,
           "col" -> y,
           "sign" -> cellStr,
           "health" -> cell.asInstanceOf[Troop].health(),
           "player" -> cell.asInstanceOf[Troop].owner()._number
         )
+        j += 1
       }
     }
-    println(obstList)
+
     Json.obj(
       "currentPlayer" -> controller.currentPlayer._number,
-      "size" -> field.getScale,
-      "obstacles" -> obstList,
-      "troops" -> troopList
+      "size" -> scale,
+      "obstacles" -> Json.toJson(obstArray),
+      "troops" -> Json.toJson(troopArray)
     )
   }
 }

@@ -1,6 +1,96 @@
 {
-  "currentPlayer" : 1,
-  "size" : 4,
-  "obstacle" : [ ],
-  "troops" : [ ]
+  "currentPlayer": 2,
+  "size": 4,
+  "obstacles": [
+    {
+      "row": 0,
+      "col": 0,
+      "sign": "g"
+    },
+    {
+      "row": 2,
+      "col": 0,
+      "sign": "t"
+    },
+    {
+      "row": 3,
+      "col": 0,
+      "sign": "r"
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "sign": "r"
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "sign": "g"
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "sign": "r"
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "sign": "t"
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "sign": "r"
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "sign": "g"
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "sign": "g"
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "sign": "g"
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "sign": "g"
+    }
+  ],
+  "troops": [
+    {
+      "row": 1,
+      "col": 0,
+      "sign": "a",
+      "health": 3,
+      "player": 1
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "sign": "s",
+      "health": 6,
+      "player": 1
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "sign": "s",
+      "health": 6,
+      "player": 2
+    },
+    {
+      "row": 3,
+      "col": 3,
+      "sign": "a",
+      "health": 3,
+      "player": 2
+    }
+  ]
 }

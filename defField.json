@@ -13,8 +13,8 @@
       "sign": "g"
     },
     {
-      "row": 1,
-      "col": 0,
+      "row": 0,
+      "col": 1,
       "sign": "r"
     },
     {
@@ -48,8 +48,8 @@
       "sign": "g"
     },
     {
-      "row": 2,
-      "col": 3,
+      "row": 3,
+      "col": 2,
       "sign": "g"
     },
     {
@@ -72,15 +72,15 @@
       "player": 1
     },
     {
-      "row": 0,
-      "col": 1,
+      "row": 1,
+      "col": 0,
       "sign": "a",
       "health": 3,
       "player": 1
     },
     {
-      "row": 3,
-      "col": 2,
+      "row": 2,
+      "col": 3,
       "sign": "s",
       "health": 6,
       "player": 2
