@@ -7,7 +7,7 @@ import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.GameStateString._
 import de.felite.controller.state.game.{P1State, PrintFieldState, State, WonState}
 import de.felite.model._
-import de.felite.util.UndoManager
+import de.felite.util.{FileIO, UndoManager}
 import de.felite.util.fileIOComponent.FileIOInterface
 import net.codingwell.scalaguice.InjectorExtensions._
 
@@ -43,7 +43,8 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     state = new State
     undoManager = new UndoManager(this)
 
-    load("defField.xml", field.getScale)
+    // for witch defFile to load depending on specified fileIOClass?
+    load("defField.json", field.getScale)
 
     btnStartCoord = (-1, -1)
     btnEndCoord = (-1, -1)
@@ -56,7 +57,7 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     currentPlayer = player1
 
 
-    //    println("------ End of Initialisation ------")
+        println("------ End of Initialisation ------")
     state.gameState = P1State(this)
     state.gameState.handle()
 
@@ -202,7 +203,7 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     state.gameState.handle()
   }
 
-  override def load(fileName: String = "field.xml", size: Int = -1): Unit = {
+  override def load(fileName: String = "defField.json", size: Int = -1): Unit = {
     player1.clearToopList()
     field = fileIO.load(this, fileName, size)
 

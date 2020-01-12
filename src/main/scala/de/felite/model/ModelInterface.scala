@@ -21,16 +21,20 @@ trait Entity {
 object Entity {
   import play.api.libs.json._
 
-  implicit val entityWrites: Writes[Entity] = (e: Entity) => Json.obj(
-    e.asInstanceOf match {
-      case _:Troop =>
-        "sign" -> e.sign.toString
-        "health" -> e.asInstanceOf[Troop].health()
-        "player" -> e.asInstanceOf[Troop].owner()._number
-      case _ =>
-        "sign" -> e.sign.toString
-    }
-  )
+  implicit val entityWrites: Writes[Entity] = ???
+  /*new Writes[Entity] {
+    override def writes(e: Entity): JsValue = Json.obj(
+      e.asInstanceOf match {
+        case _: Troop =>
+          "sign" -> e.sign.toString
+          "health" -> e.asInstanceOf[Troop].health()
+          "player" -> e.asInstanceOf[Troop].owner()._number
+        case _ =>
+          "sign" -> e.sign.toString
+      }
+    )
+  }*/
+
 
   implicit val entityReads: Reads[Entity] = ???
 }

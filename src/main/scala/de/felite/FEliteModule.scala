@@ -16,7 +16,7 @@ class FEliteModule extends AbstractModule with ScalaModule {
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defSize)
     //bind[Field].to[Field] // ERROR selfbinding
     bind[GameControllerInterface].to[controllerBaseImpl.GameController]
-    bind[FileIOInterface].to[fileIOxml.FileIO]
+    bind[FileIOInterface].to[fileIOjson.FileIO]
 
     bind[Field].annotatedWithName("small").toInstance(new Field(4))
     bind[Field].annotatedWithName("middle").toInstance(new Field(5))
