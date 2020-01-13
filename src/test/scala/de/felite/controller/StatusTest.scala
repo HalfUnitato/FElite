@@ -1,12 +1,12 @@
 package de.felite.controller
 
-import de.felite.TestBaseClass
-import de.felite.controller.component.controllerBaseImpl.GameController
+import com.google.inject.Guice
 import de.felite.controller.state.game._
-import de.felite.model.Field
+import de.felite.{FEliteModule, TestBaseClass}
 
 class StatusTest extends TestBaseClass {
-  val controller: GameController = new GameController(new Field(3))
+  val injector = Guice.createInjector(new FEliteModule)
+  val controller = injector.getInstance(classOf[GameControllerInterface])
   controller.init()
 
   "State" when {

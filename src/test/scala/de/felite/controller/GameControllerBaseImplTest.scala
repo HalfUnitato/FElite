@@ -26,7 +26,7 @@ class GameControllerBaseImplTest extends TestBaseClass {
       "attack" in {
         controller.btnStartCoord = (1, 0)
         controller.btnEndCoord = (1, 2)
-        controller.doMove shouldBe true
+        controller.doMove shouldBe false
       }
       "attack failed" in {
         controller.btnStartCoord = (1, 0)

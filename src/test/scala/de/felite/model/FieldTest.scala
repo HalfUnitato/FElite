@@ -1,10 +1,17 @@
 package de.felite.model
 
-import de.felite.TestBaseClass
+import com.google.inject.Guice
+import de.felite.controller.GameControllerInterface
+import de.felite.{FEliteModule, TestBaseClass}
 
 class FieldTest extends TestBaseClass {
+  val injector = Guice.createInjector(new FEliteModule)
+  val controller = injector.getInstance(classOf[GameControllerInterface])
+  controller.init()
+
+
   "A Field" when {
-    val testField = new Field(3)
+    val testField = controller.field
     val player = Player(_number = 1)
 
     "get Field" should {
@@ -18,8 +25,8 @@ class FieldTest extends TestBaseClass {
       }
     }
     "performing a move" should {
-      "be valid (currently it's invalid)" in {
-        testField.setCell(ObstacleFactory.create('g'), 0, 3) shouldBe false //this should be valid
+      "be valid " in {
+        testField.setCell(ObstacleFactory.create('g'), 0, 3) shouldBe true //this should be valid
       }
       "throw no Exception for Index -1" in {
         testField.setCell(ObstacleFactory.create('g'), -1, 0) shouldBe false

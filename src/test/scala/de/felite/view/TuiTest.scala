@@ -1,12 +1,13 @@
 package de.felite.view
 
-import de.felite.TestBaseClass
+import com.google.inject.Guice
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.component.controllerBaseImpl.GameController
-import de.felite.model.Field
+import de.felite.{FEliteModule, TestBaseClass}
 
 class TuiTest extends TestBaseClass {
-  val controller:GameControllerInterface = new GameController(new Field(3))
+  val injector = Guice.createInjector(new FEliteModule)
+  val controller = injector.getInstance(classOf[GameControllerInterface])
+  //controller.init()
   val tui: Tui = new Tui(controller)
   "The Tui" when {
     controller.init()
@@ -42,7 +43,7 @@ class TuiTest extends TestBaseClass {
       "execute the command" in {
         //controller.switchPlayer()
         tui.playerTurn("0 0 1 1") shouldBe true
-        tui.playerTurn("1 0 1 2") shouldBe true
+        tui.playerTurn("1 0 1 2") shouldBe false
         tui.playerTurn("-1 0 0 1") shouldBe false
         tui.playerTurn("0 0 9 1") shouldBe false
         tui.playerTurn("0 0 20 1") shouldBe false

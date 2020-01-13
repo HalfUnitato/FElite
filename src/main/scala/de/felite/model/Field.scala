@@ -6,8 +6,6 @@ import com.google.inject.name.Named
 import scala.util.{Failure, Success, Try}
 
 class Field @Inject() ( @Named("DefaultSize") scal: Int) {
-  var fileName:String = "src/fieldbase.txt"
-  //private val matrix = FileIO.readFromFile(scal,fileName)
   private val matrix : Array[Array[Option[Entity]]] = Array.ofDim(scal, scal)
 
   // return Field

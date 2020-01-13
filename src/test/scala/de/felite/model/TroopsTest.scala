@@ -36,7 +36,7 @@ class TroopsTest extends TestBaseClass {
     }
     "a new Soldier" should {
       //Archer(attV,defV,attR,mvR, health, Xpos, Ypos, Owner)
-      val soldier = SoldierFactory.create('s',20,player)
+      val soldier = SoldierFactory.create('s',30,player)
       val soldier2 = SoldierFactory.create('s',20,player)
       "be of Instance Soldier" in {
         soldier.isInstanceOf[FootPatrol] should be(true)
