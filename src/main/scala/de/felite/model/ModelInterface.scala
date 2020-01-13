@@ -18,26 +18,6 @@ trait Entity {
 
 }
 
-object Entity {
-  import play.api.libs.json._
-
-  implicit val entityWrites: Writes[Entity] = ???
-  /*new Writes[Entity] {
-    override def writes(e: Entity): JsValue = Json.obj(
-      e.asInstanceOf match {
-        case _: Troop =>
-          "sign" -> e.sign.toString
-          "health" -> e.asInstanceOf[Troop].health()
-          "player" -> e.asInstanceOf[Troop].owner()._number
-        case _ =>
-          "sign" -> e.sign.toString
-      }
-    )
-  }*/
-
-
-  implicit val entityReads: Reads[Entity] = ???
-}
 
 trait PlayerTrait {
   this: Player =>
@@ -103,7 +83,6 @@ trait Obstacle extends Entity {
   }
 }
 
-object Obstacle
 
 object ObstacleFactory {
   def create(typ: Char): Obstacle = {
@@ -111,5 +90,3 @@ object ObstacleFactory {
     SimpleObstacle(typ, bool)
   }
 }
-
-object Troop
