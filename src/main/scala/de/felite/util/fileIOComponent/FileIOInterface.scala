@@ -7,4 +7,5 @@ trait FileIOInterface {
   def load(controller: GameControllerInterface, fileName: String, size: Int): Field
 
   def store(field: Field, controller: GameControllerInterface): Unit
+
 }

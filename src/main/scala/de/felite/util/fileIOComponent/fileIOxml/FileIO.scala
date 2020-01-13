@@ -17,9 +17,10 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import scala.xml.{Elem, PrettyPrinter}
 
 class FileIO extends FileIOInterface {
+
   override def load(controller: GameControllerInterface, fileName: String, fieldSize: Int): Field = {
     var field: Field = null
-    val file = scala.xml.XML.loadFile(fileName)
+    val file = scala.xml.XML.loadFile(fileName + ".xml")
     var size = fieldSize
     if(size == -1) {
       size = (file \\ "field" \ "@size").text.toInt

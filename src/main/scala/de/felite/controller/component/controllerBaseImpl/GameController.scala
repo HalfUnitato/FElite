@@ -43,8 +43,8 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     state = new State
     undoManager = new UndoManager(this)
 
-    // for witch defFile to load depending on specified fileIOClass?
-    load("defField.json", field.getScale)
+
+    load("defField" , field.getScale)
 
     btnStartCoord = (-1, -1)
     btnEndCoord = (-1, -1)
@@ -203,7 +203,7 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     state.gameState.handle()
   }
 
-  override def load(fileName: String = "defField.json", size: Int = -1): Unit = {
+  override def load(fileName: String = "field", size: Int = -1): Unit = {
     player1.clearToopList()
     field = fileIO.load(this, fileName, size)
 

@@ -21,9 +21,10 @@ import scala.io.Source
 import scala.xml.PrettyPrinter
 
 class FileIO extends FileIOInterface {
+
   override def load(controller: GameControllerInterface, fileName: String, fieldSize: Int): Field = {
     var field: Field = null
-    val srcsrc = Source.fromFile(fileName)
+    val srcsrc = Source.fromFile(fileName + ".json")
     val src = srcsrc.getLines().mkString
     val file = Json.parse(src)
     var size = fieldSize
@@ -82,7 +83,7 @@ class FileIO extends FileIOInterface {
 
 
   override def store(field: Field, controller: GameControllerInterface): Unit = {
-    val pw = new PrintWriter(new File("game.json"))
+    val pw = new PrintWriter(new File("field.json"))
     pw.write(Json.prettyPrint(gameToJSON(field, controller)))
     pw.close()
   }

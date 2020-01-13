@@ -11,12 +11,17 @@ import net.codingwell.scalaguice.ScalaModule
 class FEliteModule extends AbstractModule with ScalaModule {
 
   val defSize: Int = 4
+  val fileext = "json"
 
   override def configure(): Unit = {
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defSize)
     //bind[Field].to[Field] // ERROR selfbinding
     bind[GameControllerInterface].to[controllerBaseImpl.GameController]
-    bind[FileIOInterface].to[fileIOjson.FileIO]
+    if (fileext.equals("json")) {
+      bind[FileIOInterface].to[fileIOjson.FileIO]
+    } else {
+      bind[FileIOInterface].to[fileIOxml.FileIO]
+    }
 
     bind[Field].annotatedWithName("small").toInstance(new Field(4))
     bind[Field].annotatedWithName("middle").toInstance(new Field(5))
