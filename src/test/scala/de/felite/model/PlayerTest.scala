@@ -6,10 +6,10 @@ class PlayerTest extends TestBaseClass {
   "A Player" when {
     val player = Player("Mercedes Maserati", Console.BLUE,1)
     val archer1: Troop = SoldierFactory.create('a',1, player)
-    val archer2: Troop = SoldierFactory.create('a',1, player)
-    val soldier1: Troop = SoldierFactory.create('a',1, player)
-    val soldier2: Troop = SoldierFactory.create('a',1, player)
-    val soldierX: Troop = SoldierFactory.create('a',1, player)
+    val archer2: Troop = SoldierFactory.create('a',2, player)
+    val soldier1: Troop = SoldierFactory.create('a',3, player)
+    val soldier2: Troop = SoldierFactory.create('a',4, player)
+    val soldierX: Troop = SoldierFactory.create('a',5, player)
 
     "created" should {
       "have a name" in {

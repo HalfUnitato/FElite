@@ -4,6 +4,7 @@ import scala.collection.mutable.ListBuffer
 
 case class Player(private val name: String = "John Doe", colour: String = Console.BLACK,_number:Int) extends PlayerTrait {
 
+
   private val playerTroops = new ListBuffer[Troop]()
   override val number:Int = _number
   override def addPlayerTroop(troop: Troop): Boolean = {
