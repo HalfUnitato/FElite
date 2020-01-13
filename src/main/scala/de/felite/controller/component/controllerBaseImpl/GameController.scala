@@ -7,7 +7,7 @@ import de.felite.controller.GameControllerInterface
 import de.felite.controller.state.game.GameStateString._
 import de.felite.controller.state.game.{P1State, PrintFieldState, State, WonState}
 import de.felite.model._
-import de.felite.util.{FileIO, UndoManager}
+import de.felite.util.UndoManager
 import de.felite.util.fileIOComponent.FileIOInterface
 import net.codingwell.scalaguice.InjectorExtensions._
 
