@@ -17,6 +17,6 @@ libraryDependencies += "net.codingwell" %% "scala-guice" % "4.2.6"
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.2.0"
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1"
 
-coverageExcludedPackages := "view.gui.*"
+coverageExcludedPackages := "*.gui.*"
 
 // scalacOptions += "-deprecation" //display deprecation warnings
