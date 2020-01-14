@@ -18,5 +18,7 @@ project/.sbtserver
 .worksheet
 # intellij
 /.idea/
-# Application
+# saved Boards
+field.json
+field.xml
 
