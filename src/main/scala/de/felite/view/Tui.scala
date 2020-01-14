@@ -76,6 +76,7 @@ class Tui(controller: GameControllerInterface) extends Observer {
   }
 
   def printHelp(): Boolean = {
+    println("this help is out of date")
     printString(String.format(
       "%s:%28s\n" +
         "%s:%22s\n" +
