@@ -4,6 +4,8 @@ version := "0.1"
 
 scalaVersion := "2.13.0"
 
+coverageExcludedPackages := "de.felite.view.gui" //exclude packages from coverage
+
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.8"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
 
@@ -17,6 +19,5 @@ libraryDependencies += "net.codingwell" %% "scala-guice" % "4.2.6"
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.2.0"
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1"
 
-coverageExcludedPackages := "de.felite.view.gui.*" //exclude packages from coverage
 
 // scalacOptions += "-deprecation" //display deprecation warnings
