@@ -19,6 +19,7 @@ project/.sbtserver
 # intellij
 /.idea/
 # saved Boards
+/null/
 field.json
 field.xml
 
