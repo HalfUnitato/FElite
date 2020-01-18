@@ -9,8 +9,8 @@ class TroopsTest extends TestBaseClass {
   "a new Troop" when {
     "a new Archer" should {
       //Archer(attV,defV,attR,mvR,xpos,ypos,owner)
-      val archer = SoldierFactory.create('a',20,player)
-      val archer2 = SoldierFactory.create('a',20,player)
+      val archer = SoldierFactory('a',20,player)
+      val archer2 = SoldierFactory('a',20,player)
       "be of Instance Archer" in {
         archer.isInstanceOf[FootPatrol] should be(true)
       }
@@ -36,8 +36,8 @@ class TroopsTest extends TestBaseClass {
     }
     "a new Soldier" should {
       //Archer(attV,defV,attR,mvR, health, Xpos, Ypos, Owner)
-      val soldier = SoldierFactory.create('s',30,player)
-      val soldier2 = SoldierFactory.create('s',20,player)
+      val soldier = SoldierFactory('s',30,player)
+      val soldier2 = SoldierFactory('s',20,player)
       "be of Instance Soldier" in {
         soldier.isInstanceOf[FootPatrol] should be(true)
       }

@@ -61,7 +61,7 @@ trait Troop extends Entity {
 }
 
 object SoldierFactory {
-  def create(typ: Char, health: Int = -1, player: Player): Troop = {
+  def apply(typ: Char, health: Int = -1, player: Player): Troop = {
     if (health == -1) {
       BuildFootPatrol.buildFootPatrol(typ, player, colour = player.colour)
     } else {
@@ -85,7 +85,7 @@ trait Obstacle extends Entity {
 
 
 object ObstacleFactory {
-  def create(typ: Char): Obstacle = {
+  def apply(typ: Char): Obstacle = {
     val bool: Boolean = if (typ == 'g') true else false
     SimpleObstacle(typ, bool)
   }

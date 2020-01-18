@@ -64,7 +64,7 @@ class FileIO extends FileIOInterface {
         val owner = if (player == 1) controller.player1
         else controller.player2
 
-        val troopVar = SoldierFactory.create(typ = typ.charAt(0),
+        val troopVar = SoldierFactory(typ = typ.charAt(0),
           health = health,
           player = owner)
 

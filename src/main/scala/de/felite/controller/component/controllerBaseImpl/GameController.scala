@@ -80,13 +80,13 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
       x = field.getScale - 2
     }
 
-    val soldier = SoldierFactory.create(typ = 's', player = player)
+    val soldier = SoldierFactory(typ = 's', player = player)
     player.addPlayerTroop(soldier.asInstanceOf[Troop])
     field.setCell(soldier, x, y)
 
     x += 1
 
-    val archer = SoldierFactory.create(typ = 'a', player = player)
+    val archer = SoldierFactory(typ = 'a', player = player)
     player.addPlayerTroop(archer.asInstanceOf[Troop])
     field.setCell(archer, x, y)
   }
@@ -141,7 +141,7 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     }
     // move
     else {
-      undoManager.doStep(new SetCommand(this, from._1, from._2, ObstacleFactory.create('g'),
+      undoManager.doStep(new SetCommand(this, from._1, from._2, ObstacleFactory('g'),
         to._1, to._2, fEntity))
     }
     true
@@ -151,9 +151,9 @@ class GameController @Inject()(_field: Field) extends GameControllerInterface {
     undoManager.doStep(new SetCommand(this, to._1, to._2, tEntity,
       to._1, to._2,
       if (tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack() <= 0) {
-        ObstacleFactory.create('g')
+        ObstacleFactory('g')
       } else {
-        val tmp = SoldierFactory.create(
+        val tmp = SoldierFactory(
           tEntity.sign,
           tEntity.asInstanceOf[Troop].health() - fEntity.asInstanceOf[Troop].attack(),
           tEntity.asInstanceOf[Troop].owner()

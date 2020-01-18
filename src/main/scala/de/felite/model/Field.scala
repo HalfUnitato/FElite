@@ -58,7 +58,7 @@ class Field @Inject() ( @Named("DefaultSize") scal: Int) {
   def getCell(x: Int, y: Int): Entity = {
     matrix(y)(x) match {
       case Some(t) => t
-      case None => ObstacleFactory.create('g')
+      case None => ObstacleFactory('g')
     }
   }
 

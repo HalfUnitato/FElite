@@ -69,7 +69,7 @@ class FileIO extends FileIOInterface {
       val player = (tfile \\ "player") (i).as[Int]
       val owner = if (player == 1) controller.player1 else controller.player2
 
-      val troop = SoldierFactory.create(typ = sign.charAt(0),
+      val troop = SoldierFactory(typ = sign.charAt(0),
         health = health,
         player = owner)
       field.setCell(troop, row, col)
