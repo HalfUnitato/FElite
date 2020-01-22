@@ -4,7 +4,7 @@ version := "0.1"
 
 scalaVersion := "2.13.1"
 
-coverageExcludedPackages := "de.felite.view.gui" //exclude packages from coverage
+coverageExcludedPackages := "<empty>;.*gui.*;.*FElite.scala" //exclude packages from coverage
 
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.8"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"

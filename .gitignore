@@ -18,6 +18,7 @@ project/.sbtserver
 .worksheet
 # intellij
 /.idea/
+null/
 # saved Boards
 /null/
 field.json
