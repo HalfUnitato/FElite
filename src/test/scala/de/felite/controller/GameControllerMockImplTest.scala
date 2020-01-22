@@ -1,20 +1,22 @@
 package de.felite.controller
 
-import de.felite.controller.component.controllerImpl.controllerStubImpl.GameController
-import de.felite.model.{Field, Player}
-import de.felite.util.FileIO
-import de.felite.{TestBaseClass, util}
+import com.google.inject.Guice
+import de.felite.model.Player
+import de.felite.{FEliteModule, TestBaseClass}
 
 class GameControllerMockImplTest extends TestBaseClass {
 
-  val playerOne: Player = Player("Marin", Console.BLUE)
-  val playerTwo: Player = Player("Lukas", Console.RED)
-  val controller: GameControllerInterface = new GameController()
+  val playerOne: Player = Player("Marin", Console.BLUE,1)
+  val playerTwo: Player = Player("Lukas", Console.RED,2)
+
+  val injector = Guice.createInjector(new FEliteModule)
+  val controller = injector.getInstance(classOf[GameControllerInterface])
+  controller.init()
 
   "The GameControl" when {
     "Initialization" should {
       "init not fail " in {
-        controller.init(1) shouldBe controller.init(1)
+        controller.init() shouldBe controller.init()
       }
     }
     "player info" when {
@@ -26,7 +28,7 @@ class GameControllerMockImplTest extends TestBaseClass {
     }
     "troop actions" should {
       "move not fail" in {
-        controller.doMove shouldBe true
+        controller.doMove shouldBe false
       }
       "undo not fail" in {
         controller.undo()

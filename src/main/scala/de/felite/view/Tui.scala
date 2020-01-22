@@ -1,10 +1,9 @@
 package de.felite.view
 
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.state._
-import de.felite.controller.state.game.{EndState, PrintFieldState, QuitState, State}
-import de.felite.util.{Observer, ObserverCommand}
+import de.felite.controller.state.game.{EndState, PrintFieldState, QuitState}
 import de.felite.util.ObserverCommand._
+import de.felite.util.{Observer, ObserverCommand}
 
 import scala.util.{Failure, Success, Try}
 
@@ -41,6 +40,12 @@ class Tui(controller: GameControllerInterface) extends Observer {
       case "help" =>
         printHelp()
         true
+      case "load" =>
+        controller.load()
+        true
+      case "store" =>
+        controller.store()
+        true
       case _ =>
         input.split(" ").toList match {
           case xF :: yF :: xT :: yT :: Nil =>
@@ -71,6 +76,7 @@ class Tui(controller: GameControllerInterface) extends Observer {
   }
 
   def printHelp(): Boolean = {
+    println("this help is out of date")
     printString(String.format(
       "%s:%28s\n" +
         "%s:%22s\n" +
@@ -93,7 +99,9 @@ class Tui(controller: GameControllerInterface) extends Observer {
       "xT yT", "coordinates to",
       "c being one of",
       "m", "to move",
-      "a", "to attack"))
+      "a", "to attack",
+      "load", "load",
+      "store", "store"))
     true
   }
 

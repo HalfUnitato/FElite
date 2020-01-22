@@ -1,12 +1,13 @@
 package de.felite.controller
 
-import de.felite.TestBaseClass
-import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
-import de.felite.controller.state.game.{EndState, GameStateString, InitState, NextCmdState, P1InitState, P1State, P2InitState, P2State, PrintFieldState}
+import com.google.inject.Guice
+import de.felite.controller.state.game._
+import de.felite.{FEliteModule, TestBaseClass}
 
 class StatusTest extends TestBaseClass {
-  val controller: GameController = new GameController
-  controller.init(1)
+  val injector = Guice.createInjector(new FEliteModule)
+  val controller = injector.getInstance(classOf[GameControllerInterface])
+  controller.init()
 
   "State" when {
     "state" should {
@@ -41,7 +42,7 @@ class StatusTest extends TestBaseClass {
 
         controller.state.gameState = PrintFieldState(controller)
         controller.state.gameState.handle shouldBe GameStateString.PRINT_FIELD
-        controller.state.gameState.toString shouldBe GameStateString.message(GameStateString.PRINT_FIELD) + "\n" + controller.FieldToString
+        controller.state.gameState.toString shouldBe GameStateString.message(GameStateString.PRINT_FIELD) + "\n" + controller.fieldToString
       }
     }
   }

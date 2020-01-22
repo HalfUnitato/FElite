@@ -1,30 +1,24 @@
 # AbgabeZiel
-TODO: Dependency Injections
-TODO: FileIO (XML und JSON)
-
+TODO: Docker
+TODO: Präsentation
 
 # HighPrio:
-TODO: Refactoring (READCOMMAND)
+TODO: TESTS
+TODO: GUI Resize (Buttons dont work when resizing) from/while load
 
-TODO:Troops owner test
 
-TODO: im help die Bedeutung der Symbole erklären
+TODO: field and fileIO both have a getScal / getScale method, remove one?
+
+
+TODO: im help die Bedeutung der Symbole erklären, help allgemein erneuern, hilfetext in gui
 TODO: skalierbares Spielfeld, almost?
 TODO: trivialer Fall bei Spielfeld -> schnell gewinnen/verlieren
-TODO: Endzustand?
-TODO: give obstacles (without default) coordiantes
-        convert rock and tree to case class
-        (in this case grass = default)
-        ->  Field-File g (grass) to d (default)
-        defaultSize for Field into Module?
 
 # LowerPrio:
-TODO: Mnemonics for GUI
+TODO: logfiles?
+TODO: Mnemonics and UX for GUI
 TODO: ModelInterface should be just one import
-TODO: cut asking for Playername and just use DummyNames
-TODO: push working tui to master?
-
+TODO: GUI Bilder
 
 # UnknownPrio:
 TODO: rework Array to ArraySeq
-TODO: todo.txt Kategorien?

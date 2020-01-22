@@ -1,16 +1,15 @@
 package de.felite.model
 
 import de.felite.TestBaseClass
-import de.felite.model.entity.figure.{Archer, Soldier}
 
 class PlayerTest extends TestBaseClass {
   "A Player" when {
-    val player = Player("Mercedes Maserati", Console.BLUE)
-    val archer1: Troop = Archer(1, 1, 1, 1, 1, 0, 1, player)
-    val archer2: Troop = Archer(1, 1, 1, 1, 1, 0, 2, player)
-    val soldier1: Troop = Soldier(1, 1, 1, 1, 1, 0, 3, player)
-    val soldier2: Troop = Soldier(1, 1, 1, 1, 1, 0, 4, player)
-    val soldierX: Troop = Soldier(9, 1, 1, 1, 1, 0, 4, player)
+    val player = Player("Mercedes Maserati", Console.BLUE,1)
+    val archer1: Troop = SoldierFactory('a',1, player)
+    val archer2: Troop = SoldierFactory('a',2, player)
+    val soldier1: Troop = SoldierFactory('a',3, player)
+    val soldier2: Troop = SoldierFactory('a',4, player)
+    val soldierX: Troop = SoldierFactory('a',5, player)
 
     "created" should {
       "have a name" in {

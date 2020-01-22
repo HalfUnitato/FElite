@@ -1,19 +1,18 @@
 package de.felite.controller
 
-import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
+import de.felite.TestBaseClass
+import de.felite.controller.component.controllerBaseImpl.GameController
 import de.felite.model.{Field, Player}
-import de.felite.util.FileIO
-import de.felite.{TestBaseClass, util}
 
 class GameControllerBaseImplTest extends TestBaseClass {
-  val playerOne: Player = Player("Marin", Console.BLUE)
-  val playerTwo: Player = Player("Lukas", Console.RED)
-  val controller: GameControllerInterface = new GameController()
+  val playerOne: Player = Player("Marin", Console.BLUE,1)
+  val playerTwo: Player = Player("Lukas", Console.RED,2)
+  val controller: GameControllerInterface = new GameController(new Field(3))
 
   "The GameControl" when {
     "Initialization" should {
       "init not fail " in {
-        controller.init(1) shouldBe controller.init(1)
+        controller.init() shouldBe controller.init()
       }
     }
     "player info" when {
@@ -27,7 +26,7 @@ class GameControllerBaseImplTest extends TestBaseClass {
       "attack" in {
         controller.btnStartCoord = (1, 0)
         controller.btnEndCoord = (1, 2)
-        controller.doMove shouldBe true
+        controller.doMove shouldBe false
       }
       "attack failed" in {
         controller.btnStartCoord = (1, 0)

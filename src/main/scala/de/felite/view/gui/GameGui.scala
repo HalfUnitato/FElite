@@ -1,8 +1,7 @@
 package de.felite.view.gui
 
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.state.game.{EndState, GameStateString, QuitState, State}
-import de.felite.model.Field
+import de.felite.controller.state.game.{EndState, GameStateString, QuitState}
 import de.felite.util.{Observer, ObserverCommand}
 import javax.swing.JOptionPane
 
@@ -14,7 +13,7 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
 
   controller.add(this)
 
-  val scale: Int = Field.getScale
+  val scale: Int = controller.field.getScale
 
   def statusLine: FlowPanel = new FlowPanel() { //this should contain all static Information per Player
     def getTurnName: String = controller.getPlayerName
@@ -104,11 +103,19 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
 
   menuBar = new MenuBar {
     contents += new Menu("File") {
+      contents += new MenuItem(Action("store current board") {
+        controller.store()
+      })
+      contents += new MenuItem(Action("load stored board") {
+        controller.load()
+      })
       contents += new MenuItem(Action("Quit") {
         controller.state.gameState = QuitState(controller)
         controller.state.gameState.handle()
       })
     }
+    /*contents += new MenuItem(Action("New Game") {
+    })*/
     contents += new Menu("Edit") {
       contents += new MenuItem(Action("Undo") {
         controller.undo()
@@ -117,9 +124,24 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
         controller.redo()
       })
     }
-    /*contents += new Menu("Help") {
+    contents += new Menu("Help") {
       mnemonic = Key.F1
-    }*/
+      contents += new MenuItem(Action("How to play") {
+        val s = new StringBuilder
+        // there is no feedback at all, which soldier clicked, range?, livepoints?
+        s.append("How to play Fire Emblem lite\n\n")
+        s.append("This is a game for two players:\n")
+        s.append("Ike (blue) and Zelgius (red), choose wisely\n\n")
+        s.append("The following Movements are possible:\n")
+        s.append("\tclick on one of your soldiers to use it, then click on another button\n" +
+          "\t this other button may be:\n" +
+          "\t -a grass field, your soldier moves there if it is not too far away\n" +
+          "\t\t -an enemy soldier, your soldier will attack this soldier if in range\n\n")
+        s.append("The last one who has soldiers wins\n\n")
+        s.append("\"End Turn\" and \"Quit Game\" do exactly what they say\n")
+        JOptionPane.showMessageDialog(null, s.toString())
+      })
+    }
   }
 
   visible = true
@@ -129,8 +151,8 @@ class GameGui(controller: GameControllerInterface) extends MainFrame with Observ
   def redraw(): Unit = {
     contents = mainPanel
     for {
-      row <- 0 until Field.getScale
-      column <- 0 until Field.getScale
+      row <- 0 until controller.field.getScale
+      column <- 0 until controller.field.getScale
     } cells(row)(column).remake()
     repaint
     centerOnScreen()

@@ -1,19 +1,16 @@
 package de.felite.view
 
-import de.felite.TestBaseClass
+import com.google.inject.Guice
 import de.felite.controller.GameControllerInterface
-import de.felite.controller.component.controllerImpl.controllerBaseImpl.GameController
-import de.felite.controller.state.game.{GameStateString, State}
-import de.felite.model.{Field, Player}
-import de.felite.util.ObserverCommand
-
-import scala.util.control.Exception
+import de.felite.{FEliteModule, TestBaseClass}
 
 class TuiTest extends TestBaseClass {
-  val controller:GameControllerInterface = new GameController()
+  val injector = Guice.createInjector(new FEliteModule)
+  val controller = injector.getInstance(classOf[GameControllerInterface])
+  //controller.init()
   val tui: Tui = new Tui(controller)
   "The Tui" when {
-    controller.init(1)
+    controller.init()
     "print String" should {
       "not throw an ERROR when printing the fieldString" in {
         noException shouldBe thrownBy(tui.printString("t3st"))
@@ -46,7 +43,7 @@ class TuiTest extends TestBaseClass {
       "execute the command" in {
         //controller.switchPlayer()
         tui.playerTurn("0 0 1 1") shouldBe true
-        tui.playerTurn("1 0 1 2") shouldBe true
+        tui.playerTurn("1 0 1 2") shouldBe false
         tui.playerTurn("-1 0 0 1") shouldBe false
         tui.playerTurn("0 0 9 1") shouldBe false
         tui.playerTurn("0 0 20 1") shouldBe false

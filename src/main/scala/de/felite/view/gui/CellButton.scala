@@ -3,7 +3,6 @@ package de.felite.view.gui
 import java.awt.Color
 
 import de.felite.controller.GameControllerInterface
-import de.felite.model.Field
 import de.felite.model.Entity
 
 import scala.swing.{Button, Font, Swing}
@@ -13,9 +12,9 @@ class CellButton(x: Int, y: Int, controller: GameControllerInterface) extends Bu
   def getX:Int = x
   def getY:Int = y
 
-  var myCell: Entity = Field.getCell(x, y)
+  var myCell: Entity = controller.field.getCell(x, y)
 
-  def getCellSign(x: Int, y: Int): String = myCell.sign().toString
+  def getCellSign(x: Int, y: Int): String = myCell.sign.toString
 
   val brown = new Color(51, 25, 0)
 
@@ -27,7 +26,7 @@ class CellButton(x: Int, y: Int, controller: GameControllerInterface) extends Bu
   font = new Font("Verdana", 1, 36)
 
   def remake(): Unit = {
-    myCell = Field.getCell(x,y)
+    myCell = controller.field.getCell(x,y)
     text = cellText
     setView()
   }

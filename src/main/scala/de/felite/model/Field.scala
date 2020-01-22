@@ -1,12 +1,12 @@
 package de.felite.model
 
-import de.felite.util.FileIO
+import com.google.inject.Inject
+import com.google.inject.name.Named
+
 import scala.util.{Failure, Success, Try}
 
-object Field {
-  private val scale: Int = 3
-  private val fileName = FileIO.setScal(scale)
-  private val matrix = FileIO.readFromFile()
+class Field @Inject() ( @Named("DefaultSize") scal: Int) {
+  private val matrix : Array[Array[Option[Entity]]] = Array.ofDim(scal, scal)
 
   // return Field
   // BUT NEVER THE ORIGINAL ONE!!!
@@ -15,7 +15,7 @@ object Field {
   override def toString: String = {
 
     var base = ""
-    for (i <- 0 until FileIO.getScal)
+    for (i <- matrix.indices)
       base += "\t" + i
     base += "\n"
 
@@ -30,7 +30,7 @@ object Field {
               case obs: Obstacle => base += obs.getColor
               case _ => base += Console.RESET
             }
-            base += b.sign() + "\t"
+            base += b.sign + "\t"
             base += Console.RESET
           case None => base += Console.RESET
         }
@@ -58,11 +58,11 @@ object Field {
   def getCell(x: Int, y: Int): Entity = {
     matrix(y)(x) match {
       case Some(t) => t
-      case None => DefEntity
+      case None => ObstacleFactory('g')
     }
   }
 
   def getScale: Int = {
-    scale
+    scal
   }
 }

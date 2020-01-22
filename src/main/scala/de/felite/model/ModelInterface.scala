@@ -1,36 +1,44 @@
 package de.felite.model
 
-import de.felite.model.entity.figure.{BuildArcher, BuildSolider}
-import de.felite.model.entity.obstacle.{Rock, Tree}
+import de.felite.model.entity.figure.BuildFootPatrol
+import de.felite.model.entity.obstacle.SimpleObstacle
+
+import scala.xml.Elem
 
 trait ModelInterface {}
 
 trait Entity {
-  def sign(): Char
+  def walkThrough: Boolean = false
+
+  def sign: Char
 
   def getColor: String
+
+  def toXML(x: Int, y: Int): Elem
+
 }
+
 
 trait PlayerTrait {
   this: Player =>
+  def number(): Int
+
+  def colour: String
 
   def addPlayerTroop(troop: Troop): Boolean
 
   def removeTroop(troop: Troop): Boolean
 
+  def clearToopList(): Unit
+
   def containsSoldier(soldier: Entity): Boolean
 
   def getPlayerName: String
-
-  def getPlayerColor: String
 
   def getUnitAmount: Int
 }
 
 trait Troop extends Entity {
-  def x(): Int
-
-  def y(): Int
 
   def health(): Int
 
@@ -42,50 +50,43 @@ trait Troop extends Entity {
 
   def moveRange(): Int
 
-  def owner(): Player = Player()
+  def owner(): Player
 
-  override def getColor: String = owner().getPlayerColor
+  override def toXML(x: Int, y: Int): Elem = {
+    <troop row={y.toString} col={x.toString} health={health().toString} player={owner().number.toString}>
+      {sign}
+    </troop>
+  }
 
-}
-
-// Std Grass
-case object DefEntity extends Obstacle {
-  val sign: Char = 'g'
-  override val walkthrough: Boolean = true
-  override val color: String = Console.GREEN
 }
 
 object SoldierFactory {
-  def create(typ: Char, pos: (Int, Int), health: Int = -1, player: Player): Troop = {
+  def apply(typ: Char, health: Int = -1, player: Player): Troop = {
     if (health == -1) {
-      if (typ.equals('a'))
-        BuildArcher.buildArcher(pos._1, pos._1, player)
-      else
-        BuildSolider.buldSoldier(pos._1, pos._1, player)
+      BuildFootPatrol.buildFootPatrol(typ, player, colour = player.colour)
     } else {
-      if (typ.equals('a'))
-        BuildArcher.buildArcher(pos._1, pos._1, player, health)
-      else
-        BuildSolider.buldSoldier(pos._1, pos._1, player, health)
+      BuildFootPatrol.buildFootPatrol(typ, player, health, player.colour)
     }
   }
 }
 
 trait Obstacle extends Entity {
 
-  def walkthrough(): Boolean = false
-
   def color(): String
 
   override def getColor: String = color()
+
+  override def toXML(x: Int, y: Int): Elem = {
+    <obstacle row={y.toString} col={x.toString}>
+      {sign}
+    </obstacle>
+  }
 }
 
+
 object ObstacleFactory {
-  def create(typ: Char): Obstacle = {
-    typ match {
-      case 'r' => Rock
-      case 'g' => DefEntity
-      case 't' => Tree
-    }
+  def apply(typ: Char): Obstacle = {
+    val bool: Boolean = if (typ == 'g') true else false
+    SimpleObstacle(typ, bool)
   }
 }

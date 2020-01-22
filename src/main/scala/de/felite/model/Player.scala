@@ -2,10 +2,11 @@ package de.felite.model
 
 import scala.collection.mutable.ListBuffer
 
-case class Player(private val name: String = "John Doe", private val color: String = Console.BLACK) extends PlayerTrait {
+case class Player(private val name: String = "John Doe", colour: String = Console.BLACK,_number:Int) extends PlayerTrait {
+
 
   private val playerTroops = new ListBuffer[Troop]()
-
+  override val number:Int = _number
   override def addPlayerTroop(troop: Troop): Boolean = {
 
     if (playerTroops.contains(troop))
@@ -22,6 +23,7 @@ case class Player(private val name: String = "John Doe", private val color: Stri
     playerTroops.remove(playerTroops.indexOf(troop))
     true
   }
+  override def clearToopList(): Unit = playerTroops.clear()
 
   override def containsSoldier(soldier: Entity):Boolean = {
     if(playerTroops.contains(soldier))
@@ -31,8 +33,6 @@ case class Player(private val name: String = "John Doe", private val color: Stri
   }
 
   override def getPlayerName: String = name
-
-  override def getPlayerColor: String = color
 
   override def getUnitAmount: Int = playerTroops.size
 }
