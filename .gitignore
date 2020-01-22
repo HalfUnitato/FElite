@@ -20,7 +20,6 @@ project/.sbtserver
 /.idea/
 null/
 # saved Boards
-/null/
 field.json
 field.xml
 

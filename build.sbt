@@ -2,7 +2,7 @@ name := "FElite"
 
 version := "0.1"
 
-scalaVersion := "2.13.1"
+scalaVersion := "2.13.0"
 
 coverageExcludedPackages := "<empty>;.*gui.*;.*FElite.scala" //exclude packages from coverage
 
