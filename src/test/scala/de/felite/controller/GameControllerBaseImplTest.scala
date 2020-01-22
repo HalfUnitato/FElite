@@ -33,6 +33,16 @@ class GameControllerBaseImplTest extends TestBaseClass {
         controller.btnEndCoord = (0, 0)
         controller.doMove shouldBe false
       }
+      "attack not fail" in {
+        controller.btnStartCoord = (1, 0)
+        controller.btnEndCoord = (2, 3)
+        controller.doMove shouldBe true
+        controller.doMove shouldBe true
+        controller.doMove shouldBe true
+        controller.doMove shouldBe true
+        controller.doMove shouldBe true
+        controller.doMove shouldBe true
+      }
       "move not fail" in {
         controller.btnStartCoord = (0, 0)
         controller.btnEndCoord = (1, 1)
@@ -69,23 +79,6 @@ class GameControllerBaseImplTest extends TestBaseClass {
         controller.btnEndCoord = (0, 1)
         controller.doMove shouldBe false
       }
-      //       "attack not fail" in {
-      //         controller.attack((0, 0), (0, 1)) shouldBe ReturnValues.VALID
-      //       }
     }
-    /*"switch to player" should {
-      "not fail" in {
-        controller.getPlayerName == "Marin"
-        controller.switchPlayer()
-        controller.getPlayerName == "Lukas"
-        controller.switchPlayer()
-        controller.getPlayerName == "Marin"
-      }
-      "next layer move" should {
-        "not fail" in {
-         noException shouldBe thrownBy(controller.nextPlayerMove("0 0 m 0 1"))
-        }
-      }
-    } */
   }
 }
